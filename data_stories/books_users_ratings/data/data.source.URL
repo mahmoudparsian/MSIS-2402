@@ -1,0 +1,42 @@
+https://www.kaggle.com/datasets/saurabhbagchi/books-dataset
+
+About Dataset
+Context
+Books read by users and ratings provided by them on Amazon
+
+Content
+Online data for books from Amazon along with user ratings and users who bought them
+
+Acknowledgements
+Primarily for building recommender systems.
+This dataset has been compiled by Cai-Nicolas Ziegler in 2004, and it comprises of three tables for users, books and ratings.
+Explicit ratings are expressed on a scale from 1-10 (higher values denoting higher appreciation) and implicit rating is expressed by 0
+http://www2.informatik.uni-freiburg.de/~cziegler/BX/
+
+Inspiration
+Can we select and recommend the top 10 books for each user based on past purchase behavior?
+
+Usability
+10.00
+
+License
+CC0: Public Domain
+
+Expected update frequency
+Annually
+
+Tags
+Business
+Literature
+E-Commerce Services
+Recommender Systems
+Marketing
+books_data(3 files)
+About this directory
+
+Suggest Edits
+This has 3 files
+
+Books.csv -> Has the book descriptions
+Ratings.csv -> Has the book ratings description
+Users.csv -> Has the user descriptions

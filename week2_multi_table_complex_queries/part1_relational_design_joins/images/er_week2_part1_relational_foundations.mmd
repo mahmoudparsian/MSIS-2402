@@ -1,0 +1,23 @@
+erDiagram
+    CUSTOMERS {
+        int customer_id PK
+        string gender
+        string country
+        string segment
+        date signup_date
+    }
+
+    ORDERS {
+        int order_id PK
+        int customer_id FK
+        int store_id
+        date order_date
+    }
+
+    PRODUCTS {
+        int product_id PK
+        string category
+        float price
+    }
+
+    CUSTOMERS ||--o{ ORDERS : places

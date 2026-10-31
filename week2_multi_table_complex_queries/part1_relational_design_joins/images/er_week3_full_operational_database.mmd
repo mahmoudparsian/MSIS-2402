@@ -1,0 +1,53 @@
+erDiagram
+    CUSTOMERS {
+        int customer_id PK
+        string country
+        string segment
+    }
+
+    STORES {
+        int store_id PK
+        string store_type
+        string country
+    }
+
+    ORDERS {
+        int order_id PK
+        int customer_id FK
+        int store_id FK
+        date order_date
+    }
+
+    ORDER_ITEMS {
+        int order_item_id PK
+        int order_id FK
+        int product_id FK
+        int quantity
+        float sales_amount
+    }
+
+    PRODUCTS {
+        int product_id PK
+        string category
+        float price
+    }
+
+    PAYMENTS {
+        int payment_id PK
+        int order_id FK
+        string payment_method
+        float payment_amount
+    }
+
+    SHIPMENTS {
+        int shipment_id PK
+        int order_id FK
+        string carrier
+    }
+
+    CUSTOMERS ||--o{ ORDERS : places
+    STORES ||--o{ ORDERS : handles
+    ORDERS ||--o{ ORDER_ITEMS : contains
+    PRODUCTS ||--o{ ORDER_ITEMS : sold
+    ORDERS ||--o{ PAYMENTS : paid_by
+    ORDERS ||--o{ SHIPMENTS : shipped_by

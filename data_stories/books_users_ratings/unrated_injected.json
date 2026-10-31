@@ -1,0 +1,101 @@
+{
+  "users": [
+    {
+      "user_id": 900001,
+      "location": "santa clara, california, usa",
+      "age": 21
+    },
+    {
+      "user_id": 900002,
+      "location": "lisbon, lisboa, portugal",
+      "age": 34
+    },
+    {
+      "user_id": 900003,
+      "location": "kyoto, kansai, japan",
+      "age": null
+    },
+    {
+      "user_id": 900004,
+      "location": "cork, munster, ireland",
+      "age": 58
+    },
+    {
+      "user_id": 900005,
+      "location": "valparaiso, valparaiso, chile",
+      "age": null
+    }
+  ],
+  "books": [
+    {
+      "isbn": "ISBA2402001",
+      "title": "Field Notes on Relational Algebra",
+      "author": "M. Parsian",
+      "year": 1998,
+      "publisher": "Broncos Press"
+    },
+    {
+      "isbn": "ISBA2402002",
+      "title": "The Quiet Shelf: Essays on Reading",
+      "author": "H. Aldridge",
+      "year": 2001,
+      "publisher": "Mission Street Books"
+    },
+    {
+      "isbn": "ISBA2402003",
+      "title": "Cartography of Small Rivers",
+      "author": "P. Nakamura",
+      "year": 1994,
+      "publisher": "Coastal Editions"
+    },
+    {
+      "isbn": "ISBA2402004",
+      "title": "An Index of Forgotten Trades",
+      "author": "R. Okonkwo",
+      "year": 1987,
+      "publisher": "Lantern House"
+    },
+    {
+      "isbn": "ISBA2402005",
+      "title": "Winter Term",
+      "author": "S. Vasquez",
+      "year": 2003,
+      "publisher": "Alameda Books"
+    },
+    {
+      "isbn": "ISBA2402006",
+      "title": "Notes Toward a Theory of Catalogues",
+      "author": "T. Lindqvist",
+      "year": 1979,
+      "publisher": "Northgate Academic"
+    },
+    {
+      "isbn": "ISBA2402007",
+      "title": "The Unread Library",
+      "author": "A. Ferrante",
+      "year": 2000,
+      "publisher": "Palo Alto Review Press"
+    },
+    {
+      "isbn": "ISBA2402008",
+      "title": "Grammars of Silence",
+      "author": "K. Osei",
+      "year": 1992,
+      "publisher": "Meridian & Co"
+    },
+    {
+      "isbn": "ISBA2402009",
+      "title": "Sixteen Ways to Leave a Dataset",
+      "author": "J. Whitfield",
+      "year": 2004,
+      "publisher": "Broncos Press"
+    },
+    {
+      "isbn": "ISBA2402010",
+      "title": "Marginalia",
+      "author": "E. Sorensen",
+      "year": 1968,
+      "publisher": "Old Quarry Books"
+    }
+  ]
+}

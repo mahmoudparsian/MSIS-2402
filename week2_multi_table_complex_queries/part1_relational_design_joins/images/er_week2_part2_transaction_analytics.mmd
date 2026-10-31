@@ -1,0 +1,22 @@
+erDiagram
+    CUSTOMERS {
+        int customer_id PK
+        string customer_name
+        string country
+    }
+
+    PRODUCTS {
+        int product_id PK
+        string product
+        float price
+    }
+
+    SALES {
+        int order_id PK
+        int customer_id FK
+        int product_id FK
+        int quantity
+    }
+
+    CUSTOMERS ||--o{ SALES : places
+    PRODUCTS ||--o{ SALES : sold_in

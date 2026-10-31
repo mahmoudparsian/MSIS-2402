@@ -1,0 +1,13 @@
+department,product,quantity,unit_price
+Sales,Pens,10,2.00
+Sales,Pens,5,2.00
+Sales,Paper,20,5.00
+Sales,Laptops,1,1200.00
+IT,Laptops,2,1200.00
+IT,Monitors,5,300.00
+IT,Pens,2,2.50
+IT,Laptops,1,1300.00
+HR,Paper,10,5.00
+HR,Pens,3,2.00
+HR,Monitors,1,350.00
+HR,Paper,5,5.00

@@ -1,0 +1,15 @@
+.env*
+CLAUDE.md*
+.DS_Store
+
+# Built DuckDB databases — regenerate with each data story's build notebook
+*.duckdb
+*.duckdb.wal
+
+# Local tool settings — don't rely on a personal global gitignore for these
+.claude/
+
+# Caches created by running notebooks / Python (e.g. `marimo export html`)
+__marimo__/
+__pycache__/
+*.pyc
