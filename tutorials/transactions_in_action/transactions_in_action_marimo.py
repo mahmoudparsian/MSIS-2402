@@ -69,7 +69,7 @@ def _(mo):
 @app.cell
 def _():
     # Install duckdb if you don't have it yet
-    # !pip install duckdb --quiet
+    # !pip install "duckdb>=2.0" --quiet
     return
 
 

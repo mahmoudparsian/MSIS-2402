@@ -87,7 +87,7 @@ transactional apps (that's what MySQL/Postgres are for).
 Install using pip:
 
 ```bash
-python3 -m pip install duckdb
+python3 -m pip install "duckdb>=2.0"
 ```
 
 Verify installation:

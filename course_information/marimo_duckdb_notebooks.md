@@ -14,7 +14,7 @@ that run against DuckDB. You'll find them in each week's folders, in
 Install:
 
 ```bash
-pip install duckdb pandas matplotlib
+pip install "duckdb>=2.0" pandas matplotlib
 pip install "marimo[sql]"
 ```
 

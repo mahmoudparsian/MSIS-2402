@@ -33,7 +33,7 @@ Each section introduces a SQL concept, shows the query, displays the result, and
 cells.append(md("""## 0 — Environment Setup"""))
 
 cells.append(code("""# Install required packages (run once)
-# !pip install duckdb matplotlib numpy"""))
+# !pip install "duckdb>=2.0" matplotlib numpy"""))
 
 cells.append(code("""import duckdb
 import pandas as pd

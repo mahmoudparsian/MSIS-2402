@@ -41,7 +41,7 @@ def _(mo):
 @app.cell
 def _():
     # Install required packages (run once)
-    # !pip install duckdb matplotlib numpy
+    # !pip install "duckdb>=2.0" matplotlib numpy
     return
 
 
