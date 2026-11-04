@@ -211,6 +211,7 @@ All in [`course_information/`](course_information/):
 | [`DISCUSSIONS_README.md`](course_information/DISCUSSIONS_README.md) | How the class discussions work |
 | [`ACADEMIC_CONDUCT.md`](course_information/ACADEMIC_CONDUCT.md) | Academic integrity expectations |
 | [`QUESTIONS_and_OFFICE_HOURS.md`](course_information/QUESTIONS_and_OFFICE_HOURS.md) | How to get help; office hours (days, times, room; the Zoom link is on Camino) |
+| [`LAB_FORMAT_ANNOUNCEMENT.md`](course_information/LAB_FORMAT_ANNOUNCEMENT.md) | **Announcement:** how the labs work — Lab A in class, Lab B by 11:59 pm, 6 tasks each |
 | [`LAPTOP.md`](course_information/LAPTOP.md) | Laptop requirement for in-class labs |
 | [`REQUIRED_SOFTWARE.md`](course_information/REQUIRED_SOFTWARE.md) | Every tool used in the course and why |
 | [`installing_duckdb_on_macbook.md`](course_information/installing_duckdb_on_macbook.md) | DuckDB install guide — macOS |
