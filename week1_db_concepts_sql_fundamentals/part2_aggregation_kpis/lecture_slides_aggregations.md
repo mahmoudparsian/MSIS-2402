@@ -16,9 +16,10 @@ From Rows → Metrics → Decisions
 
 By the end of today:
 
-* Use aggregate functions (`SUM`, `COUNT`, `AVG`)
+* Use aggregate functions (`SUM`, `COUNT`, `AVG`) — and the three kinds of `COUNT`
 * Understand `GROUP BY`
 * Distinguish `WHERE` vs `HAVING`
+* Know the order SQL runs a query in
 * Think in business metrics (KPIs)
 
 ---
@@ -75,7 +76,52 @@ Business meaning:
 
 ---
 
-# Slide 7 — `SUM()`
+<style scoped>section { font-size: 24px; } pre { font-size: 20px; }</style>
+
+# Slide 7 — Three Kinds of `COUNT`
+
+A small table where two contacts have **no email** (`NULL`):
+
+```sql
+CREATE OR REPLACE TABLE contacts AS
+SELECT * FROM (VALUES
+    (1, 'ana@shop.com', 'USA'),
+    (2, NULL,           'USA'),
+    (3, 'li@shop.com',  'UK'),
+    (4, NULL,           'Germany'),
+    (5, 'sam@shop.com', 'USA')
+) AS t(contact_id, email, country);
+
+SELECT COUNT(*)                AS all_rows,
+       COUNT(email)            AS with_email,
+       COUNT(DISTINCT country) AS countries
+FROM contacts;
+```
+
+| all_rows | with_email | countries |
+|---:|---:|---:|
+| 5 | 3 | 3 |
+
+---
+
+<style scoped>section { font-size: 24px; } table { font-size: 21px; }</style>
+
+# Slide 8 — Which `COUNT` Do I Need?
+
+| You write | It counts | Business question |
+|---|---|---|
+| `COUNT(*)` | every row | "How many contacts?" → 5 |
+| `COUNT(email)` | rows where `email` is **not** `NULL` | "How many can we email?" → 3 |
+| `COUNT(DISTINCT country)` | **different** values (no `NULL`s) | "How many countries?" → 3 |
+
+👉 Same table, three different answers. Pick the one that matches the question.
+
+💼 In our `sales` table: `COUNT(*)` = 200 transactions,
+`COUNT(DISTINCT country)` = 4 markets.
+
+---
+
+# Slide 9 — `SUM()`
 
 ```sql
 SELECT SUM(sales_amount) AS total_revenue
@@ -88,7 +134,7 @@ Business meaning:
 
 ---
 
-# Slide 8 — `AVG()`
+# Slide 10 — `AVG()`
 
 ```sql
 SELECT AVG(price) AS avg_price
@@ -101,7 +147,7 @@ Business meaning:
 
 ---
 
-# Slide 9 — ⚠️ Important Limitation
+# Slide 11 — ⚠️ Important Limitation
 
 `COUNT`/`SUM`/`AVG` alone give:
 
@@ -113,7 +159,7 @@ But businesses need:
 
 ---
 
-# Slide 10 — `GROUP BY` (Core Concept)
+# Slide 12 — `GROUP BY` (Core Concept)
 
 ```sql
 SELECT country,
@@ -125,7 +171,7 @@ ORDER BY revenue DESC;
 
 ---
 
-# Slide 11 — What `GROUP BY` Does
+# Slide 13 — What `GROUP BY` Does
 
 * Splits data into groups (one group per distinct `country`)
 * Computes the aggregate (`SUM`) separately, per group
@@ -136,7 +182,7 @@ Business question:
 
 ---
 
-# Slide 12 — Interpretation
+# Slide 14 — Interpretation
 
 Output (real data, `data/sales_dataset.csv`):
 
@@ -151,7 +197,7 @@ Output (real data, `data/sales_dataset.csv`):
 
 ---
 
-# Slide 13 — ⚠️ Common Mistake
+# Slide 15 — ⚠️ Common Mistake
 
 ```sql
 SELECT country, SUM(sales_amount)
@@ -168,7 +214,7 @@ or must be part of an aggregate function.
 
 ---
 
-# Slide 14 — 🧪 Practice
+# Slide 16 — 🧪 Practice
 
 Ask students to write:
 
@@ -178,13 +224,13 @@ Ask students to write:
 
 ---
 
-# Slide 15 — `WHERE` vs `HAVING`
+# Slide 17 — `WHERE` vs `HAVING`
 
 Both filter rows — but at different stages of the query.
 
 ---
 
-# Slide 16 — `WHERE`
+# Slide 18 — `WHERE`
 
 Filters rows **before** grouping:
 
@@ -196,7 +242,7 @@ WHERE price > 500;
 
 ---
 
-# Slide 17 — `HAVING`
+# Slide 19 — `HAVING`
 
 Filters groups **after** aggregation:
 
@@ -217,7 +263,7 @@ HAVING revenue > 95000;
 
 ---
 
-# Slide 18 — Side-by-Side
+# Slide 20 — Side-by-Side
 
 | | `WHERE` | `HAVING` |
 |---|---|---|
@@ -227,7 +273,7 @@ HAVING revenue > 95000;
 
 ---
 
-# Slide 19 — ❌ Classic Mistake
+# Slide 21 — ❌ Classic Mistake
 
 ```sql
 SELECT country, SUM(sales_amount) AS revenue
@@ -244,7 +290,7 @@ WHERE clause cannot contain aggregates!
 
 ---
 
-# Slide 20 — ✅ Correct Version
+# Slide 22 — ✅ Correct Version
 
 ```sql
 SELECT country,
@@ -260,7 +306,52 @@ Business meaning:
 
 ---
 
-# Slide 21 — 📊 KPI Thinking
+# Slide 23 — 🧭 How SQL Runs a Query
+
+You **write** `SELECT` first, but SQL **runs** the clauses in this order:
+
+| Step | Clause | What happens |
+|:---:|---|---|
+| 1 | `FROM` | pick the table |
+| 2 | `WHERE` | keep only some **rows** |
+| 3 | `GROUP BY` | make the groups |
+| 4 | `HAVING` | keep only some **groups** |
+| 5 | `SELECT` | compute the output columns (and aliases) |
+| 6 | `ORDER BY` | sort |
+| 7 | `LIMIT` | keep the first *n* rows |
+
+---
+
+# Slide 24 — What the Order Explains
+
+* **No aggregates in `WHERE`:** `WHERE` (step 2) runs **before** the groups
+  exist (step 3) → filter on `SUM(...)` with `HAVING` (step 4)
+* **`ORDER BY` can sort by any alias:** it runs **after** `SELECT` (step 5)
+* **`LIMIT` is last:** "top 3" means *sort first, then keep 3*
+
+👉 When a query surprises you, walk through the 7 steps in order.
+
+---
+
+<style scoped>section { font-size: 24px; }</style>
+
+# Slide 25 — ⚠️ Aliases: DuckDB Is Friendlier Than Most
+
+Can you use a `SELECT` alias (like `revenue`) in another clause?
+
+| Clause | DuckDB | MySQL (Weeks 4–5) |
+|---|:---:|:---:|
+| `WHERE` (plain alias, e.g. `amount`) | ✅ | ❌ *Unknown column* |
+| `WHERE` (aggregate alias, e.g. `revenue`) | ❌ | ❌ |
+| `GROUP BY`, `HAVING` | ✅ | ✅ |
+| `ORDER BY` | ✅ | ✅ |
+
+👉 **Works everywhere:** in `WHERE`, repeat the expression instead of the alias:
+`WHERE price * quantity > 5000` — not `WHERE amount > 5000`.
+
+---
+
+# Slide 26 — 📊 KPI Thinking
 
 Key metrics:
 
@@ -270,7 +361,7 @@ Key metrics:
 
 ---
 
-# Slide 22 — Insight Example
+# Slide 27 — Insight Example
 
 * High revenue ≠ high volume
 * A few expensive products can outsell many cheap ones
@@ -287,7 +378,7 @@ ORDER BY revenue DESC;
 
 ---
 
-# Slide 23 — 📈 Visualization (Concept)
+# Slide 28 — 📈 Visualization (Concept)
 
 Bar chart:
 
@@ -298,7 +389,7 @@ Bar chart:
 
 ---
 
-# Slide 24 — 🧪 In-Class Exercise
+# Slide 29 — 🧪 In-Class Exercise
 
 Write queries for:
 
@@ -309,7 +400,7 @@ Write queries for:
 
 ---
 
-# Slide 25 — 💬 Discussion
+# Slide 30 — 💬 Discussion
 
 Ask:
 
@@ -319,7 +410,7 @@ Ask:
 
 ---
 
-# Slide 26 — 🔥 Advanced Thinking
+# Slide 31 — 🔥 Advanced Thinking
 
 Compare:
 
@@ -333,22 +424,23 @@ vs.
 
 ---
 
-# Slide 27 — What Did We Learn?
+# Slide 32 — What Did We Learn?
 
-* `COUNT`, `SUM`, `AVG`
+* `COUNT`, `SUM`, `AVG` — `COUNT(*)` vs `COUNT(col)` vs `COUNT(DISTINCT col)`
 * `GROUP BY`
 * `WHERE` vs `HAVING`
+* The order SQL runs a query in
 * KPI thinking
 
 ---
 
-# Slide 28 — 🎯 Most Important Idea
+# Slide 33 — 🎯 Most Important Idea
 
 SQL transforms raw rows into business metrics.
 
 ---
 
-# Slide 29 — 🚀 Next Week
+# Slide 34 — 🚀 Next Week
 
 👉 JOINs (combining datasets)
 
@@ -356,6 +448,6 @@ SQL transforms raw rows into business metrics.
 
 ---
 
-# Slide 30 — 🙌 End of Week 1
+# Slide 35 — 🙌 End of Week 1
 
 Questions?

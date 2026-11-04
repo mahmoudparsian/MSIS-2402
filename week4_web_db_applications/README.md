@@ -15,7 +15,7 @@
 
 | Session | Topic | Lab (in [`LABS/`](../LABS/)) | Lab format |
 |:---:|---|---|---|
-| **7** | Client–server databases (MySQL) | `week4_lab1/` — a database server and its clients (1a); constraints and views (1b) | Markdown handouts; you work in the `mysql` command-line client |
+| **7** | Client–server databases (MySQL) | `week4_lab1/` — a database server and its clients (Lab A); constraints and views (Lab B) | Markdown handouts; you work in the `mysql` command-line client |
 | **8** | Web application architecture | `week4_lab2/` — a simple database-backed web application | A small Python + DuckDB web app (`shop_app_starter.py`) and Markdown handouts |
 
 **Before Session 7 starts** (the lab needs both):
@@ -78,11 +78,11 @@ must be started from this folder.
 
 ## Labs
 
-Each session's labs are published in [`LABS/`](../LABS/) during class — an
-**a** lab (core, 40 points), a **b** lab (a step more challenging, 30 points),
-and an optional, ungraded **c** lab. Submit a and b on Camino by **11:00 pm
-Pacific Time** that day ([how](../course_information/ASSIGNMENTS_and_GRADING.md#3-how-to-submit-a-lab));
-solutions are added after the deadline.
+Each session's labs are published in [`LABS/`](../LABS/) during class — a
+**Lab A** (core, 40 points, 6 tasks), done and submitted on Camino **before
+class ends**, and a **Lab B** (a step more challenging, 30 points, 6 tasks),
+due by **11:59 pm Pacific Time** that day ([how](../course_information/ASSIGNMENTS_and_GRADING.md#3-how-to-submit-a-lab)).
+Solutions are added after the deadlines.
 
 ## Class Discussions
 

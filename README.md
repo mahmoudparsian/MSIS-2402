@@ -94,8 +94,8 @@ The five weeks follow the department's
 | Time | Activity |
 |---|---|
 | First ~55 minutes | Lecture and live demo |
-| Last ~40 minutes | Start the session's lab in class, with the instructor available |
-| By **11:00 pm Pacific Time** the same day | Finish and submit labs a and b on Camino |
+| Last ~40 minutes | **Lab A** in class, with the instructor available — submit it before class ends |
+| By **11:59 pm Pacific Time** the same day | Finish and submit **Lab B** on Camino |
 
 ---
 
@@ -103,18 +103,19 @@ The five weeks follow the department's
 
 | Component | Points |
 |---|---:|
-| **Labs** — one per session, 10 × 70 points (lab a 40 + lab b 30) | 700 |
+| **Labs** — two per session, 10 × 70 points (Lab A 40 + Lab B 30) | 700 |
 | **Final Exam** — 2 hours, closed book, lock-down browser, separate exam slot after Session 10 | 300 |
 | **Total** | **1,000** |
 
-- Each session has an **a** lab (core, 40 points) and a **b** lab (a step
-  more challenging, 30 points) — **submit both** — plus an optional,
-  ungraded **c** lab for extra practice (don't submit it).
+- Each session has a **Lab A** (core, 40 points, 6 tasks — done and
+  submitted **in class**) and a **Lab B** (a step more challenging,
+  30 points, 6 tasks — due **11:59 pm Pacific Time** the same day).
 - Labs are published in [`LABS/`](LABS/) at the start of each lab block;
-  solutions are added after the 11:00 pm Pacific Time deadline.
+  Lab A solutions are added after class, Lab B solutions after its late
+  window closes.
 - The lowest lab score is replaced by the average of the other nine.
 
-How to submit (Camino, file names), the late penalty (−7 points per started
+How to submit (Camino, file names), the Lab B late penalty (−3 points per started
 24 hours), attendance, letter grades, and the Final Exam format are
 in [`ASSIGNMENTS_and_GRADING.md`](course_information/ASSIGNMENTS_and_GRADING.md).
 
@@ -156,7 +157,7 @@ session to pick up newly released labs.
 | [`week3_sql_for_analytics/`](week3_sql_for_analytics/) | Week 3 — SQL for Data Analytics |
 | [`week4_web_db_applications/`](week4_web_db_applications/) | Week 4 — Introduction to Web Database Applications |
 | [`week5_modern_data_systems/`](week5_modern_data_systems/) | Week 5 — Modern Data Systems and Database Management |
-| [`LABS/`](LABS/README.md) | **This term's labs**, published during each session (one folder per session); solutions are added after the 11:00 pm Pacific Time deadline |
+| [`LABS/`](LABS/README.md) | **This term's labs**, published during each session (one folder per session); solutions are added after the deadlines |
 
 ### Course information and setup
 

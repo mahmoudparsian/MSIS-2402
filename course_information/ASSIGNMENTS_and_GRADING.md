@@ -22,12 +22,12 @@
 
 | Component | Details | Points |
 |---|---|---:|
-| 🧪 **Labs** | One lab per class session · 10 labs × 70 points (lab **a** 40 + lab **b** 30) | 700 |
+| 🧪 **Labs** | Two labs per class session · 10 sessions × 70 points (Lab **A** 40 + Lab **B** 30) | 700 |
 | ✏️ **Final Exam** | Separate scheduled exam slot after Session 10 · 2 hours · closed books, notes, software, Internet, and phone · lock-down browser required | 300 |
 | | **Total** | **1,000** |
 
-- **Labs** (one per session — see [Section 2](#2-labs--how-each-session-works)):
-  you **start** each lab in class and **submit** it on Camino **by 11:00 pm
+- **Labs** (two per session — see [Section 2](#2-labs--how-each-session-works)):
+  you **finish and submit Lab A in class**, and submit **Lab B by 11:59 pm
   Pacific Time the same day** (see [Section 3](#3-how-to-submit-a-lab)).
 - **Final Exam:** one exam covering the whole course, held in a separate
   scheduled exam slot after the last class session (not during Session 10).
@@ -44,27 +44,33 @@ minutes** each. Every session follows the same pattern:
 | Time | Activity |
 |---|---|
 | First ~55 minutes | Lecture and live demo of the session's topic |
-| Last ~40 minutes | Students **start that session's lab** in class — enough to understand what it asks and get a working start, with the instructor available for questions |
-| By **11:00 pm Pacific Time** the same day | Students finish and **submit** the lab on Camino |
+| Last ~40 minutes | Students do **Lab A** in class, with the instructor available for questions, and **submit it before class ends** |
+| By **11:59 pm Pacific Time** the same day | Students finish and **submit Lab B** on Camino |
 
-Each lab is designed so that its first few tasks fit in the 40 minutes of
-class time and the rest can be finished the same evening. Every session has
-three labs:
+Every session has **two graded labs, 6 tasks each**:
 
-| Lab | What it is | Points | Submit? |
+| Lab | What it is | Points | Where and when |
 |---|---|---:|---|
-| **a** | The core lab | **40** | **Required** |
-| **b** | A step more challenging | **30** | **Required** |
-| **c** | Optional extra practice that starts from a raw CSV file | 0 — not graded | No — don't submit it |
+| **A** | The core lab — practice of what was just taught and demonstrated | **40** (Tasks 1–4: 7 points each; Tasks 5–6: 6 points each) | **In class.** Submit before class ends |
+| **B** | A step more challenging — apply the session's SQL to new questions | **30** (5 points per task) | **After class.** Submit by **11:59 pm Pacific Time** the same day |
 
-The session's lab score is **a + b**, out of **70**. Each of a and b is graded
-as a whole (there are no per-task points); see Course Policy #4 for what is
-graded.
+The session's lab score is **A + B**, out of **70**. Each **task** is graded
+on its own: full points, partial points for logic that is partly right, or 0.
+See Course Policy #4 for what is graded.
 
-**Where to find them:** each session's labs are published in the course
-repository's [`LABS/`](../LABS/) folder **during class**, at the start of the
-lab block. **Solutions** are added to the same folder after the 11:00 pm
-Pacific Time deadline.
+**Lab A is a timed, in-class lab.** What you have uploaded when class ends is
+graded; Lab A cannot be submitted late. If the Office of Accessible Education
+(OAE) has approved **extra time on timed tests** for you, it applies to Lab A:
+your Lab A time is extended by that amount, and Camino stays open for you
+until then. Send the instructor your OAE letter **before Session 1** so this
+is set up for every session.
+
+**Where to find them:** each session's labs (A and B) are published in the
+course repository's [`LABS/`](../LABS/) folder **during class**, at the start
+of the lab block. **Lab A solutions** are added to the same folder after the
+Lab A time is over (including any extended time). **Lab B solutions** are
+added after Lab B's late window closes — 72 hours after its deadline (see
+Course Policy #6).
 
 | Week | Session | Lab topic |
 |---|:---:|---|
@@ -85,18 +91,18 @@ Pacific Time deadline.
 
 | Item | Rule |
 |---|---|
-| **Where** | Camino — the assignment named **Session N Lab** (N = 1 … 10). One assignment per session takes both files (a and b). |
-| **Deadline** | **11:00 pm Pacific Time** on the day of the session. |
-| **What** | Your **finished** lab a **and** lab b files, renamed as below. Don't submit the c lab, the data files, or the solutions. |
+| **Where** | Camino — two assignments per session (N = 1 … 10): **Session N Lab A** and **Session N Lab B**. Upload each lab's files to its own assignment. |
+| **Deadline** | **Lab A:** before class ends (the assignment closes when class ends). **Lab B:** **11:59 pm Pacific Time** on the day of the session. |
+| **What** | Your Lab A file(s) and your **finished** Lab B file(s), renamed as below. Don't submit the data files or the solutions. |
 | **File names** | `lastname_firstname_` + the lab's released file name **without `_student`** — all lower case, no spaces (a two-part last name joined with `-`). Save your working copy under this name from the start ([LABS/](../LABS/README.md)). |
-| **Re-uploading** | Allowed until the deadline. The **last** upload counts, and its time is your submission time. |
+| **Re-uploading** | Allowed until that lab's deadline. The **last** upload counts, and its time is your submission time. |
 
 File names for each lab format (example student: Maria Lopez, Session 1):
 
-| Lab format (sessions) | Submit for lab a | Submit for lab b |
+| Lab format (sessions) | Submit for Lab A | Submit for Lab B |
 |---|---|---|
-| Marimo notebook (1–6, and 9 lab a) | `lopez_maria_week1_lab1a_marimo.py` — your completed notebook | `lopez_maria_week1_lab1b_marimo.py` |
-| MySQL handout (7, 9 lab b, 10) | `lopez_maria_week4_lab1a.md` — for each task: the SQL you ran, the output, your written answers | `lopez_maria_week4_lab1b.md` |
+| Marimo notebook (1–6, and 9 Lab A) | `lopez_maria_week1_lab1a_marimo.py` — your completed notebook | `lopez_maria_week1_lab1b_marimo.py` |
+| MySQL handout (7, 9 Lab B, 10) | `lopez_maria_week4_lab1a.md` — for each task: the SQL you ran, the output, your written answers | `lopez_maria_week4_lab1b.md` |
 | Web application (8) | `lopez_maria_week4_lab2a_shop_app.py` (your modified app) **and** `lopez_maria_week4_lab2a.md` (answers) | `lopez_maria_week4_lab2b_shop_app.py` **and** `lopez_maria_week4_lab2b.md` |
 
 Session 9 mixes formats: `lopez_maria_week5_lab1a_marimo.py` and
@@ -111,10 +117,10 @@ cell works.
 
 **Attendance is mandatory.**
 
-Each lab is started during the class session in which it is assigned. If you
-are absent, you receive a zero (`0`) on that session's lab (70 points). There
-is no way to make up a missed lab, because the in-class start, with
-instructor support, is part of the lab.
+Lab A is done during the class session in which it is assigned. If you are
+absent, you receive a zero (`0`) on that session's labs (A and B, 70 points).
+There is no way to make up a missed lab, because the in-class lab, with
+instructor support, is part of the session.
 
 > **Exception:** students with a documented emergency, illness, or
 > university-approved absence (disability accommodation, religious
@@ -159,25 +165,22 @@ instructor support, is part of the lab.
    reflect your own understanding and effort. Discussing general SQL concepts
    with classmates is fine; sharing queries or notebooks is not.
 
-6. **Late policy (labs).** A late lab loses **7 points** (10% of 70) for
-   **each started 24-hour period** after the 11:00 pm Pacific Time deadline,
-   counted from your last upload:
+6. **Late policy (labs).** **Lab A** cannot be submitted late — it is done
+   and submitted in class (see [Section 2](#2-labs--how-each-session-works)
+   for extended time). A late **Lab B** loses **3 points** (10% of 30) for **each started
+   24-hour period** after the 11:59 pm Pacific Time deadline, counted from your
+   last Lab B upload:
 
-   | Last upload | Penalty |
+   | Last Lab B upload | Penalty |
    |---|---:|
-   | by 11:00 pm on the session day | none |
-   | up to 24 hours late (e.g. 11:01 pm) | −7 |
-   | 24–48 hours late | −14 |
-   | 48–72 hours late | −21 |
-   | more than 72 hours late | that file is not graded: 0 for that part |
+   | by 11:59 pm on the session day | none |
+   | up to 24 hours late (e.g. 12:30 am) | −3 |
+   | 24–48 hours late | −6 |
+   | 48–72 hours late | −9 |
+   | more than 72 hours late | not graded: 0 for Lab B |
 
-   Lateness is set by the **last** file you upload for the session, and the
-   penalty comes off the session's 70-point score (never below 0). Example:
-   lab a on time and lab b uploaded at 9:00 am the next day → −7 from the
-   session's score. A lab a or lab b file that arrives more than 72 hours
-   late scores 0 for that part (40 or 30 points); the other part is still
-   graded. An extension must be arranged with the
-   instructor **before** the deadline.
+   The penalty comes off Lab B's 30 points (never below 0). An extension must
+   be arranged with the instructor **before** the deadline.
 
 ---
 

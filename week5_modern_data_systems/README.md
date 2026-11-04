@@ -15,7 +15,7 @@
 
 | Session | Topic | Lab (in [`LABS/`](../LABS/)) | Lab format |
 |:---:|---|---|---|
-| **9** | Transactions, concurrency, and modern data systems | `week5_lab1/` — transactions and concurrency | Lab a: Marimo notebook (DuckDB). Lab b: Markdown handout with **two** `mysql` sessions at once |
+| **9** | Transactions, concurrency, and modern data systems | `week5_lab1/` — transactions and concurrency | Lab A: Marimo notebook (DuckDB). Lab B: Markdown handout with **two** `mysql` sessions at once |
 | **10** | Performance, security, and governance | `week5_lab2/` — query plans and indexes; users, grants, and views | Markdown handouts in the `mysql` client |
 
 Both live demos and three of the four graded labs use MySQL with the
@@ -65,11 +65,11 @@ and recovery
 
 ## Labs
 
-Each session's labs are published in [`LABS/`](../LABS/) during class — an
-**a** lab (core, 40 points), a **b** lab (a step more challenging, 30 points),
-and an optional, ungraded **c** lab. Submit a and b on Camino by **11:00 pm
-Pacific Time** that day ([how](../course_information/ASSIGNMENTS_and_GRADING.md#3-how-to-submit-a-lab));
-solutions are added after the deadline.
+Each session's labs are published in [`LABS/`](../LABS/) during class — a
+**Lab A** (core, 40 points, 6 tasks), done and submitted on Camino **before
+class ends**, and a **Lab B** (a step more challenging, 30 points, 6 tasks),
+due by **11:59 pm Pacific Time** that day ([how](../course_information/ASSIGNMENTS_and_GRADING.md#3-how-to-submit-a-lab)).
+Solutions are added after the deadlines.
 
 ## Class Discussions
 

@@ -415,12 +415,12 @@ SQL becomes a **data analysis tool**, not just a query language.
 | Time | What happens |
 |---|---|
 | First ~55 minutes | Lecture and live demo |
-| Last ~40 minutes | Start the session's **lab** in class |
-| By **11:00 pm Pacific Time** | Finish and submit labs a and b on Camino |
+| Last ~40 minutes | **Lab A** in class — submit before class ends |
+| By **11:59 pm Pacific Time** | Finish and submit **Lab B** on Camino |
 
-Every session has an **a** lab (core, 40 points), a **b** lab (a step more
-challenging, 30 points), and an optional, ungraded **c** lab — published in
-the course repository's `LABS/` folder during class.
+Every session has a **Lab A** (core, 40 points, 6 tasks, done in class) and a
+**Lab B** (a step more challenging, 30 points, 6 tasks) — published in the
+course repository's `LABS/` folder during class.
 
 ---
 

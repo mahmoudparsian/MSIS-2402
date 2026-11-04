@@ -25,7 +25,8 @@
 ## Session 1 — Single-Table SQL
 
 **Topics:** what a relational database is · `SELECT`, `WHERE`, `ORDER BY`,
-`DISTINCT`, `LIMIT` · derived columns · a first look at `GROUP BY`
+`DISTINCT`, `LIMIT` · `AND` before `OR` (use parentheses) · derived columns ·
+a first look at `GROUP BY`
 
 | File | What it is |
 |---|---|
@@ -36,27 +37,31 @@
 
 ## Session 2 — Aggregation and KPIs
 
-**Topics:** `COUNT`, `SUM`, `AVG` · `GROUP BY` and `HAVING` · business KPIs ·
-modifying data with `INSERT`, `UPDATE`, `DELETE`
+**Topics:** `COUNT`, `SUM`, `AVG` · `COUNT(*)` vs `COUNT(col)` vs `COUNT(DISTINCT col)` ·
+`GROUP BY` and `HAVING` · the order SQL runs a query in · business KPIs ·
+modifying data with `INSERT`, `UPDATE`, `DELETE` · cleaning text (`TRIM`, `LOWER`,
+`UPPER`, `||`) · working with dates (`YEAR`, `MONTH`, `DATE_TRUNC`, `strftime`,
+`date_diff`, `INTERVAL`)
 
 | File | What it is |
 |---|---|
 | [`lecture_slides_aggregations.md`](part2_aggregation_kpis/lecture_slides_aggregations.md) | Slide deck — aggregation and KPIs |
 | [`lecture_slides_sql_tour.md`](part2_aggregation_kpis/lecture_slides_sql_tour.md) | Slide deck — a tour of DuckDB SQL, including `INSERT` / `UPDATE` / `DELETE` |
-| [`notebook_1_marimo.py`](part2_aggregation_kpis/notebook_1_marimo.py) | In-class notebook — aggregation and KPIs |
+| [`lecture_slides_text_and_date_functions.md`](part2_aggregation_kpis/lecture_slides_text_and_date_functions.md) | Slide deck — text and date functions for analytics: clean text before grouping, group by year and month, days between dates, the last N days |
+| [`notebook_1_marimo.py`](part2_aggregation_kpis/notebook_1_marimo.py) | In-class notebook — aggregation and KPIs, then text and date functions (same examples as the slides) |
 | [`notebook_2_marimo.py`](part2_aggregation_kpis/notebook_2_marimo.py) | In-class notebook — `WHERE` vs. `HAVING`, KPIs, and business thinking |
 | [`CLASS_DISCUSSION_02.md`](part2_aggregation_kpis/CLASS_DISCUSSION_02.md) | Class discussion — warm-up before the lab |
-| [`data/`](part2_aggregation_kpis/data/) | `sales_dataset.csv` (200 transactions — notebooks and class discussion) and `weather.csv` (used in the SQL-tour slides) |
+| [`data/`](part2_aggregation_kpis/data/) | `sales_dataset.csv` (200 transactions — notebooks and class discussion) and `weather.csv` (used in the SQL-tour slides). The text-and-date slides and `notebook_1_marimo.py` also read Session 1's dated sales, [`../part1_single_table_sql/data/sales.csv`](part1_single_table_sql/data/sales.csv) |
 
 ---
 
 ## Labs
 
-Each session's labs are published in [`LABS/`](../LABS/) during class — an
-**a** lab (core, 40 points), a **b** lab (a step more challenging, 30 points),
-and an optional, ungraded **c** lab. Submit a and b on Camino by **11:00 pm
-Pacific Time** that day ([how](../course_information/ASSIGNMENTS_and_GRADING.md#3-how-to-submit-a-lab));
-solutions are added after the deadline.
+Each session's labs are published in [`LABS/`](../LABS/) during class — a
+**Lab A** (core, 40 points, 6 tasks), done and submitted on Camino **before
+class ends**, and a **Lab B** (a step more challenging, 30 points, 6 tasks),
+due by **11:59 pm Pacific Time** that day ([how](../course_information/ASSIGNMENTS_and_GRADING.md#3-how-to-submit-a-lab)).
+Solutions are added after the deadlines.
 
 ## Running the Notebooks
 
@@ -68,7 +73,7 @@ from **its own folder**, because it reads its data by a relative path:
 | Session | Run (two commands) | Reads |
 |:---:|---|---|
 | 1 | `cd week1_db_concepts_sql_fundamentals/part1_single_table_sql` then `marimo edit notebook_3_duckdb_marimo.py` | `data/sales.csv` |
-| 2 | `cd week1_db_concepts_sql_fundamentals/part2_aggregation_kpis` then `marimo edit notebook_1_marimo.py` (or `notebook_2_marimo.py`) | `data/sales_dataset.csv` |
+| 2 | `cd week1_db_concepts_sql_fundamentals/part2_aggregation_kpis` then `marimo edit notebook_1_marimo.py` (or `notebook_2_marimo.py`) | `data/sales_dataset.csv`; `notebook_1_marimo.py` also reads `../part1_single_table_sql/data/sales.csv` |
 
 ## Shared Dataset
 

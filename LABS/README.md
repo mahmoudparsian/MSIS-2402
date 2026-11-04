@@ -1,6 +1,6 @@
 # Labs
 
-[← Course home](../README.md) · **Labs — 10 sessions × 70 points**
+[← Course home](../README.md) · **Labs — 10 sessions × 70 points (Lab A 40 + Lab B 30)**
 
 Every class session has a hands-on lab. Labs are where you practice the
 session's SQL on real business questions, and they make up **700 of the
@@ -16,19 +16,23 @@ course's 1,000 points**.
 
 | When | What happens |
 |---|---|
-| **In class** — last ~40 minutes | The session's labs are published here. You start the lab, with the instructor available for questions |
-| **By 11:00 pm Pacific Time** the same day | Finish labs a and b and upload both to the Camino assignment **Session N Lab** |
-| **After the deadline** | Solutions — and, for most notebook labs, the in-class demo notebook — are added to the same session folder |
+| **In class** — last ~40 minutes | The session's labs are published here. You do **Lab A** with the instructor available for questions, and upload it to the Camino assignment **Session N Lab A** **before class ends** |
+| **By 11:59 pm Pacific Time** the same day | Finish **Lab B** and upload it to the Camino assignment **Session N Lab B** |
+| **After class** | Lab A solutions — and, for most notebook labs, the in-class demo notebook — are added to the same session folder |
+| **72 hours after the Lab B deadline** | Lab B solutions are added (after Lab B's late window closes) |
 
-**Three versions per session:**
+**Two graded labs per session, 6 tasks each:**
 
-| Version | What it is | Points | Submit? |
+| Lab | What it is | Points | Submit |
 |---|---|---:|---|
-| **a** | The core lab | 40 | **Required** |
-| **b** | A step more challenging | 30 | **Required** |
-| **c** | Optional extra practice. Starts from a raw CSV file in the session's folder that you load (and clean) yourself | not graded | No |
+| **A** | The core lab — practice of what was just demonstrated | 40 (Tasks 1–4: 7 each; Tasks 5–6: 6 each) | **In class**, before class ends — no late submission |
+| **B** | A step more challenging | 30 (5 per task) | By **11:59 pm Pacific Time** the same day |
 
-**What you submit:** your finished lab a and lab b files, renamed
+Each task is graded on its own. Students with OAE-approved extra time on
+timed tests get that extra time for Lab A —
+[details](../course_information/ASSIGNMENTS_and_GRADING.md#2-labs--how-each-session-works).
+
+**What you submit:** your Lab A and your finished Lab B files, renamed
 `lastname_firstname_` + the lab's file name — for example
 `lopez_maria_week1_lab1a_marimo.py` and `lopez_maria_week1_lab1b_marimo.py`.
 Each lab's first lines name its exact files. The full table (notebook,
@@ -41,12 +45,9 @@ MySQL, and web-app labs) is in
 
 | Sessions | Format | What you need |
 |---|---|---|
-| 1–6, and 9 (lab a) | [Marimo](https://marimo.io) notebook with DuckDB — each task has an empty SQL cell for your query | The core course software |
-| 7, 9 (lab b), and 10 | Markdown handout — you work in the `mysql` command-line client | MySQL with the course data loaded ([how](../datasets/oltp_database/mysql/README.md)) |
+| 1–6, and 9 (Lab A) | [Marimo](https://marimo.io) notebook with DuckDB — each task has an empty SQL cell for your query | The core course software |
+| 7, 9 (Lab B), and 10 | Markdown handout — you work in the `mysql` command-line client | MySQL with the course data loaded ([how](../datasets/oltp_database/mysql/README.md)) |
 | 8 | A small Python + DuckDB web application you modify (`shop_app_starter.py`), with a Markdown handout | The core course software |
-
-The **c** labs are Marimo notebooks, except Session 7's, which loads a CSV
-file into MySQL.
 
 ### Running a notebook lab
 
@@ -100,10 +101,10 @@ released.
 
 | Policy | In short |
 |---|---|
-| **Points** | 10 labs × 70 points = 700 (lab a 40 + lab b 30) |
+| **Points** | 10 sessions × 70 points = 700 (Lab A 40 + Lab B 30) |
 | **Lowest lab** | Replaced by the average of your other nine |
-| **Late work** | −7 points for each started 24 hours after 11:00 pm Pacific Time (by your last upload); a file more than 72 hours late scores 0 for its part |
-| **Absence** | A missed session's lab scores zero — the in-class start is part of the lab. Documented emergencies and approved absences: contact the instructor |
+| **Late work** | Lab A: none — it is submitted in class. Lab B: −3 points for each started 24 hours after 11:59 pm Pacific Time (by your last upload); more than 72 hours late scores 0 for Lab B |
+| **Absence** | A missed session's labs (A and B) score zero — the in-class lab is part of the session. Documented emergencies and approved absences: contact the instructor |
 | **Your own work** | Discussing SQL concepts is fine; sharing queries or notebooks is not |
 
 The full policy is in

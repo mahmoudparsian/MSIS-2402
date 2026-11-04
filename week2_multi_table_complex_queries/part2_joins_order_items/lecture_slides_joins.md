@@ -43,7 +43,8 @@ GROUP BY c.country;
 By the end of today:
 
 * Understand why joins exist
-* Use `INNER JOIN` and `LEFT JOIN`
+* Use `INNER JOIN`, `LEFT JOIN`, and `FULL OUTER JOIN`
+* Write a join with `USING` when the key names match
 * Avoid common join mistakes
 * Combine data for business insights
 
@@ -163,7 +164,30 @@ JOIN customers c
 
 ---
 
-# Slide 13 — 🔗 Multi-Table Join
+<style scoped>section { font-size: 25px; } pre { font-size: 21px; }</style>
+
+# Slide 13 — ✂️ Shortcut: `USING`
+
+When the key column has the **same name** in both tables:
+
+```sql
+SELECT *
+FROM sales s
+JOIN customers c
+  USING (customer_id);   -- same as ON s.customer_id = c.customer_id
+```
+
+| | `ON` | `USING` |
+|---|:---:|:---:|
+| Rows | 300 | 300 |
+| `customer_id` columns in `SELECT *` | **2** | **1** |
+
+👉 Same rows, shorter to write, and the key appears only once.
+⚠️ Only works when the names match — otherwise use `ON`.
+
+---
+
+# Slide 14 — 🔗 Multi-Table Join
 
 Find customers who bought a Laptop:
 
@@ -183,7 +207,7 @@ intentionally simplified so you can focus on the JOIN mechanics.)
 
 ---
 
-# Slide 14 — 💼 Business Meaning
+# Slide 15 — 💼 Business Meaning
 
 "Which customers bought a Laptop?"
 
@@ -195,7 +219,7 @@ Customer_3, Customer_22, Customer_55, Customer_4, Customer_12, ...
 
 ---
 
-# Slide 15 — 🔥 Derived Insight
+# Slide 16 — 🔥 Derived Insight
 
 ```sql
 SELECT s.order_id, 
@@ -212,7 +236,7 @@ JOIN products p
 
 ---
 
-# Slide 16 — 🔍 `LEFT JOIN`
+# Slide 17 — 🔍 `LEFT JOIN`
 
 ```sql
 SELECT c.customer_name, 
@@ -227,7 +251,7 @@ LEFT JOIN sales s
 
 ---
 
-# Slide 17 — 🧠 A Small Illustration
+# Slide 18 — 🧠 A Small Illustration
 
 3 customers, 3 sales rows — Cara has never bought anything:
 
@@ -250,7 +274,7 @@ WHERE s.order_id IS NULL;
 
 ---
 
-# Slide 18 — 💼 Real Use Case
+# Slide 19 — 💼 Real Use Case
 
 * Customer churn
 * Inactive users
@@ -265,7 +289,110 @@ non-empty result.
 
 ---
 
-# Slide 19 — 🔥 Join + Aggregation
+# Slide 20 — 🔄 `FULL OUTER JOIN`
+
+* `INNER JOIN` → only rows that match in **both** tables
+* `LEFT JOIN` → **all** rows from the left table
+* `FULL OUTER JOIN` → **all** rows from **both** tables;
+  `NULL` wherever the other side has no match
+
+💼 Use it to **reconcile two lists**: CRM vs. billing, orders vs. shipments,
+this month's customers vs. last month's.
+
+---
+
+<style scoped>section { font-size: 24px; } pre { font-size: 20px; }</style>
+
+# Slide 21 — Example: CRM vs. Billing
+
+```sql
+CREATE OR REPLACE TABLE crm_customers AS
+SELECT * FROM (VALUES (1, 'Alice'), (2, 'Bob'), (3, 'Cara'), (4, 'Dev'))
+    AS t(customer_id, name);
+
+CREATE OR REPLACE TABLE billing_accounts AS
+SELECT * FROM (VALUES (2, 'Basic'), (3, 'Pro'), (5, 'Pro'))
+    AS t(customer_id, plan);
+
+SELECT c.customer_id AS crm_id,
+       c.name,
+       b.customer_id AS billing_id,
+       b.plan
+FROM crm_customers AS c
+FULL OUTER JOIN billing_accounts AS b
+  ON c.customer_id = b.customer_id
+ORDER BY crm_id, billing_id;
+```
+
+---
+
+# Slide 22 — Example: CRM vs. Billing (cont.)
+
+| crm_id | name | billing_id | plan |
+|---:|---|---:|---|
+| 1 | Alice | `NULL` | `NULL` |
+| 2 | Bob | 2 | Basic |
+| 3 | Cara | 3 | Pro |
+| 4 | Dev | `NULL` | `NULL` |
+| `NULL` | `NULL` | 5 | Pro |
+
+* Alice and Dev are in the CRM but have **no billing account**
+* Customer 5 is **billed** but **not in the CRM**
+
+👉 A `LEFT JOIN` from either side would miss one of these problems.
+
+---
+
+<style scoped>section { font-size: 24px; } pre { font-size: 20px; }</style>
+
+# Slide 23 — Show Only the Problems
+
+```sql
+SELECT c.customer_id AS crm_id,
+       b.customer_id AS billing_id,
+       CASE
+           WHEN b.customer_id IS NULL THEN 'missing in billing'
+           ELSE 'missing in CRM'
+       END AS problem
+FROM crm_customers AS c
+FULL OUTER JOIN billing_accounts AS b
+  ON c.customer_id = b.customer_id
+WHERE c.customer_id IS NULL
+   OR b.customer_id IS NULL
+ORDER BY crm_id, billing_id;
+```
+
+| crm_id | billing_id | problem |
+|---:|---:|---|
+| 1 | `NULL` | missing in billing |
+| 4 | `NULL` | missing in billing |
+| `NULL` | 5 | missing in CRM |
+
+---
+
+<style scoped>section { font-size: 24px; } pre { font-size: 20px; }</style>
+
+# Slide 24 — ⚠️ MySQL Has No `FULL OUTER JOIN`
+
+In MySQL (Weeks 4–5) it is a syntax error (`ERROR 1064`).
+Combine two `LEFT JOIN`s — one from each side — with `UNION`:
+
+```sql
+SELECT c.customer_id AS crm_id, b.customer_id AS billing_id
+FROM crm_customers AS c
+LEFT JOIN billing_accounts AS b ON c.customer_id = b.customer_id
+UNION
+SELECT c.customer_id AS crm_id, b.customer_id AS billing_id
+FROM billing_accounts AS b
+LEFT JOIN crm_customers AS c ON c.customer_id = b.customer_id;
+```
+
+👉 Same 5 rows as the `FULL OUTER JOIN`. `UNION` is covered in this week's
+next deck (subqueries, CTEs, and set operations).
+
+---
+
+# Slide 25 — 🔥 Join + Aggregation
 
 ```sql
 SELECT c.customer_name,
@@ -284,7 +411,7 @@ Top result (real data): Customer_30 — $24,400.
 
 ---
 
-# Slide 20 — 🧠 Key Transition
+# Slide 26 — 🧠 Key Transition
 
 ## Joins → Aggregation
 
@@ -292,7 +419,7 @@ Top result (real data): Customer_30 — $24,400.
 
 ---
 
-# Slide 21 — 📊 Business Insight
+# Slide 27 — 📊 Business Insight
 
 * Top customers
 * Revenue concentration
@@ -300,7 +427,7 @@ Top result (real data): Customer_30 — $24,400.
 
 ---
 
-# Slide 22 — ⚠️ Another Common Mistake
+# Slide 28 — ⚠️ Another Common Mistake
 
 Forgetting `GROUP BY` after a join that mixes aggregate and
 non-aggregate columns:
@@ -321,7 +448,7 @@ or must be part of an aggregate function.
 
 ---
 
-# Slide 23 — 🧪 In-Class Exercise
+# Slide 29 — 🧪 In-Class Exercise
 
 Write queries for:
 
@@ -332,7 +459,7 @@ Write queries for:
 
 ---
 
-# Slide 24 — 💬 Discussion
+# Slide 30 — 💬 Discussion
 
 Ask:
 
@@ -342,7 +469,7 @@ Ask:
 
 ---
 
-# Slide 25 — 🔥 Advanced Thinking
+# Slide 31 — 🔥 Advanced Thinking
 
 👉 Pareto Principle:
 
@@ -350,13 +477,13 @@ Ask:
 
 ---
 
-# Slide 26 — 🎯 Most Important Idea (So Far)
+# Slide 32 — 🎯 Most Important Idea (So Far)
 
 SQL integrates data across tables → enables insight.
 
 ---
 
-# Slide 27 — 📦 A Bigger, Real-World Dataset
+# Slide 33 — 📦 A Bigger, Real-World Dataset
 
 Everything so far used a small teaching table (`sales`, 300 rows).
 
@@ -370,7 +497,7 @@ same one Week 3 completes with `stores`, `payments`, and `shipments`.
 
 ---
 
-# Slide 28 — Slide — Real Retail Data Model
+# Slide 34 — Slide — Real Retail Data Model
 
 Retail systems often store data in multiple tables:
 
@@ -383,7 +510,7 @@ This design avoids data duplication and enables detailed analytics.
 
 ---
 
-# Slide 29 — Transaction Tables
+# Slide 35 — Transaction Tables
 
 **`orders`**:
 
@@ -399,7 +526,7 @@ Each order can contain multiple items.
 
 ---
 
-# Slide 30 — Product Table
+# Slide 36 — Product Table
 
 **`products`**:
 
@@ -410,7 +537,7 @@ This table stores product attributes.
 
 ---
 
-# Slide 31 — Understanding Relationships
+# Slide 37 — Understanding Relationships
 
 ```
 orders → order_items
@@ -426,7 +553,7 @@ This lets us answer questions about:
 
 ---
 
-# Slide 32 — Example Join (Orders + Items)
+# Slide 38 — Example Join (Orders + Items)
 
 ```sql
 SELECT *
@@ -439,7 +566,7 @@ Shows which items belong to each order.
 
 ---
 
-# Slide 33 — Join with Products
+# Slide 39 — Join with Products
 
 ```sql
 SELECT *
@@ -452,7 +579,7 @@ Connects sales line items to product information.
 
 ---
 
-# Slide 34 — Multi-Table Join
+# Slide 40 — Multi-Table Join
 
 ```sql
 SELECT *
@@ -465,7 +592,7 @@ Now we can analyze sales by product.
 
 ---
 
-# Slide 35 — Sales by Category
+# Slide 41 — Sales by Category
 
 ```sql
 SELECT p.category, 
@@ -479,7 +606,7 @@ This calculates revenue by category.
 
 ---
 
-# Slide 36 — Orders per Customer
+# Slide 42 — Orders per Customer
 
 ```sql
 SELECT customer_id, 
@@ -492,7 +619,7 @@ Shows customer purchasing frequency.
 
 ---
 
-# Slide 37 — Top Selling Categories
+# Slide 43 — Top Selling Categories
 
 ```sql
 SELECT p.category, 
@@ -505,7 +632,7 @@ ORDER BY revenue DESC;
 
 ---
 
-# Slide 38 — Average Order-Item Size
+# Slide 44 — Average Order-Item Size
 
 ```sql
 SELECT AVG(sales_amount) AS avg_line_item_value
@@ -516,7 +643,7 @@ Shows the average value of a single line item (not a whole order).
 
 ---
 
-# Slide 39 — Customer Order Activity
+# Slide 45 — Customer Order Activity
 
 ```sql
 SELECT c.country, 
@@ -528,7 +655,7 @@ GROUP BY c.country;
 
 ---
 
-# Slide 40 — Revenue by Country
+# Slide 46 — Revenue by Country
 
 ```sql
 SELECT c.country, 
@@ -541,7 +668,7 @@ GROUP BY c.country;
 
 ---
 
-# Slide 41 — Top Products by Revenue
+# Slide 47 — Top Products by Revenue
 
 ```sql
 SELECT p.product_id, 
@@ -555,7 +682,7 @@ LIMIT 10;
 
 ---
 
-# Slide 42 — Business Insights
+# Slide 48 — Business Insights
 
 Using SQL we can now answer:
 
@@ -565,7 +692,7 @@ Using SQL we can now answer:
 
 ---
 
-# Slide 43 — Common Query Pattern
+# Slide 49 — Common Query Pattern
 
 ```sql
 SELECT dimension, 
@@ -581,11 +708,12 @@ business analytics.
 
 ---
 
-# Slide 44 — Week 2 Summary
+# Slide 50 — Week 2 Summary
 
 Today we learned:
 
-* `INNER JOIN` and `LEFT JOIN`
+* `INNER JOIN`, `LEFT JOIN`, and `FULL OUTER JOIN` (reconciling two lists)
+* `USING` as a shortcut for `ON` when the key names match
 * why the join condition (not just the `JOIN` keyword) determines
   correctness
 * multi-table joins across a bigger, real transaction schema
@@ -594,7 +722,7 @@ Today we learned:
 
 ---
 
-# Slide 45 — ➡️ Next: Decomposing Queries
+# Slide 51 — ➡️ Next: Decomposing Queries
 
 Questions?
 

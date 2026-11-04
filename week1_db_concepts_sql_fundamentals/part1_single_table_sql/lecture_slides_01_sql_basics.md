@@ -514,17 +514,59 @@ WHERE product_category = 'Electronics'
 
 ---
 
-# slide-40: ⚠️ Common Mistake
+<style scoped>section { font-size: 25px; } pre { font-size: 21px; }</style>
 
-Students confuse:
+# slide-40: ⚠️ `AND` Runs Before `OR`
 
-	•	AND vs OR
-	
-👉 Emphasize difference clearly
+*Goal: Electronics **or** Sports items priced over $400.*
+
+```sql
+SELECT sale_id, product_category, unit_price
+FROM sales
+WHERE product_category = 'Electronics'
+   OR product_category = 'Sports' AND unit_price > 400
+ORDER BY unit_price
+LIMIT 3;
+```
+
+| sale_id | product_category | unit_price |
+|---:|---|---:|
+| 8 | Electronics | 26.72 |
+| 35 | Electronics | 42.83 |
+| 11 | Electronics | 101.45 |
+
+❌ Electronics for **$26.72**? SQL read it as
+`Electronics` **OR** (`Sports` **AND** `> 400`) — **36 rows**, most of them wrong.
 
 ---
 
-# slide-41: Truth table
+<style scoped>section { font-size: 25px; } pre { font-size: 21px; }</style>
+
+# slide-41: ✅ Use Parentheses
+
+```sql
+SELECT sale_id, product_category, unit_price
+FROM sales
+WHERE (product_category = 'Electronics' OR product_category = 'Sports')
+  AND unit_price > 400
+ORDER BY unit_price
+LIMIT 3;
+```
+
+| sale_id | product_category | unit_price |
+|---:|---|---:|
+| 34 | Sports | 401.63 |
+| 55 | Sports | 422.56 |
+| 82 | Electronics | 433.45 |
+
+✅ **15 rows**, every one over $400.
+
+👉 **Rule:** `AND` is applied before `OR` (like × before + in math).
+When a `WHERE` mixes `AND` and `OR`, **always** add parentheses.
+
+---
+
+# slide-42: Truth table
 
 | A | B | A AND B | A OR B | NOT A | A XOR B |
 | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -535,7 +577,7 @@ Students confuse:
 
 ---
 
-# slide-42: `ORDER BY` Clause
+# slide-43: `ORDER BY` Clause
 
 #### `ORDER BY` sorts results: (`A -> Z`) (`1 -> 10`)
 
@@ -557,7 +599,7 @@ ORDER BY total_amount ASC;
 
 ---
 
-# slide-43: `ORDER BY` Clause (`DESC`)
+# slide-44: `ORDER BY` Clause (`DESC`)
 
 #### `ORDER BY` sorts results: (`Z -> A`)(`10 -> 1`)
 
@@ -571,7 +613,7 @@ ORDER BY total_amount DESC;
 
 ---
 
-# slide-44: `LIMIT` Clause
+# slide-45: `LIMIT` Clause
 
 LIMIT restricts output size.
 
@@ -585,7 +627,7 @@ LIMIT 10;
 
 ---
 
-# slide-45: `DISTINCT` Clause
+# slide-46: `DISTINCT` Clause
 
 `DISTINCT` removes duplicates.
 
@@ -598,7 +640,7 @@ FROM sales;
 
 ---
 
-# slide-46: Reading SQL in Plain English
+# slide-47: Reading SQL in Plain English
 
 Query:
 
@@ -617,7 +659,7 @@ Show the five highest sales where `quantity ≥ 2`.
 
 ---
 
-# slide-47: Business Questions We Can Answer
+# slide-48: Business Questions We Can Answer
 
 Example queries: **10 Largest Sales**
 
@@ -630,7 +672,7 @@ LIMIT 10;
 
 ---
 
-# slide-48: Common Beginner Mistakes
+# slide-49: Common Beginner Mistakes
 
 Typical mistakes:
 
@@ -649,7 +691,7 @@ WHERE quantity > 2;
 
 ---
 
-# slide-49: Why SQL Is Powerful
+# slide-50: Why SQL Is Powerful
 
 SQL lets us ask questions directly to data.
 
@@ -668,7 +710,7 @@ This immediately reveals the largest transactions.
 
 <style scoped>section { font-size: 22px; } pre, table { font-size: 18px; }</style>
 
-# slide-50: 🧮 Derived Column
+# slide-51: 🧮 Derived Column
 
 A **derived column** is computed from other columns in the same row.
 Give it a clear name with `AS`:
@@ -695,13 +737,13 @@ LIMIT 3;
 
 ---
 
-# slide-51: 💼 Business Insight
+# slide-52: 💼 Business Insight
 
 `Revenue = unit_price × quantity`
 
 ---
 
-# slide-52: 🔥 First KPI
+# slide-53: 🔥 First KPI
 
 👉 `line_value` = revenue per sale
 
@@ -709,7 +751,7 @@ LIMIT 3;
 
 <style scoped>section { font-size: 25px; } pre { font-size: 21px; }</style>
 
-# slide-53: 🏷️ Derived Labels with `CASE`
+# slide-54: 🏷️ Derived Labels with `CASE`
 
 `CASE` turns a value into a **label** — SQL's if / else-if / else:
 
@@ -736,7 +778,7 @@ LIMIT 5;
 
 ---
 
-# slide-54: 🧠 How `CASE` Reads
+# slide-55: 🧠 How `CASE` Reads
 
 * Checks each `WHEN` **top to bottom** and stops at the **first** true one
   * so `quantity = 1` never reaches `quantity <= 3`
@@ -750,7 +792,7 @@ the second? Decide (`<` vs. `<=`), then test a row right at the edge.
 
 ---
 
-# slide-55: 📊 Quick Visualization (Concept)
+# slide-56: 📊 Quick Visualization (Concept)
 
 ### SQL → extract
 
@@ -761,7 +803,7 @@ the second? Decide (`<` vs. `<=`), then test a row right at the edge.
 
 ---
 
-# slide-56: 🧪 In-Class Exercise
+# slide-57: 🧪 In-Class Exercise
 
 Write queries for:
 
@@ -773,7 +815,7 @@ Write queries for:
 ```
 ---
 
-# slide-57: 💬 Discussion
+# slide-58: 💬 Discussion
 
 Ask:
 
@@ -783,7 +825,7 @@ Ask:
 
 ---
 
-# slide-58: 🧠 What did we learn?
+# slide-59: 🧠 What did we learn?
 
 * `SELECT`
 * `FROM`
@@ -797,13 +839,13 @@ Ask:
 
 ---
 
-# slide-59: 🎯 Most Important Idea
+# slide-60: 🎯 Most Important Idea
 
 SQL = asking business questions
 
 ---
 
-# slide-60: 🚀 Next Session
+# slide-61: 🚀 Next Session
 
 We move to:
 
@@ -815,7 +857,7 @@ We move to:
 
 ---
 
-# slide-61: Week‑1 Summary
+# slide-62: Week‑1 Summary
 
 Today we learned:
 
@@ -827,7 +869,7 @@ Today we learned:
 
 ---
 
-# slide-62: 🙌 End of Deck 1
+# slide-63: 🙌 End of Deck 1
 
 Questions?
 
