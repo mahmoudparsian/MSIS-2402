@@ -130,6 +130,8 @@ has computed each group's total.
 
 ---
 
+<style scoped>section { font-size: 24px; } pre { font-size: 19px; } table { font-size: 20px; }</style>
+
 # 🔢 `ROW_NUMBER()`
 
 `ROW_NUMBER()` assigns a unique, sequential integer to each row —
@@ -137,10 +139,23 @@ starting at 1 — in the order you specify. Unlike `RANK()`, it never
 produces ties.
 
 ```sql
-SELECT *,
-       ROW_NUMBER() OVER (ORDER BY sales_amount DESC) AS rn
-FROM sales;
+SELECT order_id, product, sales_amount,
+       ROW_NUMBER() OVER (ORDER BY sales_amount DESC, order_id) AS rn
+FROM sales
+ORDER BY rn
+LIMIT 5;
 ```
+
+| order_id | product | sales_amount | rn |
+|---:|---|---:|---:|
+| 112 | Laptop | 6,295 | 1 |
+| 86 | Laptop | 6,245 | 2 |
+| 28 | Laptop | 6,135 | 3 |
+| 87 | Laptop | 5,990 | 4 |
+| 79 | Laptop | 5,980 | 5 |
+
+👉 `order_id` is the **tie-breaker**: if two orders had the same
+`sales_amount`, it decides which one gets the lower number.
 
 ---
 
@@ -151,6 +166,68 @@ FROM sales;
 | `RANK()` | ties allowed, **gaps** after a tie (1, 2, 2, 4) |
 | `DENSE_RANK()` | ties allowed, **no gaps** (1, 2, 2, 3) |
 | `ROW_NUMBER()` | always unique, no ties (1, 2, 3, 4) |
+
+---
+
+<style scoped>section { font-size: 24px; } pre { font-size: 19px; } table { font-size: 20px; }</style>
+
+# 🧪 All Three on Ties — a Small Illustration
+
+Eight stores; three are tied at 750 and two at 500:
+
+```sql
+CREATE OR REPLACE TABLE store_sales AS
+SELECT * FROM (VALUES
+    ('S1', 'North', 900), ('S2', 'North', 750),
+    ('S3', 'North', 750), ('S4', 'North', 600),
+    ('S5', 'South', 980), ('S6', 'South', 750),
+    ('S7', 'South', 500), ('S8', 'South', 500)
+) AS t(store, region, revenue);
+
+SELECT store, revenue,
+       ROW_NUMBER() OVER (ORDER BY revenue DESC, store) AS row_num,
+       RANK()       OVER (ORDER BY revenue DESC)        AS rnk,
+       DENSE_RANK() OVER (ORDER BY revenue DESC)        AS dense_rnk
+FROM store_sales
+ORDER BY row_num;
+```
+
+---
+
+# 🧪 All Three on Ties — Result
+
+| store | revenue | row_num | rnk | dense_rnk |
+|---|---:|---:|---:|---:|
+| S5 | 980 | 1 | 1 | 1 |
+| S1 | 900 | 2 | 2 | 2 |
+| S2 | 750 | 3 | 3 | 3 |
+| S3 | 750 | 4 | 3 | 3 |
+| S6 | 750 | 5 | 3 | 3 |
+| S4 | 600 | 6 | 6 | 4 |
+| S7 | 500 | 7 | 7 | 5 |
+| S8 | 500 | 8 | 7 | 5 |
+
+---
+
+# 🧠 Reading the Three Columns
+
+* `row_num` — **1 to 8**, always different; ties are broken by `store`
+* `rnk` — S2, S3, S6 share **3**; the next store gets **6** (a gap)
+* `dense_rnk` — S2, S3, S6 share **3**; the next store gets **4** (no gap)
+
+⚠️ **`ROW_NUMBER` needs a tie-breaker.** Without `, store` in its
+`ORDER BY`, S2, S3, and S6 could get 3, 4, 5 in **any** order — and a
+different order on the next run.
+
+---
+
+# 🎯 Which One When?
+
+| The question says… | Use |
+|---|---|
+| "exactly N per group", "the first / latest order" | `ROW_NUMBER()` + a tie-breaker |
+| "the top N, **including ties**" (competition ranking) | `RANK()` |
+| "the Nth-highest **value**", "the top N price levels" | `DENSE_RANK()` |
 
 ---
 
@@ -212,6 +289,134 @@ what `PARTITION BY` does.
 Without `PARTITION BY`, "Clothing" being #1 in Australia would be
 invisible — it might rank #5 or #6 globally, hidden behind bigger
 countries' totals. `PARTITION BY` gives every group its own ranking.
+
+---
+
+<style scoped>section { font-size: 24px; } pre { font-size: 19px; } table { font-size: 20px; }</style>
+
+# 🏆 Top 2 Orders per Product
+
+Rank inside a CTE, then filter **outside** it:
+
+```sql
+WITH ranked AS (
+    SELECT product, order_id, sales_amount,
+           ROW_NUMBER() OVER (PARTITION BY product
+                              ORDER BY sales_amount DESC, order_id) AS rn
+    FROM sales
+)
+SELECT product, order_id, sales_amount, rn
+FROM ranked
+WHERE rn <= 2
+ORDER BY product, rn;
+```
+
+---
+
+# 🏆 Top 2 Orders per Product — Result
+
+| product | order_id | sales_amount | rn |
+|---|---:|---:|---:|
+| Laptop | 112 | 6,295 | 1 |
+| Laptop | 86 | 6,245 | 2 |
+| Phone | 60 | 4,485 | 1 |
+| Phone | 138 | 4,480 | 2 |
+| Tablet | 50 | 1,930 | 1 |
+| Tablet | 56 | 1,568 | 2 |
+| Watch | 127 | 1,415 | 1 |
+| Watch | 59 | 1,325 | 2 |
+
+---
+
+# 💡 DuckDB Shortcut: `QUALIFY`
+
+`QUALIFY` filters a window result directly — no CTE needed
+(same 8 rows as the CTE version):
+
+```sql
+SELECT product, order_id, sales_amount
+FROM sales
+QUALIFY ROW_NUMBER() OVER (PARTITION BY product
+                           ORDER BY sales_amount DESC, order_id) <= 2;
+```
+
+---
+
+# ⚠️ `WHERE` Cannot See a Rank
+
+```sql
+SELECT store, revenue,
+       RANK() OVER (ORDER BY revenue DESC) AS rnk
+FROM store_sales
+WHERE rnk <= 3;
+```
+
+```console
+Binder Error: WHERE clause cannot contain window functions!
+```
+
+👉 `WHERE` runs **before** window functions are computed. Rank in a
+CTE (or use `QUALIFY`), then filter.
+
+---
+
+<style scoped>section { font-size: 24px; } pre { font-size: 19px; } table { font-size: 20px; }</style>
+
+# 🏆 Top 2 per Region — Keep the Ties with `RANK`
+
+```sql
+WITH ranked AS (
+    SELECT store, region, revenue,
+           RANK() OVER (PARTITION BY region ORDER BY revenue DESC) AS rnk
+    FROM store_sales
+)
+SELECT region, store, revenue, rnk
+FROM ranked
+WHERE rnk <= 2
+ORDER BY region, rnk, store;
+```
+
+---
+
+# 🏆 Top 2 per Region — Result
+
+| region | store | revenue | rnk |
+|---|---|---:|---:|
+| North | S1 | 900 | 1 |
+| North | S2 | 750 | 2 |
+| North | S3 | 750 | 2 |
+| South | S5 | 980 | 1 |
+| South | S6 | 750 | 2 |
+
+👉 **5 rows**: North keeps **both** stores tied at 750. `ROW_NUMBER`
+would return exactly 4 and drop one of them.
+
+---
+
+<style scoped>section { font-size: 24px; } pre { font-size: 19px; } table { font-size: 20px; }</style>
+
+# 🥈 The Nth-Highest **Value** — `DENSE_RANK`
+
+*"Which store has the 4th-highest revenue?"*
+
+```sql
+WITH ranked AS (
+    SELECT store, revenue,
+           DENSE_RANK() OVER (ORDER BY revenue DESC) AS revenue_level
+    FROM store_sales
+)
+SELECT store, revenue
+FROM ranked
+WHERE revenue_level = 4
+ORDER BY store;
+```
+
+| store | revenue |
+|---|---:|
+| S4 | 600 |
+
+With `RANK()` instead, `= 4` returns **no rows** — the ranks jump from
+3 to 6 after the three-way tie.
 
 ---
 

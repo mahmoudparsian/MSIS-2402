@@ -21,7 +21,8 @@
 ## Session 5 — Operational Databases and Window Functions
 
 **Topics:** the full 7-table operational schema · data-quality checks and
-deduplication · window functions (`ROW_NUMBER`, `RANK`, `DENSE_RANK`) ·
+deduplication · window functions · ranking with `ROW_NUMBER`, `RANK`, and
+`DENSE_RANK` (ties, top N per group, the Nth-highest value, `QUALIFY`) ·
 trends and segmentation
 
 | File | What it is |
