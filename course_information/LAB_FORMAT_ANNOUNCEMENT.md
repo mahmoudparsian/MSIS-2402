@@ -11,7 +11,7 @@ your 1,000 points**. Here is how they work. Please read this before Session 1.
 
 > **If you read an earlier version of this repository:** the labs now have
 > a new format. Lab A is now **finished in class**, Lab B is due at
-> **11:59 pm** (not 11:00 pm), every lab has exactly **6 tasks**, and the
+> **11:59 pm the day after class**, every lab has exactly **6 tasks**, and the
 > optional **c** labs are gone.
 
 ---
@@ -24,7 +24,7 @@ Every class session has two graded labs. Each lab has **6 tasks**.
 |---|---|---|
 | **What it is** | The core lab — practice what you just saw in the lecture and demo | A step more challenging — use the session's SQL on new questions |
 | **When you do it** | **In class**, in the last ~40 minutes | **After class** |
-| **Deadline** | **Before class ends** | **11:59 pm Pacific Time**, the same day |
+| **Deadline** | **Before class ends** | **11:59 pm Pacific Time, the day after class** |
 | **Points** | **40** — Tasks 1–4: 7 points each; Tasks 5–6: 6 points each | **30** — 5 points per task |
 | **Submit on Camino** | assignment **Session N Lab A** | assignment **Session N Lab B** |
 | **Late?** | Not possible — the assignment closes when class ends | −3 points for each started 24 hours; more than 72 hours late = 0 |
@@ -39,7 +39,7 @@ your other nine.
 |---|---|
 | First ~55 minutes | Lecture and live demo |
 | Last ~40 minutes | **Lab A** in class — the instructor is there to help |
-| By **11:59 pm Pacific Time** | Finish and submit **Lab B** |
+| By **11:59 pm Pacific Time the next day** | Finish and submit **Lab B** |
 
 ## Lab A — in class
 
@@ -54,12 +54,16 @@ your other nine.
   OAE letter **before Session 1**, and Camino will stay open longer for you
   in every session.
 
-## Lab B — by 11:59 pm
+## Lab B — by 11:59 pm the day after class
 
 - Lab B is a step more challenging than Lab A.
+- Class meets Tuesday and Thursday, 7:35–9:10 pm. Lab B for a **Tuesday**
+  session is due **Wednesday** at 11:59 pm; for a **Thursday** session, it is
+  due **Friday** at 11:59 pm. That gives you a full day after class.
 - You may re-upload until the deadline. Your **last** upload counts.
-- Late Lab B: **−3 points for each started 24 hours** after 11:59 pm.
-  For example, an upload at 9:00 am the next day loses 3 points. After 72
+- Late Lab B: **−3 points for each started 24 hours** after the deadline.
+  For example, for a Tuesday session, an upload at 9:00 am Thursday loses
+  3 points. After 72
   hours, Lab B scores 0.
 
 ## After the Deadlines

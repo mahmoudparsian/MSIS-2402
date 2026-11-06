@@ -416,7 +416,7 @@ SQL becomes a **data analysis tool**, not just a query language.
 |---|---|
 | First ~55 minutes | Lecture and live demo |
 | Last ~40 minutes | **Lab A** in class — submit before class ends |
-| By **11:59 pm Pacific Time** | Finish and submit **Lab B** on Camino |
+| By **11:59 pm Pacific Time the next day** | Finish and submit **Lab B** on Camino |
 
 Every session has a **Lab A** (core, 40 points, 6 tasks, done in class) and a
 **Lab B** (a step more challenging, 30 points, 6 tasks) — published in the

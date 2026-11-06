@@ -68,7 +68,7 @@ and recovery
 Each session's labs are published in [`LABS/`](../LABS/) during class — a
 **Lab A** (core, 40 points, 6 tasks), done and submitted on Camino **before
 class ends**, and a **Lab B** (a step more challenging, 30 points, 6 tasks),
-due by **11:59 pm Pacific Time** that day ([how](../course_information/ASSIGNMENTS_and_GRADING.md#3-how-to-submit-a-lab)).
+due by **11:59 pm Pacific Time** the day after class ([how](../course_information/ASSIGNMENTS_and_GRADING.md#3-how-to-submit-a-lab)).
 Solutions are added after the deadlines.
 
 ## Class Discussions

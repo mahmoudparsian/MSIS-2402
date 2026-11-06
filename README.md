@@ -95,7 +95,7 @@ The five weeks follow the department's
 |---|---|
 | First ~55 minutes | Lecture and live demo |
 | Last ~40 minutes | **Lab A** in class, with the instructor available — submit it before class ends |
-| By **11:59 pm Pacific Time** the same day | Finish and submit **Lab B** on Camino |
+| By **11:59 pm Pacific Time the day after class** (Wednesday for a Tuesday session, Friday for a Thursday session) | Finish and submit **Lab B** on Camino |
 
 ---
 
@@ -109,7 +109,7 @@ The five weeks follow the department's
 
 - Each session has a **Lab A** (core, 40 points, 6 tasks — done and
   submitted **in class**) and a **Lab B** (a step more challenging,
-  30 points, 6 tasks — due **11:59 pm Pacific Time** the same day).
+  30 points, 6 tasks — due **11:59 pm Pacific Time** the day after class).
 - Labs are published in [`LABS/`](LABS/) at the start of each lab block;
   Lab A solutions are added after class, Lab B solutions after its late
   window closes.
@@ -211,7 +211,7 @@ All in [`course_information/`](course_information/):
 | [`DISCUSSIONS_README.md`](course_information/DISCUSSIONS_README.md) | How the class discussions work |
 | [`ACADEMIC_CONDUCT.md`](course_information/ACADEMIC_CONDUCT.md) | Academic integrity expectations |
 | [`QUESTIONS_and_OFFICE_HOURS.md`](course_information/QUESTIONS_and_OFFICE_HOURS.md) | How to get help; office hours (days, times, room; the Zoom link is on Camino) |
-| [`LAB_FORMAT_ANNOUNCEMENT.md`](course_information/LAB_FORMAT_ANNOUNCEMENT.md) | **Announcement:** how the labs work — Lab A in class, Lab B by 11:59 pm, 6 tasks each |
+| [`LAB_FORMAT_ANNOUNCEMENT.md`](course_information/LAB_FORMAT_ANNOUNCEMENT.md) | **Announcement:** how the labs work — Lab A in class, Lab B by 11:59 pm the next day, 6 tasks each |
 | [`LAPTOP.md`](course_information/LAPTOP.md) | Laptop requirement for in-class labs |
 | [`REQUIRED_SOFTWARE.md`](course_information/REQUIRED_SOFTWARE.md) | Every tool used in the course and why |
 | [`installing_duckdb_on_macbook.md`](course_information/installing_duckdb_on_macbook.md) | DuckDB install guide — macOS |

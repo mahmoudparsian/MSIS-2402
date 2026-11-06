@@ -7,7 +7,7 @@
 Every class session ends with that session's **Lab A**: you do it in the
 last ~40 minutes of class, with the instructor available for questions, and
 submit it on Camino before class ends; **Lab B** is due by **11:59 pm Pacific
-Time** the same day (see
+Time** the day after class (see
 [`ASSIGNMENTS_and_GRADING.md`](ASSIGNMENTS_and_GRADING.md) §2–3). You need a
 working laptop with you every session.
 
