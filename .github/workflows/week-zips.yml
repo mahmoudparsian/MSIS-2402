@@ -1,0 +1,77 @@
+# Rebuild the ZIP downloads (one per week, one per released session's labs)
+# after every push that touches a week folder, LABS/, or the shared dataset,
+# and attach them to the "weekly-zips" GitHub Release. Students download from
+# links like:
+#   https://github.com/mahmoudparsian/MSIS-2402/releases/download/weekly-zips/week1_db_concepts_sql_fundamentals.zip
+#   https://github.com/mahmoudparsian/MSIS-2402/releases/download/weekly-zips/session01-labs.zip
+name: Build week ZIPs
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "week1_*/**"
+      - "week2_*/**"
+      - "week3_*/**"
+      - "week4_*/**"
+      - "week5_*/**"
+      - "LABS/**"
+      - "datasets/oltp_database/**"
+      - ".github/scripts/build_week_zips.sh"
+      - ".github/workflows/week-zips.yml"
+  workflow_dispatch:   # adds a "Run workflow" button on the Actions tab
+
+permissions:
+  contents: write      # needed to create/update the release
+
+concurrency:
+  group: week-zips
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build the ZIPs
+        run: bash .github/scripts/build_week_zips.sh dist
+
+      - name: Upload ZIPs to the "weekly-zips" release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if ! gh release view weekly-zips >/dev/null 2>&1; then
+            gh release create weekly-zips \
+              --title "Course folders (ZIP downloads)" \
+              --notes "Created by the Build week ZIPs workflow." \
+              --latest=false
+          fi
+          gh release upload weekly-zips dist/*.zip --clobber
+
+          # Delete ZIPs that no longer have a source folder (a renamed week,
+          # or a LABS/ session folder that was removed), so an old link fails
+          # instead of serving out-of-date files.
+          for asset in $(gh release view weekly-zips --json assets --jq '.assets[].name'); do
+            if [ ! -f "dist/$asset" ]; then
+              echo "deleting stale asset $asset"
+              gh release delete-asset weekly-zips "$asset" --yes
+            fi
+          done
+
+          # GitHub always adds "Source code (zip/tar.gz)" to a release and builds
+          # them from the tag's commit. Move the tag to this commit so those two
+          # stay current too.
+          git tag -f weekly-zips "$GITHUB_SHA"
+          git push -f origin refs/tags/weekly-zips
+
+          cat > notes.md <<NOTES
+          ⬇️ **Download a \`week…\` ZIP (lectures, notebooks, discussions) or a \`sessionNN-labs.zip\` (that session's labs, once released).**
+
+          Ignore "Source code (zip)" and "Source code (tar.gz)". GitHub adds those automatically, and they hold the whole repository.
+
+          Every ZIP also contains \`datasets/oltp_database/\`, so its notebooks run on their own. How to unzip and run: [DOWNLOADING_COURSE_FILES.md](https://github.com/mahmoudparsian/MSIS-2402/blob/main/course_information/DOWNLOADING_COURSE_FILES.md).
+
+          Last updated: $(date -u '+%Y-%m-%d %H:%M UTC') from commit ${GITHUB_SHA::7}.
+          NOTES
+          gh release edit weekly-zips --notes-file notes.md

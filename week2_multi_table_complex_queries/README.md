@@ -2,6 +2,8 @@
 
 [← Week 1](../week1_db_concepts_sql_fundamentals/README.md) · [Course home](../README.md) · **Week 2 of 5** · [Week 3 →](../week3_sql_for_analytics/README.md)
 
+⬇️ **No git?** Download this week as one ZIP (with the course data): [`week2_multi_table_complex_queries.zip`](https://github.com/mahmoudparsian/MSIS-2402/releases/download/weekly-zips/week2_multi_table_complex_queries.zip) — [how to unzip and run](../course_information/DOWNLOADING_COURSE_FILES.md)
+
 > This module develops students' ability to work with related data across
 > multiple tables and to solve more complex information needs using SQL.
 > Students learn strategies for combining, structuring, and decomposing

@@ -2,6 +2,8 @@
 
 [← Week 3](../week3_sql_for_analytics/README.md) · [Course home](../README.md) · **Week 4 of 5** · [Week 5 →](../week5_modern_data_systems/README.md)
 
+⬇️ **No git?** Download this week as one ZIP (with the course data): [`week4_web_db_applications.zip`](https://github.com/mahmoudparsian/MSIS-2402/releases/download/weekly-zips/week4_web_db_applications.zip) — [how to unzip and run](../course_information/DOWNLOADING_COURSE_FILES.md)
+
 > This module introduces the role of databases in web and other modern
 > applications. Students develop a broad understanding of application
 > architecture and the relationship among user interfaces, application

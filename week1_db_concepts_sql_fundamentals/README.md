@@ -2,6 +2,8 @@
 
 [← Course home](../README.md) · **Week 1 of 5** · [Week 2 →](../week2_multi_table_complex_queries/README.md)
 
+⬇️ **No git?** Download this week as one ZIP (with the course data): [`week1_db_concepts_sql_fundamentals.zip`](https://github.com/mahmoudparsian/MSIS-2402/releases/download/weekly-zips/week1_db_concepts_sql_fundamentals.zip) — [how to unzip and run](../course_information/DOWNLOADING_COURSE_FILES.md)
+
 > This module introduces the foundations of relational databases and SQL.
 > Students learn how relational data is organized and develop basic skills
 > for creating, retrieving, filtering, summarizing, and modifying data. The

@@ -25,7 +25,7 @@ applies, and the instructor will correct this page.
 | **Classroom** | *To be announced on Camino* <!-- TODO(syllabus): room --> |
 | **Prerequisite** | None |
 | **Learning management system** | Camino (Canvas) — lab submissions, Final Exam, announcements, Zoom link |
-| **Course materials** | Course repository: <https://github.com/mahmoudparsian/MSIS-2402> |
+| **Course materials** | Course repository: <https://github.com/mahmoudparsian/MSIS-2402> — or one ZIP per week and per session's labs ([`DOWNLOADING_COURSE_FILES.md`](DOWNLOADING_COURSE_FILES.md)) |
 | **Follow-on course** | MSIS-2407 — <https://github.com/mahmoudparsian/MSIS-2407> |
 
 ### Instructor

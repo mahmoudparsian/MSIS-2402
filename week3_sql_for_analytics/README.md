@@ -2,6 +2,8 @@
 
 [← Week 2](../week2_multi_table_complex_queries/README.md) · [Course home](../README.md) · **Week 3 of 5** · [Week 4 →](../week4_web_db_applications/README.md)
 
+⬇️ **No git?** Download this week as one ZIP (with the course data): [`week3_sql_for_analytics.zip`](https://github.com/mahmoudparsian/MSIS-2402/releases/download/weekly-zips/week3_sql_for_analytics.zip) — [how to unzip and run](../course_information/DOWNLOADING_COURSE_FILES.md)
+
 > This module explores how SQL can be used for contemporary data analysis.
 > Students apply SQL to transform, summarize, compare, and analyze data and
 > are introduced to more advanced analytical capabilities of modern

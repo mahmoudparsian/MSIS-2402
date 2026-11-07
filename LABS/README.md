@@ -10,6 +10,10 @@ course's 1,000 points**.
 > during class, at the start of the lab block. Before Session 1 it holds only
 > this page.
 
+⬇️ **No git?** Each released session is also one ZIP (`session01-labs.zip` …
+`session10-labs.zip`, with the course data) —
+[links and steps](../course_information/DOWNLOADING_COURSE_FILES.md#-labs--one-zip-per-session).
+
 ---
 
 ## How a Lab Works

@@ -2,6 +2,8 @@
 
 [← Week 4](../week4_web_db_applications/README.md) · [Course home](../README.md) · **Week 5 of 5**
 
+⬇️ **No git?** Download this week as one ZIP (with the course data): [`week5_modern_data_systems.zip`](https://github.com/mahmoudparsian/MSIS-2402/releases/download/weekly-zips/week5_modern_data_systems.zip) — [how to unzip and run](../course_information/DOWNLOADING_COURSE_FILES.md)
+
 > This module broadens the course beyond SQL and relational databases to
 > introduce the modern data landscape and practical database management
 > considerations. Students develop general awareness of different types of

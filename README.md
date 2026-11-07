@@ -138,9 +138,11 @@ in [`ASSIGNMENTS_and_GRADING.md`](course_information/ASSIGNMENTS_and_GRADING.md)
    [`5_weeks_outline/`](5_weeks_outline/README.md) — `sql_notebook_01.py` is the
    best first notebook to open.
 
-**Getting the course files:** download this repository as a ZIP from GitHub
-(**Code → Download ZIP**), or — optionally — clone it with Git
-([guide](tutorials/git/README.md)). Download again (or `git pull`) each
+**Getting the course files:** download **one ZIP per week and one per
+session's labs** — each includes the course data
+([links and steps](course_information/DOWNLOADING_COURSE_FILES.md)); or
+download the whole repository (**Code → Download ZIP**); or — optionally —
+clone it with Git ([guide](tutorials/git/README.md)) and `git pull` each
 session to pick up newly released labs.
 
 ---
@@ -213,6 +215,7 @@ All in [`course_information/`](course_information/):
 | [`ACADEMIC_CONDUCT.md`](course_information/ACADEMIC_CONDUCT.md) | Academic integrity expectations |
 | [`QUESTIONS_and_OFFICE_HOURS.md`](course_information/QUESTIONS_and_OFFICE_HOURS.md) | How to get help; office hours (days, times, room; the Zoom link is on Camino) |
 | [`LAB_FORMAT_ANNOUNCEMENT.md`](course_information/LAB_FORMAT_ANNOUNCEMENT.md) | **Announcement:** how the labs work — Lab A in class, Lab B by 11:59 pm the next day, 6 tasks each |
+| [`DOWNLOADING_COURSE_FILES.md`](course_information/DOWNLOADING_COURSE_FILES.md) | ZIP downloads — one per week, one per session's labs, no git needed |
 | [`LAPTOP.md`](course_information/LAPTOP.md) | Laptop requirement for in-class labs |
 | [`REQUIRED_SOFTWARE.md`](course_information/REQUIRED_SOFTWARE.md) | Every tool used in the course and why |
 | [`installing_duckdb_on_macbook.md`](course_information/installing_duckdb_on_macbook.md) | DuckDB install guide — macOS |
