@@ -158,9 +158,9 @@ def _(con, mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ### Basic Query 4: High-Value Orders (Revenue > $5,000)
+    ### Basic Query 4: High-Value Orders (Revenue > $3,000)
 
-    **What are we doing?** We find orders where the total revenue exceeds $5,000, sorted from highest to lowest. This helps identify the most valuable individual transactions.
+    **What are we doing?** We find orders where the total revenue exceeds $3,000 (1,363 orders; the largest is $3,999.50), sorted from highest to lowest, and show the top 15. This helps identify the most valuable individual transactions.
     """)
     return
 

@@ -68,15 +68,15 @@ def _(mo):
     mo.md(r"""
     ## Step 1: Load CSV and Create DuckDB Database
 
-    We read the CSV file  and load it into a 
-    persistent DuckDB database file called .
+    We read the CSV file `shopify_sales_dataset_ml_eda.csv` and load it into a
+    persistent DuckDB database file called `shopify_sales.duckdb`.
 
     DuckDB is an in-process analytical database that excels at:
     - Fast analytical queries on columnar data
     - SQL-based analysis without needing a server
     - Direct CSV/Parquet ingestion
 
-    We use  which automatically detects column types, delimiters, and headers.
+    We use `read_csv_auto()`, which automatically detects column types, delimiters, and headers.
     """)
     return
 
@@ -131,20 +131,19 @@ def _(mo):
 
     ### How We Dedup in DuckDB
 
-    We use a **window function** approach with :
+    We use `SELECT DISTINCT *`: it keeps **one copy** of every distinct row, so
+    exact duplicates disappear. To count them, compare the row count before
+    (`COUNT(*)`) with the number of distinct rows
+    (`SELECT COUNT(*) FROM (SELECT DISTINCT * FROM sales)`).
 
-    1. **Partition** rows by ALL columns — identical rows land in the same partition
-    2. **Number** them within each partition using 
-    3. **Keep only** the first occurrence (row_number = 1), effectively dropping duplicates
+    A window-function alternative does the same job and also lets you choose
+    *which* copy to keep:
 
-    This is equivalent to  but gives us the ability to count 
-    how many duplicates were removed.
+    1. **Partition** rows by all columns — identical rows land in the same partition
+    2. **Number** them within each partition with `ROW_NUMBER()`
+    3. **Keep only** `row_number = 1`
 
-
-
-    An alternative simpler approach is:
-
-    Both produce the same result. We use  for simplicity below.
+    Both give the same result here; we use `SELECT DISTINCT *` below because it is simpler.
     """)
     return
 
@@ -179,10 +178,10 @@ def _(mo):
     mo.md(r"""
     ## Step 3: Handle Missing/NULL order_id Records
 
-    Records without an  cannot be reliably linked to a transaction.
-    Rather than deleting them, we move them to a separate  
-    table for further review. This preserves data integrity while keeping the 
-    main  table clean for analysis.
+    Records without an `order_id` cannot be reliably linked to a transaction.
+    Rather than deleting them, we move them to a separate `investigate_records`
+    table for further review. This preserves data integrity while keeping the
+    main `sales` table clean for analysis.
     """)
     return
 

@@ -2,8 +2,12 @@
 
 **MSIS-2402 · Week 3, Part 1 — Operational Database Analysis**
 
-210,035 New York City taxi rides from January 2015, with **real timestamps** — which
-makes this one of only two stories here that can teach time-based analysis.
+210,035 New York City taxi rides from **January 1, 2015, 00:00–14:59** (the first 15
+hours of New Year's Day), with **real timestamps** — which makes this one of only two
+stories here that can teach time-based analysis (by hour; all rides are on one day).
+
+> The CSV writes dates as `1/1/15 0:11` (month/day/2-digit year). The notebook loads it
+> with `timestampformat = '%m/%d/%y %H:%M'`; without that, DuckDB reads the year as 1.
 
 ---
 

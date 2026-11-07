@@ -20,7 +20,8 @@ def _(mo):
     ## MSIS-2402 — Database Management Systems: Fundamentals of SQL
 
     This notebook uses **DuckDB** to explore 210,035
-    NYC yellow-taxi trips from January 2015.
+    NYC yellow-taxi trips from **January 1, 2015, 00:00–14:59** —
+    the first 15 hours of New Year's Day.
 
     Each section introduces a SQL concept, shows the
     query, displays the result, and (where helpful)
@@ -110,7 +111,8 @@ def _(con):
     # ── 1b  Import CSV into a raw staging table ──────────────────────────────────
     con.execute("""
         CREATE OR REPLACE TABLE rides_raw AS
-        SELECT * FROM read_csv_auto('taxi.csv', header=True);
+        SELECT * FROM read_csv_auto('taxi.csv', header=True,
+                                    timestampformat = '%m/%d/%y %H:%M');
     """)
     _count = con.execute("SELECT COUNT(*) FROM rides_raw").fetchall()[0][0]
     print(f"Imported {_count:,} rows into rides_raw")
@@ -121,8 +123,9 @@ def _(con):
 def _(con):
     # ── 1c  Rename columns, parse dates, add derived columns ──────────────────────
     #
-    # NOTE: DuckDB's read_csv_auto already parsed the datetime columns as TIMESTAMP,
-    # so we use them directly — no strptime() needed.
+    # NOTE: the CSV writes dates as month/day/2-digit-year (e.g. 1/1/15 0:11).
+    # Without timestampformat in step 1b, DuckDB guesses wrong and reads them as
+    # year 1. With it, the datetime columns are proper TIMESTAMPs we can use directly.
     con.execute("""
         CREATE OR REPLACE TABLE rides AS
         SELECT
