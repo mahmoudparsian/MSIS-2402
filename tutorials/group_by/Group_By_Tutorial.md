@@ -1,442 +1,485 @@
-# GROUP BY Tutorial 101
+# `GROUP BY` Tutorial 101
 
-* Database Environment: DuckDB
-* Last updated: May 25, 2026
+[← Tutorials](../README.md) · **`GROUP BY` tutorial 101** · [Notebook version](Group_By_Notebook.py) · [`GROUP BY` with office supplies →](office_supplies_group_by_tutorial.md)
 
-## Description
+## What `GROUP BY` Does
 
-		1. The GROUP BY clause in SQL gathers rows 
-		with identical values into summary rows.
-		This is a reduction operation.
-		
-		2. In SQL, the GROUP BY clause functions as 
-		a reduction operation by collapsing multiple 
-		individual rows into a single summary row 
-		based on shared values in specified columns. 
-		
-		3. It is most frequently used with aggregate 
-		functions like COUNT(), SUM(), AVG(), MAX(), 
-		and MIN() to run calculations on each separate 
-		group.
+1. `GROUP BY` gathers rows with the same value(s) in the listed column(s) into
+   one **summary row** per group — it *reduces* many rows to a few.
+2. It is almost always used with **aggregate functions** — `COUNT()`, `SUM()`,
+   `AVG()`, `MIN()`, `MAX()` — which compute one value per group.
 
-
-## SQL Syntax	
-
-
-			SELECT column_name(s), 
-			       AGGREGATE_FUNCTION(column_name)
-			FROM table_name
-			WHERE condition
-			GROUP BY column_name(s);
-		
-
-## DuckDB from Command Line
-
-```sql
-% duckdb
--- Loading resources from ~/.duckdbrc
-DuckDB v1.5.3 (Variegata)
-Enter ".help" for usage hints.
+```
+SELECT column_name(s),
+       AGGREGATE_FUNCTION(column_name)
+FROM   table_name
+WHERE  condition
+GROUP BY column_name(s);
 ```
 
-## Create a Table with 2 Columns
+---
+
+## Setup
+
+Everything below runs in the **DuckDB command line** (start it with `duckdb`
+in a terminal — it prints its version, `v2.…`, and a `D` prompt) or in a
+Marimo notebook's SQL cells. No files are needed: the table is typed in.
+
+### A table with two columns
 
 ```sql
-duckdb ▸ CREATE TABLE scores(player VARCHAR, score INT);
+CREATE OR REPLACE TABLE scores (player VARCHAR, score INT);
 ```
 
-## Insert 4 rows for Alex
+### Four rows for Alex, four for Jane — some scores missing (`NULL`)
 
 ```sql
-duckdb ▸ INSERT INTO scores(player, score) VALUES('Alex', 10);
-duckdb ▸ INSERT INTO scores(player, score) VALUES('Alex', 20);
-duckdb ▸ INSERT INTO scores(player, score) VALUES('Alex', 30);
-duckdb ▸ INSERT INTO scores(player, score) VALUES('Alex', NULL);
-```
-
-## Insert 4 rows for Jane
-```sql
-duckdb ▸ INSERT INTO scores(player, score) VALUES('Jane', 70);
-duckdb ▸ INSERT INTO scores(player, score) VALUES('Jane', 90);
-duckdb ▸ INSERT INTO scores(player, score) VALUES('Jane', NULL);
-duckdb ▸ INSERT INTO scores(player, score) VALUES('Jane', NULL);
-```
-
-## View Table
-
-```sql
-duckdb ▸ SELECT * FROM scores;
-┌─────────┬───────┐
-│ player  │ score │
-│ varchar │ int32 │
-├─────────┼───────┤
-│ Alex    │    10 │
-│ Alex    │    20 │
-│ Alex    │    30 │
-│ Alex    │  NULL │
-│ Jane    │    70 │
-│ Jane    │    90 │
-│ Jane    │  NULL │
-│ Jane    │  NULL │
-└─────────┴───────┘
-```
-
-## Find Average of scores per player
-
-```sql
-duckdb ▸ SELECT player, 
-                AVG(score) AS avg_score
-         FROM scores 
-         GROUP BY player;
-┌─────────┬───────────┐
-│ player  │ avg_score │
-│ varchar │  double   │
-├─────────┼───────────┤
-│ Jane    │      80.0 │
-│ Alex    │      20.0 │
-└─────────┴───────────┘
-```
-
-**NOTE:** `AVG()` ignores `NULL` values. Alex has 
-scores 10, 20, 30, NULL — the average is 
-(10+20+30)/3 = 20.0, not (10+20+30+0)/4.
-
-## Find Minimum and Maximum of scores per player
-
-```sql
-duckdb ▸ SELECT player, 
-                MIN(score) AS min_score, 
-                MAX(score) AS max_score
-          FROM scores 
-          GROUP BY player;
-┌─────────┬───────────┬───────────┐
-│ player  │ min_score │ max_score │
-│ varchar │   int32   │   int32   │
-├─────────┼───────────┼───────────┤
-│ Jane    │        70 │        90 │
-│ Alex    │        10 │        30 │
-└─────────┴───────────┴───────────┘
-```
-
-## COUNT(*) vs COUNT(column_name) per player
-
-		COUNT(*) counts all rows in the group, 
-		including NULLs. COUNT(column_name) counts 
-		only non-NULL values in that column.
-
-```sql
-duckdb ▸ SELECT player, 
-                COUNT(*) AS total_rows, 
-                COUNT(score) AS non_null_scores
-         FROM scores 
-         GROUP BY player;
-┌─────────┬────────────┬─────────────────┐
-│ player  │ total_rows │ non_null_scores │
-│ varchar │   int64    │      int64      │
-├─────────┼────────────┼─────────────────┤
-│ Alex    │          4 │               3 │
-│ Jane    │          4 │               2 │
-└─────────┴────────────┴─────────────────┘
-```
-
-**NOTE:** Alex has 4 rows but only 3 non-NULL scores. 
-Jane has 4 rows but only 2 non-NULL scores.
-
-
-## Find Sum of scores per player
-
-```sql
-duckdb ▸ SELECT player, 
-                SUM(score) AS total_score
-         FROM scores 
-         GROUP BY player;
-┌─────────┬─────────────┐
-│ player  │ total_score │
-│ varchar │   int128    │
-├─────────┼─────────────┤
-│ Alex    │          60 │
-│ Jane    │         160 │
-└─────────┴─────────────┘
-```
-
-**NOTE:** Like `AVG()`, `SUM()` ignores `NULL` values.
-
-
-## Combine multiple aggregates in one query
-
-```sql
-duckdb ▸ SELECT player, 
-                COUNT(*) AS total_rows,
-                COUNT(score) AS non_null_scores,
-                SUM(score) AS total_score,
-                AVG(score) AS avg_score,
-                MIN(score) AS min_score,
-                MAX(score) AS max_score
-         FROM scores 
-         GROUP BY player;
-┌─────────┬────────────┬─────────────────┬─────────────┬───────────┬───────────┬───────────┐
-│ player  │ total_rows │ non_null_scores │ total_score │ avg_score │ min_score │ max_score │
-│ varchar │   int64    │      int64      │   int128    │  double   │   int32   │   int32   │
-├─────────┼────────────┼─────────────────┼─────────────┼───────────┼───────────┼───────────┤
-│ Alex    │          4 │               3 │          60 │      20.0 │        10 │        30 │
-│ Jane    │          4 │               2 │         160 │      80.0 │        70 │        90 │
-└─────────┴────────────┴─────────────────┴─────────────┴───────────┴───────────┴───────────┘
-```
-
-
-## HAVING: filter groups after aggregation
-
-		The WHERE clause filters rows BEFORE grouping.
-		The HAVING clause filters groups AFTER aggregation.
-
-```sql
--- Find players whose average score is greater than 50
-duckdb ▸ SELECT player, 
-                AVG(score) AS avg_score
-         FROM scores 
-         GROUP BY player
-         HAVING AVG(score) > 50;
-┌─────────┬───────────┐
-│ player  │ avg_score │
-│ varchar │  double   │
-├─────────┼───────────┤
-│ Jane    │      80.0 │
-└─────────┴───────────┘
+INSERT INTO scores (player, score) VALUES ('Alex', 10);
+INSERT INTO scores (player, score) VALUES ('Alex', 20);
+INSERT INTO scores (player, score) VALUES ('Alex', 30);
+INSERT INTO scores (player, score) VALUES ('Alex', NULL);
+INSERT INTO scores (player, score) VALUES ('Jane', 70);
+INSERT INTO scores (player, score) VALUES ('Jane', 90);
+INSERT INTO scores (player, score) VALUES ('Jane', NULL);
+INSERT INTO scores (player, score) VALUES ('Jane', NULL);
 ```
 
 ```sql
--- Find players who have more than 2 non-NULL scores
-duckdb ▸ SELECT player, 
-                COUNT(score) AS non_null_scores
-         FROM scores 
-         GROUP BY player
-         HAVING COUNT(score) > 2;
-┌─────────┬─────────────────┐
-│ player  │ non_null_scores │
-│ varchar │      int64      │
-├─────────┼─────────────────┤
-│ Alex    │               3 │
-└─────────┴─────────────────┘
+SELECT *
+FROM scores
+ORDER BY player, score NULLS LAST;
 ```
 
+Result:
 
-## STRING_AGG and LIST: concatenate grouped values
+| player | score |
+|---|---:|
+| Alex | 10 |
+| Alex | 20 |
+| Alex | 30 |
+| Alex | NULL |
+| Jane | 70 |
+| Jane | 90 |
+| Jane | NULL |
+| Jane | NULL |
 
-		STRING_AGG() concatenates values into a 
-		comma-separated string. LIST() collects 
-		values into a DuckDB list (array).
+*8 rows*
+
+---
+
+## Average Score per Player
 
 ```sql
-duckdb ▸ SELECT player, 
-                STRING_AGG(score::VARCHAR, ', ') AS scores_csv,
-                LIST(score) AS scores_list
-         FROM scores 
-         GROUP BY player;
-┌─────────┬────────────┬──────────────────┐
-│ player  │ scores_csv │   scores_list    │
-│ varchar │  varchar   │    int32[]       │
-├─────────┼────────────┼──────────────────┤
-│ Alex    │ 10, 20, 30 │ [10, 20, 30]     │
-│ Jane    │ 70, 90     │ [70, 90]         │
-└─────────┴────────────┴──────────────────┘
+SELECT player,
+       AVG(score) AS avg_score
+FROM scores
+GROUP BY player
+ORDER BY player;
 ```
 
-**NOTE:** Both `STRING_AGG()` and `LIST()` skip 
-`NULL` values by default.
+Result:
 
+| player | avg_score |
+|---|---:|
+| Alex | 20.0 |
+| Jane | 80.0 |
 
-## GROUP BY with multiple columns
+*2 rows*
 
-		First, let us add a 'team' column to our table.
+**Note:** `AVG()` ignores `NULL`s. Alex's scores are 10, 20, 30, `NULL`, so his
+average is (10 + 20 + 30) / 3 = 20.0 — not (10 + 20 + 30 + 0) / 4.
+
+## Lowest and Highest Score per Player
 
 ```sql
-duckdb ▸ ALTER TABLE scores ADD COLUMN team VARCHAR;
-duckdb ▸ UPDATE scores SET team = 'Red' WHERE player = 'Alex';
-duckdb ▸ UPDATE scores SET team = 'Blue' WHERE player = 'Jane';
+SELECT player,
+       MIN(score) AS min_score,
+       MAX(score) AS max_score
+FROM scores
+GROUP BY player
+ORDER BY player;
+```
+
+Result:
+
+| player | min_score | max_score |
+|---|---:|---:|
+| Alex | 10 | 30 |
+| Jane | 70 | 90 |
+
+*2 rows*
+
+## `COUNT(*)` vs. `COUNT(column)`
+
+`COUNT(*)` counts every row in the group, `NULL`s included. `COUNT(score)`
+counts only the rows where `score` is not `NULL`.
+
+```sql
+SELECT player,
+       COUNT(*)     AS total_rows,
+       COUNT(score) AS non_null_scores
+FROM scores
+GROUP BY player
+ORDER BY player;
+```
+
+Result:
+
+| player | total_rows | non_null_scores |
+|---|---:|---:|
+| Alex | 4 | 3 |
+| Jane | 4 | 2 |
+
+*2 rows*
+
+Alex has 4 rows but 3 scores; Jane has 4 rows but 2 scores.
+
+## Total Score per Player
+
+```sql
+SELECT player,
+       SUM(score) AS total_score
+FROM scores
+GROUP BY player
+ORDER BY player;
+```
+
+Result:
+
+| player | total_score |
+|---|---:|
+| Alex | 60 |
+| Jane | 160 |
+
+*2 rows*
+
+Like `AVG()`, `SUM()` ignores `NULL`s.
+
+## Several Aggregates in One Query
+
+```sql
+SELECT player,
+       COUNT(*)     AS total_rows,
+       COUNT(score) AS non_null_scores,
+       SUM(score)   AS total_score,
+       AVG(score)   AS avg_score,
+       MIN(score)   AS min_score,
+       MAX(score)   AS max_score
+FROM scores
+GROUP BY player
+ORDER BY player;
+```
+
+Result:
+
+| player | total_rows | non_null_scores | total_score | avg_score | min_score | max_score |
+|---|---:|---:|---:|---:|---:|---:|
+| Alex | 4 | 3 | 60 | 20.0 | 10 | 30 |
+| Jane | 4 | 2 | 160 | 80.0 | 70 | 90 |
+
+*2 rows*
+
+---
+
+## `HAVING`: Filter Groups After Aggregation
+
+`WHERE` filters **rows** before grouping; `HAVING` filters **groups** after the
+aggregates are computed.
+
+Players whose average score is greater than 50:
+
+```sql
+SELECT player,
+       AVG(score) AS avg_score
+FROM scores
+GROUP BY player
+HAVING AVG(score) > 50
+ORDER BY player;
+```
+
+Result:
+
+| player | avg_score |
+|---|---:|
+| Jane | 80.0 |
+
+*1 row*
+
+Players with more than 2 non-`NULL` scores:
+
+```sql
+SELECT player,
+       COUNT(score) AS non_null_scores
+FROM scores
+GROUP BY player
+HAVING COUNT(score) > 2
+ORDER BY player;
+```
+
+Result:
+
+| player | non_null_scores |
+|---|---:|
+| Alex | 3 |
+
+*1 row*
+
+---
+
+## `STRING_AGG` and `LIST`: See the Values in Each Group
+
+`STRING_AGG()` joins a group's values into one text value; `LIST()` collects
+them into a DuckDB list. The `ORDER BY` inside each fixes the order of the
+values — without it, the order is not guaranteed.
+
+```sql
+SELECT player,
+       STRING_AGG(score::VARCHAR, ', ' ORDER BY score) AS scores_text,
+       LIST(score ORDER BY score)                      AS scores_list
+FROM scores
+GROUP BY player
+ORDER BY player;
+```
+
+Result:
+
+| player | scores_text | scores_list |
+|---|---|---|
+| Alex | 10, 20, 30 | [10, 20, 30, NULL] |
+| Jane | 70, 90 | [70, 90, NULL, NULL] |
+
+*2 rows*
+
+**`NULL`s are treated differently:** `STRING_AGG()` skips them (`10, 20, 30`),
+but `LIST()` **keeps** them (`[10, 20, 30, NULL]`). To leave them out of the
+list, filter them: `LIST(score ORDER BY score) FILTER (WHERE score IS NOT NULL)`.
+
+---
+
+## Grouping by Two Columns
+
+First, add a `team` column and fill it in:
+
+```sql
+ALTER TABLE scores ADD COLUMN team VARCHAR;
+UPDATE scores SET team = 'Red'  WHERE player = 'Alex';
+UPDATE scores SET team = 'Blue' WHERE player = 'Jane';
+```
+
+Now each player also plays one game for the other team:
+
+```sql
+INSERT INTO scores (player, score, team) VALUES ('Alex', 50, 'Blue');
+INSERT INTO scores (player, score, team) VALUES ('Jane', 40, 'Red');
 ```
 
 ```sql
--- Now insert a player on a different team
-duckdb ▸ INSERT INTO scores(player, score, team) VALUES('Alex', 50, 'Blue');
-duckdb ▸ INSERT INTO scores(player, score, team) VALUES('Jane', 40, 'Red');
+SELECT *
+FROM scores
+ORDER BY team, player, score NULLS LAST;
 ```
+
+Result:
+
+| player | score | team |
+|---|---:|---|
+| Alex | 50 | Blue |
+| Jane | 70 | Blue |
+| Jane | 90 | Blue |
+| Jane | NULL | Blue |
+| Jane | NULL | Blue |
+| Alex | 10 | Red |
+| Alex | 20 | Red |
+| Alex | 30 | Red |
+| Alex | NULL | Red |
+| Jane | 40 | Red |
+
+*10 rows*
+
+One group per **team and player**:
 
 ```sql
-duckdb ▸ SELECT * FROM scores;
-┌─────────┬───────┬─────────┐
-│ player  │ score │  team   │
-│ varchar │ int32 │ varchar │
-├─────────┼───────┼─────────┤
-│ Alex    │    10 │ Red     │
-│ Alex    │    20 │ Red     │
-│ Alex    │    30 │ Red     │
-│ Alex    │  NULL │ Red     │
-│ Jane    │    70 │ Blue    │
-│ Jane    │    90 │ Blue    │
-│ Jane    │  NULL │ Blue    │
-│ Jane    │  NULL │ Blue    │
-│ Alex    │    50 │ Blue    │
-│ Jane    │    40 │ Red     │
-└─────────┴───────┴─────────┘
+SELECT team,
+       player,
+       COUNT(score) AS games,
+       SUM(score)   AS total_score,
+       AVG(score)   AS avg_score
+FROM scores
+GROUP BY team, player
+ORDER BY team, player;
 ```
+
+Result:
+
+| team | player | games | total_score | avg_score |
+|---|---|---:|---:|---:|
+| Blue | Alex | 1 | 50 | 50.0 |
+| Blue | Jane | 2 | 160 | 80.0 |
+| Red | Alex | 3 | 60 | 20.0 |
+| Red | Jane | 1 | 40 | 40.0 |
+
+*4 rows*
+
+One group per **team**:
 
 ```sql
--- GROUP BY two columns: team and player
-duckdb ▸ SELECT team,
-                player, 
-                COUNT(score) AS games,
-                SUM(score) AS total_score,
-                AVG(score) AS avg_score
-         FROM scores 
-         GROUP BY team, player
-         ORDER BY team, player;
-┌─────────┬─────────┬───────┬─────────────┬───────────┐
-│  team   │ player  │ games │ total_score │ avg_score │
-│ varchar │ varchar │ int64 │   int128    │  double   │
-├─────────┼─────────┼───────┼─────────────┼───────────┤
-│ Blue    │ Alex    │     1 │          50 │      50.0 │
-│ Blue    │ Jane    │     2 │         160 │      80.0 │
-│ Red     │ Alex    │     3 │          60 │      20.0 │
-│ Red     │ Jane    │     1 │          40 │      40.0 │
-└─────────┴─────────┴───────┴─────────────┴───────────┘
+SELECT team,
+       COUNT(score) AS games,
+       SUM(score)   AS total_score,
+       AVG(score)   AS avg_score
+FROM scores
+GROUP BY team
+ORDER BY team;
 ```
+
+Result:
+
+| team | games | total_score | avg_score |
+|---|---:|---:|---:|
+| Blue | 3 | 210 | 70.0 |
+| Red | 4 | 100 | 25.0 |
+
+*2 rows*
+
+---
+
+## `WHERE` + `GROUP BY` + `HAVING` Together
+
+The order of work: `WHERE` filters rows, then `GROUP BY` groups them, then
+`HAVING` filters the groups. *Using only scores above 15, which teams average
+more than 40?*
 
 ```sql
--- GROUP BY team only
-duckdb ▸ SELECT team,
-                COUNT(score) AS games,
-                SUM(score) AS total_score,
-                AVG(score) AS avg_score
-         FROM scores 
-         GROUP BY team
-         ORDER BY team;
-┌─────────┬───────┬─────────────┬───────────┐
-│  team   │ games │ total_score │ avg_score │
-│ varchar │ int64 │   int128    │  double   │
-├─────────┼───────┼─────────────┼───────────┤
-│ Blue    │     3 │         210 │      70.0 │
-│ Red     │     4 │         100 │      25.0 │
-└─────────┴───────┴─────────────┴───────────┘
+SELECT team,
+       AVG(score)   AS avg_score,
+       COUNT(score) AS num_scores
+FROM scores
+WHERE score > 15
+GROUP BY team
+HAVING AVG(score) > 40
+ORDER BY avg_score DESC;
 ```
 
+Result:
 
-## WHERE + GROUP BY + HAVING together
+| team | avg_score | num_scores |
+|---|---:|---:|
+| Blue | 70.0 | 3 |
 
-		Execution order: WHERE filters rows first, 
-		then GROUP BY groups them, then HAVING 
-		filters the groups.
+*1 row*
+
+## Sorting by an Aggregate
+
+Teams by total score, highest first:
 
 ```sql
--- Among non-NULL scores > 15, find teams 
--- whose average exceeds 40
-duckdb ▸ SELECT team,
-                AVG(score) AS avg_score,
-                COUNT(score) AS num_scores
-         FROM scores 
-         WHERE score > 15
-         GROUP BY team
-         HAVING AVG(score) > 40
-         ORDER BY avg_score DESC;
-┌─────────┬───────────┬────────────┐
-│  team   │ avg_score │ num_scores │
-│ varchar │  double   │   int64    │
-├─────────┼───────────┼────────────┤
-│ Blue    │      70.0 │          3 │
-└─────────┴───────────┴────────────┘
+SELECT team,
+       SUM(score) AS total_score
+FROM scores
+GROUP BY team
+ORDER BY total_score DESC;
 ```
 
+Result:
 
-## GROUP BY with ORDER BY on aggregate
+| team | total_score |
+|---|---:|
+| Blue | 210 |
+| Red | 100 |
+
+*2 rows*
+
+---
+
+## Beyond `GROUP BY`: Ranking Rows
+
+`GROUP BY` collapses rows; a **window function** such as `RANK()` keeps every
+row and adds a value computed over other rows (see the
+[window functions tutorial](../window_functions/ranking_tutorial.md)).
+
+All scores ranked from highest to lowest (`NULL` scores sort last and are
+ranked last):
 
 ```sql
--- Rank teams by total score (descending)
-duckdb ▸ SELECT team,
-                SUM(score) AS total_score
-         FROM scores 
-         GROUP BY team
-         ORDER BY total_score DESC;
-┌─────────┬─────────────┐
-│  team   │ total_score │
-│ varchar │   int128    │
-├─────────┼─────────────┤
-│ Blue    │         210 │
-│ Red     │         100 │
-└─────────┴─────────────┘
+SELECT player,
+       score,
+       RANK() OVER (ORDER BY score DESC) AS rnk
+FROM scores
+ORDER BY rnk, player;
 ```
 
+Result:
 
-## Rank players by score 
+| player | score | rnk |
+|---|---:|---:|
+| Jane | 90 | 1 |
+| Jane | 70 | 2 |
+| Alex | 50 | 3 |
+| Jane | 40 | 4 |
+| Alex | 30 | 5 |
+| Alex | 20 | 6 |
+| Alex | 10 | 7 |
+| Alex | NULL | 8 |
+| Jane | NULL | 8 |
+| Jane | NULL | 8 |
+
+*10 rows*
+
+A separate ranking for each player (`PARTITION BY player`):
 
 ```sql
-duckdb ▸ SELECT player, 
-                score, 
-                RANK() OVER(ORDER BY score DESC) as rnk 
-         FROM scores;
-┌─────────┬───────┬───────┐
-│ player  │ score │  rnk  │
-│ varchar │ int32 │ int64 │
-├─────────┼───────┼───────┤
-│ Jane    │    90 │     1 │
-│ Jane    │    70 │     2 │
-│ Alex    │    30 │     3 │
-│ Alex    │    20 │     4 │
-│ Alex    │    10 │     5 │
-│ Alex    │  NULL │     6 │
-│ Jane    │  NULL │     6 │
-│ Jane    │  NULL │     6 │
-└─────────┴───────┴───────┘
+SELECT player,
+       score,
+       RANK() OVER (PARTITION BY player ORDER BY score DESC) AS rnk
+FROM scores
+ORDER BY player, rnk;
 ```
 
-## Rank each player by score 
+Result:
+
+| player | score | rnk |
+|---|---:|---:|
+| Alex | 50 | 1 |
+| Alex | 30 | 2 |
+| Alex | 20 | 3 |
+| Alex | 10 | 4 |
+| Alex | NULL | 5 |
+| Jane | 90 | 1 |
+| Jane | 70 | 2 |
+| Jane | 40 | 3 |
+| Jane | NULL | 4 |
+| Jane | NULL | 4 |
+
+*10 rows*
+
+Each player's top 2 scores — rank inside a CTE, then filter on the rank:
 
 ```sql
-duckdb ▸ SELECT player, 
-                score, 
-                RANK() OVER(PARTITION BY player ORDER BY score DESC) as rnk 
-         FROM scores;
-┌─────────┬───────┬───────┐
-│ player  │ score │  rnk  │
-│ varchar │ int32 │ int64 │
-├─────────┼───────┼───────┤
-│ Jane    │    90 │     1 │
-│ Jane    │    70 │     2 │
-│ Jane    │  NULL │     3 │
-│ Jane    │  NULL │     3 │
-|---------|-------|-------|
-│ Alex    │    30 │     1 │
-│ Alex    │    20 │     2 │
-│ Alex    │    10 │     3 │
-│ Alex    │  NULL │     4 │
-└─────────┴───────┴───────┘
+WITH ranked AS (
+    SELECT player,
+           score,
+           RANK() OVER (PARTITION BY player ORDER BY score DESC) AS rnk
+    FROM scores
+)
+SELECT player,
+       score,
+       rnk
+FROM ranked
+WHERE rnk <= 2
+ORDER BY player, rnk;
 ```
 
-## Find top-2 score per player 
+Result:
 
-```sql
-duckdb ▸ WITH ranked AS (
-            SELECT player, 
-                   score, 
-                   RANK() OVER (
-                        PARTITION BY player 
-                        ORDER BY score DESC
-                   ) 
-                    as rnk 
-            FROM scores
-         ) 
-         SELECT player, 
-                score, 
-                rnk 
-         FROM ranked 
-         WHERE rnk <= 2;
-┌─────────┬───────┬───────┐
-│ player  │ score │  rnk  │
-│ varchar │ int32 │ int64 │
-├─────────┼───────┼───────┤
-│ Alex    │    30 │     1 │
-│ Alex    │    20 │     2 │
-|---------|-------|-------|
-│ Jane    │    90 │     1 │
-│ Jane    │    70 │     2 │
-└─────────┴───────┴───────┘
-```
+| player | score | rnk |
+|---|---:|---:|
+| Alex | 50 | 1 |
+| Alex | 30 | 2 |
+| Jane | 90 | 1 |
+| Jane | 70 | 2 |
 
+*4 rows*
+
+---
+
+*MSIS-2402 — Database Management Systems: Fundamentals of SQL — Winter 2027*

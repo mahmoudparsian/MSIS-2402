@@ -18,7 +18,6 @@ def _(mo):
     # GROUP BY Tutorial 101
 
     * Database Environment: DuckDB
-    * Last updated: May 25, 2026
     """)
     return
 
@@ -159,6 +158,7 @@ def _(duckdb):
                AVG(score) AS avg_score
         FROM scores 
         GROUP BY player
+        ORDER BY player
     """).show()
     return
 
@@ -217,6 +217,7 @@ def _(duckdb):
                MAX(score) AS max_score
         FROM scores 
         GROUP BY player
+        ORDER BY player
     """).show()
     return
 
@@ -266,6 +267,7 @@ def _(duckdb):
                COUNT(score) AS non_null_scores
         FROM scores 
         GROUP BY player
+        ORDER BY player
     """).show()
     return
 
@@ -319,6 +321,7 @@ def _(duckdb):
                SUM(score) AS total_score
         FROM scores 
         GROUP BY player
+        ORDER BY player
     """).show()
     return
 
@@ -375,6 +378,7 @@ def _(duckdb):
                MAX(score) AS max_score
         FROM scores 
         GROUP BY player
+        ORDER BY player
     """).show()
     return
 
@@ -399,6 +403,7 @@ def _(duckdb):
         FROM scores 
         GROUP BY player
         HAVING AVG(score) > 50
+        ORDER BY player
     """).show()
     return
 
@@ -412,6 +417,7 @@ def _(duckdb):
         FROM scores 
         GROUP BY player
         HAVING COUNT(score) > 2
+        ORDER BY player
     """).show()
     return
 
@@ -432,10 +438,11 @@ def _(mo):
 def _(duckdb):
     duckdb.sql("""
         SELECT player, 
-               STRING_AGG(score::VARCHAR, ', ') AS scores_csv,
-               LIST(score) AS scores_list
+               STRING_AGG(score::VARCHAR, ', ' ORDER BY score) AS scores_csv,
+               LIST(score ORDER BY score) AS scores_list
         FROM scores 
         GROUP BY player
+        ORDER BY player
     """).show()
     return
 
@@ -443,8 +450,9 @@ def _(duckdb):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    **NOTE:** Both `STRING_AGG()` and `LIST()` skip 
-    `NULL` values by default.
+    **NOTE:** `NULL`s are treated differently: `STRING_AGG()` skips them
+    (`10, 20, 30`), but `LIST()` **keeps** them (`[10, 20, 30, NULL]`). The
+    `ORDER BY` inside each fixes the order of the values.
     """)
     return
 
@@ -626,6 +634,7 @@ def _(duckdb):
                score, 
                RANK() OVER(ORDER BY score DESC) as rnk 
         FROM scores
+        ORDER BY rnk, player
     """).show()
     return
 
@@ -645,6 +654,7 @@ def _(duckdb):
                score, 
                RANK() OVER(PARTITION BY player ORDER BY score DESC) as rnk 
         FROM scores
+        ORDER BY player, rnk
     """).show()
     return
 
@@ -674,6 +684,7 @@ def _(duckdb):
                rnk 
         FROM ranked 
         WHERE rnk <= 2
+        ORDER BY player, rnk
     """).show()
     return
 

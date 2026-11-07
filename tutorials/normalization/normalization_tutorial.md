@@ -498,3 +498,7 @@ connecting the other three.
 
 **Try it:** draw this diagram yourself in draw.io with crow's-foot notation,
 listing each table's columns and marking the primary and foreign keys.
+
+---
+
+*MSIS-2402 — Database Management Systems: Fundamentals of SQL — Winter 2027*

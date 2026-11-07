@@ -186,7 +186,7 @@ def _(duckdb):
     """)
 
     print("Schema created and seed data loaded!")
-    con.sql("SELECT * FROM accounts").show()
+    con.sql("SELECT * FROM accounts ORDER BY account_id").show()
     return (con,)
 
 
@@ -235,7 +235,7 @@ def _(con):
     """)
 
     print("Bob's checking after $100 bonus:")
-    con.sql("SELECT * FROM accounts WHERE customer_id = 2").show()
+    con.sql("SELECT * FROM accounts WHERE customer_id = 2 ORDER BY account_id").show()
     return
 
 
@@ -276,7 +276,7 @@ def _(mo):
 @app.cell
 def _(con):
     print("=== BEFORE transfer ===")
-    con.sql("SELECT * FROM accounts WHERE customer_id = 1").show()
+    con.sql("SELECT * FROM accounts WHERE customer_id = 1 ORDER BY account_id").show()
 
     # --- Explicit transaction ---
     con.execute("BEGIN TRANSACTION;")
@@ -305,9 +305,9 @@ def _(con):
     con.execute("COMMIT;")
 
     print("=== AFTER transfer ===")
-    con.sql("SELECT * FROM accounts WHERE customer_id = 1").show()
+    con.sql("SELECT * FROM accounts WHERE customer_id = 1 ORDER BY account_id").show()
     print("=== Transaction Log ===")
-    con.sql("SELECT * FROM transactions_log").show()
+    con.sql("SELECT * FROM transactions_log ORDER BY txn_id").show()
     return
 
 
@@ -345,7 +345,7 @@ def _(mo):
 @app.cell
 def _(con):
     print("=== BEFORE (Bob's accounts) ===")
-    con.sql("SELECT * FROM accounts WHERE customer_id = 2").show()
+    con.sql("SELECT * FROM accounts WHERE customer_id = 2 ORDER BY account_id").show()
 
     # Start a transaction
     con.execute("BEGIN TRANSACTION;")
@@ -356,14 +356,14 @@ def _(con):
 
     # Let's peek at the data INSIDE the transaction (not yet committed)
     print("=== DURING transaction (uncommitted) ===")
-    con.sql("SELECT * FROM accounts WHERE customer_id = 2").show()
+    con.sql("SELECT * FROM accounts WHERE customer_id = 2 ORDER BY account_id").show()
 
     # Wait — Bob changed his mind!
     con.execute("ROLLBACK;")
     print(">>> ROLLBACK executed! <<<\n")
 
     print("=== AFTER rollback (Bob's accounts) ===")
-    con.sql("SELECT * FROM accounts WHERE customer_id = 2").show()
+    con.sql("SELECT * FROM accounts WHERE customer_id = 2 ORDER BY account_id").show()
     return
 
 
@@ -398,7 +398,7 @@ def _(mo):
 @app.cell
 def _(con, duckdb):
     print("=== BEFORE (Alice's accounts) ===")
-    con.sql("SELECT * FROM accounts WHERE customer_id = 1").show()
+    con.sql("SELECT * FROM accounts WHERE customer_id = 1 ORDER BY account_id").show()
 
     try:
         con.execute("BEGIN TRANSACTION;")
@@ -431,7 +431,7 @@ def _(con, duckdb):
             pass  # already rolled back automatically
 
     print("\n=== AFTER failed transaction (Alice's accounts) ===")
-    con.sql("SELECT * FROM accounts WHERE customer_id = 1").show()
+    con.sql("SELECT * FROM accounts WHERE customer_id = 1 ORDER BY account_id").show()
     return
 
 

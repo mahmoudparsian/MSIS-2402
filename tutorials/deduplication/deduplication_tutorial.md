@@ -1,26 +1,21 @@
-## Comprehensive Guide: Deduplicating Data in DuckDB
+# Deduplicating Data in DuckDB
+
+[← Tutorials](../README.md) · **Deduplication**
+
+Two ways to handle duplicate rows:
+
+1. removing **exact** duplicates — every column is the same;
+2. removing **business** duplicates — the identifying columns match (here: the
+   same employee), even if other columns differ.
+
+---
+
+## 1. The Data
+
+[`raw_data.csv`](raw_data.csv), in this folder — imagine a system log where
+some entries were saved twice and some were updated:
 
 ```
-This document covers two distinct ways 
-to handle duplicates: 
-
-  1. removing "exact" duplicates 
-     (where every column is the same) 
-     
-  2. versus removing "business" duplicates 
-     (where specific identifying columns match).
-
-```
-------------------------------
-
-## 1. The Dataset (`raw_data.csv`)
-
-```
-Imagine a system log where some entries 
-were double-saved, and some were updated.
-```
-
-```text
 department,employee,salary
 Sales,Alice,5000
 Sales,Alice,5000
@@ -33,108 +28,131 @@ IT,Eve,4000
 IT,Eve,4000
 HR,David,4500
 ```
-------------------------------
 
-## 2. Setup in DuckDB
+10 rows: 5 employees, 4 of them saved twice, and Alice also has a second salary.
+
+---
+
+## 2. Setup
+
+Start DuckDB **from this folder**. From the course repository folder
+(`MSIS-2402-main` if you downloaded the ZIP):
+
+```
+cd tutorials/deduplication
+duckdb
+```
+
+(or create a Marimo notebook in this folder and run the SQL in SQL cells). Then:
 
 ```sql
--- Create table and load the "messy" data
-CREATE TABLE staff 
-AS 
+CREATE OR REPLACE TABLE staff AS
 SELECT * FROM read_csv_auto('raw_data.csv');
+
+SELECT COUNT(*) AS n_rows FROM staff;
 ```
 
-------------------------------
+Result:
 
-## 3. Example 1: Deduplicate the "Entire Record"
+| n_rows |
+|---:|
+| 10 |
 
-```
-Use this when you want to remove 
-identical twins. If every single 
-column matches another row, you 
-only want one.
+*1 row*
 
-The Logic: Partition by every column.
-```
+---
 
-The Query:
+## 3. Example 1: Remove Exact Duplicates
+
+Use this when two rows are identical twins: if every column matches, keep one.
+
+**The logic:** number the rows within each group of identical rows
+(`PARTITION BY` **every** column) and keep row number 1.
 
 ```sql
-SELECT 
-    department, 
-    employee, 
-    salary
+SELECT department,
+       employee,
+       salary
 FROM staff
 QUALIFY ROW_NUMBER() OVER (
-    -- partition by ALL columns
-    PARTITION BY department, employee, salary
-) = 1;
+    PARTITION BY department, employee, salary   -- every column
+) = 1
+ORDER BY employee, salary;
 ```
 
-The Result:
+Result:
 
-```
-Alice appears twice because her $5,000 
-and $8,000 rows are technically unique records.
-```
+| department | employee | salary |
+|---|---|---:|
+| Sales | Alice | 5000 |
+| Sales | Alice | 8000 |
+| HR | Bob | 6000 |
+| IT | Charlie | 7000 |
+| HR | David | 4500 |
+| IT | Eve | 4000 |
 
-| department | employee | salary | Note |
-|---|---|---|---|
-| Sales | Alice | 5000 | Kept 1 of 2 identical rows |
-| Sales | Alice | 8000 | Unique (salary differs), so it stays |
-| HR | Bob | 6000 | Kept 1 of 2 identical rows |
-| IT | Charlie | 7000 | Kept 1 of 2 identical rows |
-| IT | Eve | 4000 | Kept 1 of 2 identical rows |
-| HR | David | 4500 | Original record |
+*6 rows*
 
-------------------------------
+Alice still appears **twice**: her 5000 and 8000 rows are different records
+(the salary differs). Every other employee keeps one row.
 
-## 4. Example 2: Deduplicate by "Employee" (Keeping Highest Salary)
+For exact duplicates, `SELECT DISTINCT department, employee, salary FROM staff`
+gives the same 6 rows. The `ROW_NUMBER()` form is shown because the next
+example needs it.
 
-```
-Use this when you have multiple 
-entries for one person but only 
-want their latest or highest record.
+---
 
-The Logic: Partition by employee, 
-           order by salary DESC.
-```
+## 4. Example 2: One Row per Employee (Keep the Highest Salary)
 
-The Query:
+Use this when one person has several records and you want only the latest —
+or, here, the highest-paid — one.
+
+**The logic:** `PARTITION BY` the identifying column (`employee`),
+`ORDER BY salary DESC`, keep row number 1.
 
 ```sql
-SELECT 
-    department, 
-    employee, 
-    salary
+SELECT department,
+       employee,
+       salary
 FROM staff
 QUALIFY ROW_NUMBER() OVER (
-    PARTITION BY employee 
+    PARTITION BY employee
     ORDER BY salary DESC
-) = 1;
+) = 1
+ORDER BY employee;
 ```
 
-The Result:
+Result:
 
-```
-Alice is now reduced to a single 
-row—the one with the highest pay.
-```
+| department | employee | salary |
+|---|---|---:|
+| Sales | Alice | 8000 |
+| HR | Bob | 6000 |
+| IT | Charlie | 7000 |
+| HR | David | 4500 |
+| IT | Eve | 4000 |
 
-| department | employee | salary | Why? |
-|---|---|---|---|
-| Sales | Alice | 8000 | Winner of {5000, 5000, 8000} |
-| HR | Bob | 6000 | Winner of {6000, 6000} |
-| IT | Charlie | 7000 | Winner of {7000, 7000} |
-| IT | Eve | 4000 | Winner of {4000, 4000} |
-| HR | David | 4500 | Only one entry |
+*5 rows*
 
-------------------------------
-## 5. Summary Checklist
+Alice is now one row — her highest salary, 8000. Bob, Charlie, and Eve had two
+identical rows each; which of the two is kept doesn't matter, because they are
+the same.
 
-| Goal | Partition By... | Order By... |
+---
+
+## 5. Summary
+
+| Goal | `PARTITION BY` | `ORDER BY` inside `OVER (...)` |
 |---|---|---|
-| Remove exact clones | All columns | Not required (or any) |
-| Keep newest record | Unique ID (e.g., employee) | timestamp DESC |
-| Keep most expensive | Unique ID (e.g., employee) | salary DESC |
-| Keep oldest record | Unique ID (e.g., employee) | timestamp ASC |
+| Remove exact copies | all columns | not needed — the copies are identical |
+| Keep the newest record | the identifying column(s), e.g. `employee` | the timestamp column `DESC` |
+| Keep the oldest record | the identifying column(s) | the timestamp column `ASC` |
+| Keep the highest value | the identifying column(s) | that value `DESC` |
+
+If two rows tie on the `ORDER BY` value but differ elsewhere, add a
+tie-breaker column (for example `ORDER BY salary DESC, department`), or
+`ROW_NUMBER()` may keep a different row each time you run the query.
+
+---
+
+*MSIS-2402 — Database Management Systems: Fundamentals of SQL — Winter 2027*

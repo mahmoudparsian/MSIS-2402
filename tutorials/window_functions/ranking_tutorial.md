@@ -1,23 +1,18 @@
-# DuckDB Window Functions Tutorial
-# `ROW_NUMBER`, `RANK`, and `DENSE_RANK`
+# Window Functions: `ROW_NUMBER`, `RANK`, and `DENSE_RANK`
 
-```
-This tutorial demonstrates the differences 
-between the three primary ranking functions 
-in SQL using DuckDB.
-```
+[← Tutorials](../README.md) · **Window functions** · [`ROW_NUMBER()` example →](row_number_example.md)
+
+The differences between the three ranking functions, shown on 10 employees —
+several of them with the **same salary** (ties), because ties are exactly where
+the three functions differ.
+
 ---
 
-## 1. The Data (employees.csv)
+## 1. The Data
+
+[`employees_by_country.csv`](employees_by_country.csv), in this folder:
 
 ```
-Save the following 10 rows into a 
-file named employees.csv. Notice that 
-some employees have the same salary (ties) 
-to highlight how the functions differ.
-```
-
-```text
 country,gender,employee,salary
 USA,M,John,5000
 USA,F,Sarah,5000
@@ -33,84 +28,102 @@ CAN,F,Maya,4500
 
 ---
 
-## 2. DuckDB Setup
+## 2. Setup
+
+Start DuckDB **from this folder**. From the course repository folder
+(`MSIS-2402-main` if you downloaded the ZIP):
 
 ```
-Run these commands to create
-your table and load the data.
+cd tutorials/window_functions
+duckdb
 ```
+
+(or create a Marimo notebook in this folder and run the SQL in SQL cells). Then:
 
 ```sql
--- Create table and import data
-CREATE TABLE staff 
-AS 
-SELECT * FROM read_csv_auto('employees.csv');
+CREATE OR REPLACE TABLE staff AS
+SELECT * FROM read_csv_auto('employees_by_country.csv');
+
+SELECT COUNT(*) AS n_rows FROM staff;
 ```
+
+Result:
+
+| n_rows |
+|---:|
+| 10 |
+
+*1 row*
 
 ---
 
-## 3. Example 1: Without PARTITION BY (Global Ranking)
+## 3. One Ranking for Everybody (no `PARTITION BY`)
 
-```
-When used without a partition, the 
-window functions look at the entire 
-dataset as one single group.
-```
-
-The Query:
+Without `PARTITION BY`, the whole table is one group.
 
 ```sql
-SELECT 
-    employee,
-    salary,
-    ROW_NUMBER() OVER (ORDER BY salary DESC) as row_num,
-    RANK()       OVER (ORDER BY salary DESC) as rnk,
-    DENSE_RANK() OVER (ORDER BY salary DESC) as dense_rnk
-FROM staff;
+SELECT employee,
+       salary,
+       ROW_NUMBER() OVER (ORDER BY salary DESC, employee) AS row_num,
+       RANK()       OVER (ORDER BY salary DESC)           AS rnk,
+       DENSE_RANK() OVER (ORDER BY salary DESC)           AS dense_rnk
+FROM staff
+ORDER BY row_num;
 ```
 
-The Result:
+Result:
 
-| employee | salary | row_num | rnk | dense_rnk | Logic Explanation |
-|---|---|---|---|---|---|
-| Alex | 7000 | 1 | 1 | 1 | Tie for 1st |
-| Zoe | 7000 | 2 | 1 | 1 | Tie for 1st |
-| Emma | 6000 | 3 | 3 | 2 | RANK skips 2; DENSE does not |
-| Liam | 6000 | 4 | 3 | 2 | Tie for 3rd |
-| Olivia | 5500 | 5 | 5 | 3 | RANK skips 4 |
-| John | 5000 | 6 | 6 | 4 | Three-way tie for 6th |
-| Sarah | 5000 | 7 | 6 | 4 | ... |
-| Ryan | 5000 | 8 | 6 | 4 | ... |
-| Maya | 4500 | 9 | 9 | 5 | RANK skips 7 and 8 |
-| Mike | 4000 | 10 | 10 | 6 | ... |
+| employee | salary | row_num | rnk | dense_rnk |
+|---|---:|---:|---:|---:|
+| Alex | 7000 | 1 | 1 | 1 |
+| Zoe | 7000 | 2 | 1 | 1 |
+| Emma | 6000 | 3 | 3 | 2 |
+| Liam | 6000 | 4 | 3 | 2 |
+| Olivia | 5500 | 5 | 5 | 3 |
+| John | 5000 | 6 | 6 | 4 |
+| Ryan | 5000 | 7 | 6 | 4 |
+| Sarah | 5000 | 8 | 6 | 4 |
+| Maya | 4500 | 9 | 9 | 5 |
+| Mike | 4000 | 10 | 10 | 6 |
+
+*10 rows*
+
+Read the ties:
+
+- **Alex and Zoe** (7000) share `rnk` 1 and `dense_rnk` 1. `ROW_NUMBER` still
+  gives them 1 and 2 — it never repeats a number.
+- **Emma** (6000) is `rnk` **3** — `RANK` skips 2 because two people are ahead of
+  her — but `dense_rnk` **2**: `DENSE_RANK` never skips.
+- **John, Ryan, Sarah** (5000) tie three ways: `rnk` 6, `dense_rnk` 4; the next
+  salary, Maya's, is `rnk` **9** (6 + 3).
+
+**The tie-breaker rule.** `ROW_NUMBER()` must put tied rows in *some* order. If
+the `ORDER BY` inside `OVER (...)` doesn't decide it, the order — and so which
+tied row gets which number — can change from run to run. Always add a
+tie-breaker column (here `employee`) so the numbering is repeatable. `RANK` and
+`DENSE_RANK` don't need one: tied rows get the same number on purpose.
 
 ---
 
-## 4. Example 2: With PARTITION BY (Ranking within Country)
+## 4. A Ranking per Country (`PARTITION BY country`)
 
-```
-This tells DuckDB to restart the 
-calculations every time the country 
-value changes.
-```
-
-The Query:
+`PARTITION BY` restarts the numbering in every country.
 
 ```sql
-SELECT 
-    country,
-    employee,
-    salary,
-    ROW_NUMBER() OVER (PARTITION BY country ORDER BY salary DESC) as row_num,
-    RANK()       OVER (PARTITION BY country ORDER BY salary DESC) as rnk,
-    DENSE_RANK() OVER (PARTITION BY country ORDER BY salary DESC) as dense_rnk
-FROM staff;
+SELECT country,
+       employee,
+       salary,
+       ROW_NUMBER() OVER (PARTITION BY country ORDER BY salary DESC, employee) AS row_num,
+       RANK()       OVER (PARTITION BY country ORDER BY salary DESC)           AS rnk,
+       DENSE_RANK() OVER (PARTITION BY country ORDER BY salary DESC)           AS dense_rnk
+FROM staff
+ORDER BY country, row_num;
 ```
 
-The Result:
+Result:
 
 | country | employee | salary | row_num | rnk | dense_rnk |
-|---|---|---|---|---|---|
+|---|---|---:|---:|---:|---:|
 | CAN | Alex | 7000 | 1 | 1 | 1 |
 | CAN | Zoe | 7000 | 2 | 1 | 1 |
 | CAN | Ryan | 5000 | 3 | 3 | 2 |
@@ -122,192 +135,88 @@ The Result:
 | USA | Sarah | 5000 | 2 | 1 | 1 |
 | USA | Mike | 4000 | 3 | 3 | 2 |
 
+*10 rows*
+
 ---
 
-## Summary Table: Which one should I use?
+## 5. Which One Should I Use?
 
-| Function | Handle Ties? | Sequential? | Typical Use Case |
+| Function | Ties get … | Numbers after a tie | Typical use |
 |---|---|---|---|
-| ROW_NUMBER | No (Unique IDs) | Yes (1, 2, 3, 4) | Pagination or picking exactly one row. |
-| RANK | Yes (Same value = Same rank) | No (1, 1, 3, 4) | Standard "Top 10" lists where ties skip places. |
-| DENSE_RANK | Yes (Same value = Same rank) | Yes (1, 1, 2, 3) | Grouped rankings where you don't want gaps. |
-
-
-
-## Tutorial: Using Multiple Partitions in DuckDB
-
-```
-Partitioning by multiple columns 
-(e.g., country and gender) creates 
-smaller, highly specific subgroups. 
-DuckDB will reset the counter only 
-when the combination of those columns 
-changes.
-```
-
-## 1. The Data (`employees.csv`)
-
-We will use the same 10 rows from the previous example.
-
-```
-country,gender,employee,salary
-USA,M,John,5000
-USA,F,Sarah,5000
-USA,M,Mike,4000
-UK,F,Emma,6000
-UK,M,Liam,6000
-UK,F,Olivia,5500
-CAN,M,Alex,7000
-CAN,F,Zoe,7000
-CAN,M,Ryan,5000
-CAN,F,Maya,4500
-```
+| `ROW_NUMBER()` | different numbers (needs a tie-breaker) | 1, 2, 3, 4 | pick exactly one row; pagination |
+| `RANK()` | the same number | skips: 1, 1, 3, 4 | "top 10" lists where ties take up places |
+| `DENSE_RANK()` | the same number | no gaps: 1, 1, 2, 3 | "the 2nd-highest salary" |
 
 ---
 
-## 2. The SQL Query (Multi-Column Partition)
+## 6. Partitioning by Two Columns
 
-```
-In this query, we partition by both 
-country and gender. This allows us to 
-see who the top earner is for Males 
-in Canada, Females in Canada, Males 
-in the USA, etc.
-```
+`PARTITION BY country, gender` makes smaller groups: the numbering restarts for
+every **combination** of country and gender.
+
+**Question:** *who is the top earner among the men in Canada, the women in
+Canada, the men in the USA, and so on?*
 
 ```sql
-SELECT 
-    country,
-    gender,
-    employee,
-    salary,
-    ROW_NUMBER() OVER (
-        PARTITION BY country, gender 
-        ORDER BY salary DESC
-    ) as row_num,
-    RANK() OVER (
-        PARTITION BY country, gender 
-        ORDER BY salary DESC
-    ) as rnk
+SELECT country,
+       gender,
+       employee,
+       salary,
+       ROW_NUMBER() OVER (PARTITION BY country, gender ORDER BY salary DESC, employee) AS row_num,
+       RANK()       OVER (PARTITION BY country, gender ORDER BY salary DESC)           AS rnk
 FROM staff
 ORDER BY country, gender, row_num;
 ```
 
+Result:
+
+| country | gender | employee | salary | row_num | rnk |
+|---|---|---|---:|---:|---:|
+| CAN | F | Zoe | 7000 | 1 | 1 |
+| CAN | F | Maya | 4500 | 2 | 2 |
+| CAN | M | Alex | 7000 | 1 | 1 |
+| CAN | M | Ryan | 5000 | 2 | 2 |
+| UK | F | Emma | 6000 | 1 | 1 |
+| UK | F | Olivia | 5500 | 2 | 2 |
+| UK | M | Liam | 6000 | 1 | 1 |
+| USA | F | Sarah | 5000 | 1 | 1 |
+| USA | M | John | 5000 | 1 | 1 |
+| USA | M | Mike | 4000 | 2 | 2 |
+
+*10 rows*
+
+- **More columns, smaller groups:** instead of ranking against everyone in the
+  country, each person is ranked against people of the same gender in that
+  country.
+- **The reset:** `row_num` starts again at 1 for each new country + gender
+  combination.
+- **A typical use:** the most expensive product in every category *and*
+  sub-category.
+
 ---
 
-## 3. The Result
+## 7. Filtering on a Rank: `QUALIFY`
 
-| country | gender | employee | salary | row_num | rnk | Notes |
-|---|---|---|---|---|---|---|
-| CAN | F | Zoe | 7000 | 1 | 1 | Top Female in CAN |
-| CAN | F | Maya | 4500 | 2 | 2 | |
-| CAN | M | Alex | 7000 | 1 | 1 | Top Male in CAN |
-| CAN | M | Ryan | 5000 | 2 | 2 | |
-| UK | F | Emma | 6000 | 1 | 1 | Top Female in UK |
-| UK | F | Olivia | 5500 | 2 | 2 | |
-| UK | M | Liam | 6000 | 1 | 1 | Top Male in UK |
-| USA | F | Sarah | 5000 | 1 | 1 | Top Female in USA |
-| USA | M | John | 5000 | 1 | 1 | Top Male in USA |
-| USA | M | Mike | 4000 | 2 | 2 | |
-
----
-
-## Key Takeaways for Multi-Partitioning
-
-```
-   1. Granularity: Adding more columns to 
-      PARTITION BY makes your groups more 
-      "granular." Instead of ranking against 
-      everyone in the country, you are only 
-      ranking against people of the same gender 
-      within that country.
-      
-   2. Resetting: The ROW_NUMBER resets to 1 
-      every time a new combination of 
-      country + gender appears.
-   
-   3. Use Case: This is extremely useful for 
-      identifying "Best in Class" across 
-      multiple categories—for example, finding 
-      the most expensive product in every Category 
-      and Sub-Category.
-```
-
-#  DuckDB and QUALIFY clause
-
-```
-DuckDB has a special shortcut that 
-lets you filter window functions 
-without using a subquery.
-
-The QUALIFY clause is one of DuckDB's 
-best "power features." In standard SQL, 
-you cannot use window functions in a 
-WHERE clause because window functions 
-are calculated after filtering. 
-
-Normally, you have to use a CTE or 
-Subquery.
-
-QUALIFY allows you to filter the results 
-of window functions directly in your main 
-query, making your code much cleaner.
-```
-
-## 1. The Goal
-
-```
-Find only the highest-paid employee 
-for each gender within each country.
-```
-
-----
-
-## 2. The DuckDB SQL (The "Old" Way vs. The DuckDB Way)
-
-## The "Old" Standard SQL (Using a CTE)
+A window function is computed **after** `WHERE`, so you can't write
+`WHERE ROW_NUMBER() OVER (...) = 1`. The standard way is a CTE (or subquery):
 
 ```sql
 WITH ranked_staff AS (
-    SELECT 
-        country, gender, employee, salary,
-        ROW_NUMBER() OVER (
-           PARTITION BY country, gender 
-           ORDER BY salary DESC
-        ) as rn
+    SELECT country, gender, employee, salary,
+           ROW_NUMBER() OVER (PARTITION BY country, gender
+                              ORDER BY salary DESC, employee) AS rn
     FROM staff
 )
-SELECT * 
-FROM ranked_staff 
-WHERE rn = 1;
+SELECT country, gender, employee, salary
+FROM ranked_staff
+WHERE rn = 1
+ORDER BY country, gender;
 ```
 
-## The DuckDB Way (Using QUALIFY)
-
-```
-Notice how we don't even need to 
-include the ROW_NUMBER in the 
-SELECT list if we don't want to.
-```
-
-```sql
-SELECT 
-    country, 
-    gender, 
-    employee, 
-    salary
-FROM staff
-QUALIFY ROW_NUMBER() OVER (
-   PARTITION BY country, gender 
-   ORDER BY salary DESC
-) = 1;
-```
----
-
-## 3. The Result
+Result:
 
 | country | gender | employee | salary |
-|---|---|---|---|
+|---|---|---|---:|
 | CAN | F | Zoe | 7000 |
 | CAN | M | Alex | 7000 |
 | UK | F | Emma | 6000 |
@@ -315,36 +224,40 @@ QUALIFY ROW_NUMBER() OVER (
 | USA | F | Sarah | 5000 |
 | USA | M | John | 5000 |
 
----
+*6 rows*
 
-## 4. Why this is powerful
-
-```
-   1. Cleaner Code: You avoid nesting your queries.
-   
-   2. Logic Separation: You use WHERE to filter 
-      raw rows (e.g., WHERE salary > 0) and 
-      QUALIFY to filter the results of your 
-      window calculations.
-      
-   3. Flexibility: You can use any ranking function 
-      (RANK, DENSE_RANK, ROW_NUMBER) or even moving 
-      averages inside the QUALIFY clause.
-```
-
-## Pro Tip: Using it for Duplicates
-
-```
-If you have a table with duplicate entries 
-and only want to see one unique row per employee:
-```
+DuckDB also has a shortcut, `QUALIFY` — a `WHERE` for window functions — so no
+CTE is needed (and the rank need not be in the `SELECT` list):
 
 ```sql
-SELECT * 
+SELECT country,
+       gender,
+       employee,
+       salary
 FROM staff
-QUALIFY ROW_NUMBER() OVER (
-    PARTITION BY employee ORDER BY salary DESC
-) = 1;
+QUALIFY ROW_NUMBER() OVER (PARTITION BY country, gender
+                           ORDER BY salary DESC, employee) = 1
+ORDER BY country, gender;
 ```
 
+Result:
 
+| country | gender | employee | salary |
+|---|---|---|---:|
+| CAN | F | Zoe | 7000 |
+| CAN | M | Alex | 7000 |
+| UK | F | Emma | 6000 |
+| UK | M | Liam | 6000 |
+| USA | F | Sarah | 5000 |
+| USA | M | John | 5000 |
+
+*6 rows*
+
+Both return the same 6 rows. Use `WHERE` to filter raw rows and `QUALIFY` to
+filter on window results; `QUALIFY` works with `RANK`, `DENSE_RANK`,
+`ROW_NUMBER`, or any other window function. (`QUALIFY` is not standard SQL —
+MySQL, for example, doesn't have it; there, use the CTE.)
+
+---
+
+*MSIS-2402 — Database Management Systems: Fundamentals of SQL — Winter 2027*

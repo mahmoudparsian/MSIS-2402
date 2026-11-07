@@ -16,8 +16,11 @@ There are two kinds:
   marimo edit Group_By_Notebook.py
   ```
 
-- **Reading tutorials** (`*.md`) — read them on GitHub; copy the SQL into a
-  notebook or the DuckDB command line to try it.
+- **Reading tutorials** (`*.md`) — read them on GitHub; to try the SQL, start
+  the DuckDB command line (or a Marimo notebook) **from the tutorial's own
+  folder**, where its CSV files are — each tutorial's Setup section gives the
+  exact `cd` command. Every result shown was produced by running the query
+  shown above it.
 
 ---
 
@@ -27,7 +30,7 @@ There are two kinds:
 
 | Tutorial | Type | What you'll learn |
 |---|:---:|---|
-| [Getting the course files with Git](git/README.md) | Reading | Clone the course repository once, then pull each week's new material — optional; downloading the ZIP works too |
+| [Getting the course files with Git](git/README.md) | Reading | Clone the course repository once, then pull each week's new material — optional; [ZIP downloads](../course_information/DOWNLOADING_COURSE_FILES.md) work too |
 | [DuckDB from the command line](duckdb_from_command_line/README.md) | Reading | Run DuckDB in a terminal, query a CSV file, and save your work — no Python needed. Separate [macOS](duckdb_from_command_line/duckdb_from_command_line_on_macbook.md) and [Windows](duckdb_from_command_line/duckdb_from_command_line_on_windows.md) guides |
 | [Creating tables from CSV files](create_tables_from_CSV_files/TUTORIAL_Create_Tables_from_CSV_Files_marimo.py) | Notebook | Load CSV files with and without headers, and Parquet files, into DuckDB tables — from auto-detection to full schema control. Also as [reading](create_tables_from_CSV_files/TUTORIAL_Create_Tables_from_CSV_Files.md) |
 
@@ -38,14 +41,14 @@ There are two kinds:
 | [GROUP BY tutorial 101](group_by/Group_By_Notebook.py) | Notebook | Grouping and aggregate functions, step by step, with charts. Also as [reading](group_by/Group_By_Tutorial.md) |
 | [GROUP BY with office supplies](group_by/office_supplies_group_by_tutorial.md) | Reading | The same ideas on a small sales dataset ([`office_supplies.csv`](group_by/office_supplies.csv)) |
 | [SQL joins](joins/joins_tutorial.md) | Reading | `INNER`, `LEFT`, and `RIGHT` joins on two small tables ([`employees.csv`](joins/employees.csv), [`departments.csv`](joins/departments.csv)) |
-| [Window functions and ranking](window_functions/ranking_tutorial.md) | Reading | `RANK()`, `DENSE_RANK()`, `ROW_NUMBER()`, and `PARTITION BY` |
-| [`ROW_NUMBER()` example](window_functions/row_number_example.md) | Reading | A short worked example of numbering rows within groups |
+| [Window functions and ranking](window_functions/ranking_tutorial.md) | Reading | `RANK()`, `DENSE_RANK()`, `ROW_NUMBER()` (with a tie-breaker), `PARTITION BY`, and `QUALIFY` ([`employees_by_country.csv`](window_functions/employees_by_country.csv)) |
+| [`ROW_NUMBER()` example](window_functions/row_number_example.md) | Reading | A short worked example of numbering rows within groups ([`employees_by_department.csv`](window_functions/employees_by_department.csv)) |
 
 ### Data quality and design
 
 | Tutorial | Type | What you'll learn |
 |---|:---:|---|
-| [Deduplicating data](deduplication/deduplication_tutorial.md) | Reading | Find and remove duplicate rows in DuckDB |
+| [Deduplicating data](deduplication/deduplication_tutorial.md) | Reading | Find and remove duplicate rows in DuckDB ([`raw_data.csv`](deduplication/raw_data.csv)) |
 | [Database normalization](normalization/normalization_tutorial.md) | Reading | 1NF through BCNF — why and how to split a table |
 
 ### Beyond plain SQL

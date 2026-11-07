@@ -197,7 +197,7 @@ def _(con):
         print(f"\n{'='*60}")
         print(f"  {table.upper()}")
         print(f"{'='*60}")
-        con.sql(f"SELECT * FROM {table}").show()
+        con.sql(f"SELECT * FROM {table} ORDER BY 1").show()   # sorted by the first column (the id)
     return
 
 
@@ -402,6 +402,7 @@ def _(con):
            mask_email(email) AS masked_email,
            country
     FROM customers
+    ORDER BY customer_id
     """).show()
     return
 
@@ -719,6 +720,7 @@ def _(con):
     SELECT product_name,
            slugify(product_name) AS slug
     FROM products
+    ORDER BY product_id
     """).show()
     return
 
@@ -801,6 +803,7 @@ def _(con):
            country,
            country_label(country) AS region
     FROM customers
+    ORDER BY customer_id
     """).show()
 
     # Test with a NULL value
@@ -836,6 +839,7 @@ def _(con):
            email,
            hash_email(email) AS email_hash
     FROM customers
+    ORDER BY customer_id
     """).show()
     return
 

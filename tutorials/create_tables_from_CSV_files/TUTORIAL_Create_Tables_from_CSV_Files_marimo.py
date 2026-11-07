@@ -189,7 +189,7 @@ def _(mo):
 
     ## 4. Advanced Configuration: Explicit Typing
 
-    In production environments, relying on "sniffing" can be risky. If a column is empty in the first 100 rows, DuckDB might guess the wrong type. We can enforce types using the `columns` parameter.
+    Relying on "sniffing" can be risky. DuckDB guesses each column's type from a **sample of rows — 20,480 by default** (the `sample_size` option). If a value that doesn't fit the guess appears only later — say the code `ABC` in row 30,000 of a column that was all numbers until then — reading the file fails with a `Conversion Error`. To be safe, give the types yourself with the `columns` parameter (below), or let the sniffer read the whole file with `sample_size=-1`.
     """)
     return
 
@@ -256,10 +256,8 @@ def _(mo):
         Parquet is the "gold standard" for analytical data storage 
         because it is columnar and compressed. Since DuckDB is a 
         columnar engine, reading Parquet files is even more efficient 
-        than reading CSVs because DuckDB can skip metadata and only 
-        read the specific columns your query requires.
-
-        Here is the breakdown of how to handle Parquet files in DuckDB.
+        than reading CSVs: the column types are stored in the file,
+        and DuckDB reads only the columns your query needs.
     ```
     """)
     return
@@ -358,6 +356,9 @@ def _(mo):
     at once using "glob" patterns.
     ```
 
+    These are **patterns to adapt** — this tutorial's `data/` folder holds a single
+    Parquet file, so there is nothing here for them to read.
+
     ```sql
     -- Read all parquet files in the 'uploads' folder
     CREATE TABLE all_data AS SELECT * FROM 'uploads/*.parquet';
@@ -375,10 +376,9 @@ def _(mo):
     ---
     # 4. Reading from Remote Sources (S3/HTTP)
 
-    ```
-    One of DuckDB's "superpowers" is reading Parquet 
-    files directly from the cloud without downloading 
-    the whole file first.
+    One of DuckDB's "superpowers" is reading Parquet
+    files directly from the cloud without downloading
+    the whole file first. (An example to adapt — the URL below is a placeholder.)
 
     ```sql
     -- First, load the httpfs extension
@@ -426,7 +426,7 @@ def _(mo):
     ### Exercises for the Lab
 
     1. **Mismatch**: Try importing `users_header.csv` but set `header=False`. Observe how the header row becomes the first row of data.
-    2. **Globbing**: Create a third CSV and try `SELECT * FROM read_csv('*.csv')`. DuckDB will union them automatically!
+    2. **Globbing**: create `data/users_more.csv` with the **same three columns** as `users_header.csv` (for example the rows `400,dana,2023-04-10` and `500,erin,2023-05-12`), then run `SELECT * FROM read_csv('data/users*.csv') ORDER BY user_id`. DuckDB reads both files as one table — 5 rows. (`read_csv('data/*.csv')` would fail with `Schema mismatch between globbed files`: `logs_no_header.csv` has different columns.)
 
     ---
 

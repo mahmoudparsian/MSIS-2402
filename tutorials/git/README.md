@@ -1,9 +1,12 @@
 # Getting the Course Files with Git
 
-**Optional.** Downloading the ZIP (see `software_installation/`, Step 0) is all
-you need for this course. Use Git only if you already know it or want to learn
-it — the payoff is that **one command picks up each week's new material**
-instead of downloading a new ZIP.
+[← Tutorials](../README.md) · **Getting the course files with Git**
+
+**Optional.** Downloading ZIP files is all you need for this course — the whole
+repository (see `software_installation/`, Step 0), or one ZIP per week and per
+session's labs ([`DOWNLOADING_COURSE_FILES.md`](../../course_information/DOWNLOADING_COURSE_FILES.md)).
+Use Git only if you already know it or want to learn it — the payoff is that
+**one command picks up each week's new material** instead of downloading again.
 
 ---
 
@@ -47,23 +50,29 @@ git pull
 
 That's it — new and updated files appear in place.
 
-## 4. Keep your own work separate (so `git pull` never fails)
+## 4. Work on your own copy (so `git pull` never fails)
 
 `git pull` refuses to run if you have **edited** a file that the course has also
-updated, because it won't overwrite your work. Avoid that entirely by **never
-editing the course files in place**:
+updated, because it won't overwrite your work. Avoid that entirely: **never edit
+the course's own files — save a copy under a new name in the same folder, and
+work on the copy.**
 
-- Make your own folder **outside** `MSIS-2402` (for example
-  `Documents/MSIS-2402-my-work`).
-- **Copy** a lab or notebook there before you start working on it.
+- For a lab, the new name is its submission name: save
+  `week1_lab1a_student_marimo.py` as `lopez_maria_week1_lab1a_marimo.py` (your
+  name in front, `_student` dropped) in the same `LABS/week1_lab1/` folder — see
+  [`LABS/README.md`](../../LABS/README.md).
+- `git pull` never changes or deletes files you created, so your copy is safe.
+- Keep the copy **in the same folder**: notebooks find their data by a relative
+  path (for example `../../datasets/oltp_database/`), so a copy moved
+  elsewhere can't find its data.
 
 ## 5. If `git pull` complains anyway
 
 If you did edit a course file and `git pull` stops with a message like
 *"Your local changes to the following files would be overwritten"*:
 
-1. **Save a copy of your work first** — copy any file you changed to your own
-   work folder (Step 4).
+1. **Save a copy of your work first** — save each file you changed under a new
+   name (Step 4).
 2. Throw away your edits to the course files and pull again:
 
    ```
@@ -83,3 +92,7 @@ anything of yours) and clone again — it takes a minute and always works.
 You don't need a GitHub account, and you will **not** push anything back —
 the course repository is read-only for students. Submit your labs on Camino
 ([how](../../course_information/ASSIGNMENTS_and_GRADING.md#3-how-to-submit-a-lab)), not through Git.
+
+---
+
+*MSIS-2402 — Database Management Systems: Fundamentals of SQL — Winter 2027*

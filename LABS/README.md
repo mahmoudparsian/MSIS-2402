@@ -68,8 +68,9 @@ If you haven't set up the course software yet, see
 
 ### Getting new labs
 
-- **Downloaded the ZIP?** Download the repository again after each session's
-  labs are released.
+- **No git?** Download that session's ZIP (`sessionNN-labs.zip`, ready about a
+  minute after the release — [links](../course_information/DOWNLOADING_COURSE_FILES.md#-labs--one-zip-per-session)),
+  or the whole repository again.
 - **Cloned with Git?** Run `git pull` — see the
   [Git guide](../tutorials/git/README.md).
 
