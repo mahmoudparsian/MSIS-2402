@@ -32,7 +32,7 @@ Eight stories. Five belong to a single week; three span several.
 | [`books_users_ratings/`](books_users_ratings/) | 1.0M ratings | 4 | **2 · 3 Part 2** | Spans weeks: build + joins in Week 2; Part 3 in Week 3, Part 2 |
 | [`taxi_210K_trips/`](taxi_210K_trips/) | 210K | 1 | **3 · Part 1** | **Primary** — time-series |
 | [`shopify_sales_60k_records/`](shopify_sales_60k_records/) | 60K | 2 | **3 · Part 1** | Alternative — adds profit and a quarantine table |
-| [`citi_bike_one_million/`](citi_bike_one_million/) | 1.0M | 1 | **3 · Part 1 → Part 2** | Alternative — the largest, and adds maps |
+| [`citi_bike_one_million/`](citi_bike_one_million/) | 10,889 rides (in a 1.0M-line file) | 1 | **3 · Part 1 → Part 2** | Alternative — starts with a data-quality trap, and adds maps |
 
 Every story folder has its own `README.md` with the full details.
 
@@ -48,7 +48,7 @@ Every story folder has its own `README.md` with the full details.
 | **1 · Part 2** | Aggregation & KPIs | **`coffee_shop_149K_records/`** | 149K rows, rich grouping columns; almost every query is a `GROUP BY` |
 | **2** | Multiple tables — keys, joins, referential integrity | **`books_users_ratings/`** | 4 real tables, enforced keys, and 10.3% orphaned foreign keys to reason about |
 | **3 · Part 1** | Operational analysis, window functions | **`taxi_210K_trips/`** | Real timestamps — the questions are genuinely time-based |
-| **3 · Part 2** | Advanced SQL, CTEs | **`nova_retail/`** (notebook 3) | 13 CTEs and 12 window functions across 20 queries |
+| **3 · Part 2** | Advanced SQL, CTEs | **`nova_retail/`** (notebook 3) | 13 queries with CTEs and 12 with window functions, across 15 questions |
 
 Week 4 (web database applications) and Week 5 (modern data systems) are not
 SQL-analysis weeks, so no data story is mapped to them.
@@ -79,7 +79,7 @@ SQL-analysis weeks, so no data story is mapped to them.
 
 - **`taxi_210K_trips/`** — real timestamps, rush-hour patterns, messy operational records.
 - `shopify_sales_60k_records/` — adds profit, returns, and a bad-row quarantine table.
-- `citi_bike_one_million/` — 1M rows and a third notebook of maps.
+- `citi_bike_one_million/` — a 1M-line file that is 99% empty lines (finding them is the first lesson), and a third notebook of maps.
 
 **Week 3, Part 2 — Advanced SQL & CTEs**
 
@@ -163,21 +163,22 @@ run just before their analysis partner.
 
 ### What each story contains
 
-| Story | Tables | Rows | Queries | Dominant techniques | Week |
+| Story | Tables | Rows | Questions | Dominant techniques | Week |
 |---|:---:|---:|---:|---|---|
 | `sales_table_200_rows` | 1 | 200 | 25 | `GROUP BY` ×17, light CTE/window | 1 · Part 1 |
-| `nova_retail` notebook 1 | 4 | 20K orders | 16 | `GROUP BY` ×8, one join | 1 |
-| `coffee_shop_149K_records` | 1 | 149K | 10 | `GROUP BY`, CTE ×4, window ×4 | 1 · Part 2 |
-| `olympic_120_years` | 1 | 270K | 24 | `GROUP BY` ×20, `HAVING`, `CASE` | 1 · Part 2 |
+| `nova_retail` notebook 1 | 4 | 20K orders | 15 | `GROUP BY` ×8, one join | 1 |
+| `coffee_shop_149K_records` | 1 | 149K | 30 | `GROUP BY` ×25, CTE ×5, window ×5 | 1 · Part 2 |
+| `olympic_120_years` | 1 | 271K | 25 | `GROUP BY` ×20, `HAVING`, `CASE` | 1 · Part 2 |
 | `books_users_ratings` build | 4 | 1.0M ratings | — | ETL, constraints, dedup, quarantine | 2 |
-| `nova_retail` notebook 2 | 4 | 20K orders | 16 | **`JOIN` ×12**, `LEFT JOIN` ×2 | 2 |
+| `nova_retail` notebook 2 | 4 | 20K orders | 15 | **`JOIN` ×12**, `LEFT JOIN` ×2 | 2 |
 | `books_users_ratings` analyze | 4 | 1.0M ratings | 18 | **`JOIN` ×11**, anti-joins, CTE ×6, `QUALIFY` | 2 → 3 · Part 2 |
-| `taxi_210K_trips` | 1 | 210K | 31 | Time-based, window ×7, ranking + CTEs | 3 · Part 1 |
-| `shopify_sales_60k_records` | 2 | 60K | 26 | `GROUP BY` ×21, window ×5, explicit ranking section | 3 · Part 1 |
-| `citi_bike_one_million` | 1 | 1.0M | 30 | window ×9, CTE ×8, ranking section, maps | 3 · Part 1 |
-| `nova_retail` notebook 3 | 4 | 20K orders | 20 | **CTE ×13, window ×12**, advanced tier | 3 · Part 2 |
+| `taxi_210K_trips` | 1 | 210K | 30 | Time-based, window ×7, ranking + CTEs | 3 · Part 1 |
+| `shopify_sales_60k_records` | 2 | 60K | 30 | `GROUP BY` ×21, window ×5, explicit ranking section | 3 · Part 1 |
+| `citi_bike_one_million` | 1 | 10,889 | 30 | window ×9, CTE ×8, ranking section, maps | 3 · Part 1 |
+| `nova_retail` notebook 3 | 4 | 20K orders | 15 | **CTE ×13, window ×12**, advanced tier | 3 · Part 2 |
 
-Counts come from scanning each notebook's SQL cells, not from its prose.
+**Questions** = the numbered questions in the notebook. **Technique counts** (e.g. `JOIN` ×12) = how many of
+the notebook's queries use that technique, counted by scanning its SQL (2026-11-06).
 
 ### The reasoning in one line each
 
@@ -194,8 +195,8 @@ Counts come from scanning each notebook's SQL cells, not from its prose.
 - **Week 3, Part 1 · `taxi`, `shopify`, `citi_bike`** — operational data (trips,
   orders, rides) with explicit ranking and window-function sections. `citi_bike`
   adds a third notebook of maps.
-- **Week 3, Part 2 · `nova_retail` notebook 3** — the advanced tier: 13 CTEs and 12
-  window functions across 20 queries.
+- **Week 3, Part 2 · `nova_retail` notebook 3** — the advanced tier: 13 queries with CTEs and
+  12 with window functions, across 15 questions.
 
 ### Stories that span weeks
 

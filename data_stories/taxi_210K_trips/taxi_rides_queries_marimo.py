@@ -17,14 +17,13 @@ def _(mo):
     mo.md(r"""
     # NYC Taxi Rides — SQL Data Story
 
-    ## Introduction to Database Management (2402)
+    ## MSIS-2402 — Database Management Systems: Fundamentals of SQL
 
-    ```
-    This notebook uses **DuckDB** to explore ~210,000 
-    NYC yellow‑taxi trips from January 2015.
+    This notebook uses **DuckDB** to explore 210,035
+    NYC yellow-taxi trips from January 2015.
 
-    Each section introduces a SQL concept, shows the 
-    query, displays the result, and (where helpful) 
+    Each section introduces a SQL concept, shows the
+    query, displays the result, and (where helpful)
     plots it.
     """)
     return
@@ -1528,8 +1527,7 @@ def _(mo):
     | **Ranking** | `WITH` (CTEs), `ROW_NUMBER`, `RANK`, `DENSE_RANK`, `NTILE`, `PERCENT_RANK`, `PARTITION BY` |
 
     ---
-    *Notebook generated for  <br>
-    2402 — Introduction to Database Management, Santa Clara University.*
+    *MSIS-2402 — Database Management Systems: Fundamentals of SQL — Santa Clara University.*
     """)
     return
 

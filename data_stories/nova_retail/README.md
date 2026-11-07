@@ -1,5 +1,7 @@
 # 🛒 Nova Retail — Data Story
 
+[← Data stories](../README.md) · **Nova Retail**
+
 **MSIS-2402 · Week 1** *(notebook 1)* · **Week 2 — Joins** *(notebook 2)* ·
 **Week 3, Part 2 — Advanced SQL** *(notebook 3)*
 
@@ -14,18 +16,28 @@ the two that can teach `JOIN` honestly. (The other is `books_users_ratings/`.)
 
 ## The schema
 
+| Table | Columns |
+|---|---|
+| `customers` | `customer_id`, `gender`, `country`, `customer_segment`, `signup_date` |
+| `products` | `product_id`, `category`, `price` |
+| `orders` | `order_id`, `customer_id`, `order_date` |
+| `order_items` | `order_item_id`, `order_id`, `product_id`, `quantity`, `category`, `price`, `sales_amount` |
+
+How they join:
+
 ```
-   customers                orders               order_items            products
-┌──────────────┐      ┌──────────────────┐   ┌──────────────────┐   ┌──────────────┐
-│ customer_id  │◄──FK─│ customer_id   FK │◄FK│ order_id      FK │   │ product_id PK│
-│      PK      │      │ order_id      PK │   │ product_id    FK │──►│ price, name  │
-│ name, …      │      │ order_date, …    │   │ quantity, price  │   │ category, …  │
-└──────────────┘      └──────────────────┘   └──────────────────┘   └──────────────┘
-      1 ─── many              1 ─── many              many ─── 1
+customers.customer_id  1 ──< many  orders.customer_id
+orders.order_id        1 ──< many  order_items.order_id
+products.product_id    1 ──< many  order_items.product_id
 ```
 
+These are the **logical** keys the joins use (`customer_id`, `order_id`,
+`product_id`). `data/schema.sql` declares no `PRIMARY KEY` or `FOREIGN KEY`
+constraints, so DuckDB does not enforce them — for a story with enforced keys,
+see `books_users_ratings/`.
+
 | Table | Rows | Meaning |
-|---|---|---|
+|---|---:|---|
 | `customers` | 1,005 | One row per customer |
 | `products` | 2,004 | One row per product |
 | `orders` | 20,000 | One row per order |
@@ -41,71 +53,64 @@ the *relationship*, not to either side.
 
 | Notebook | Content | Week |
 |---|---|---|
-| `notebook_1_basics_marimo.py` | Basic (5) + Basic+ (10) queries | **1–2** |
-| `notebook_2_intermediate_marimo.py` | Basic+ (5) + Intermediate (10) — **12 joins** | **3** |
-| `notebook_3_advanced_marimo.py` | Intermediate (5) + Advanced (10) — **13 CTEs, 12 window functions** | **5** |
+| `notebook_1_basics_marimo.py` | Basic (5) + Basic+ (10) queries | **1** |
+| `notebook_2_intermediate_marimo.py` | Basic+ (5) + Intermediate (10) — **12 queries with joins** | **2** |
+| `notebook_3_advanced_marimo.py` | Intermediate (5) + Advanced (10) — **13 queries with CTEs, 12 with window functions** | **3, Part 2** |
 
 ---
 
-## Pipeline — two stages, run separately
+## Run it
 
-**1. Generate the data** (`data_generator/nova_retail_generator.py`):
+All commands start in the course repository folder (`MSIS-2402-main` if you
+downloaded the ZIP).
 
-```bash
-cd data_generator
-python3 nova_retail_generator.py --size medium --seed 2026 --out ../data
-```
-
-**The `--out ../data` flag is required and easy to miss** — the script's
-own default (`--out nova_dataset`, i.e. a new `nova_dataset/` folder
-inside `data_generator/`) does **not** point at the `data/` folder the
-rest of this pipeline actually reads from. Running the generator with no
-arguments silently produces output nobody downstream will ever use.
-`--size` is one of `small` (200 customers / 10K orders), `medium` (1,000 /
-100K — what `data/` currently contains), or `large` (10,000 / 1M).
-
-This writes `customers.csv`, `products.csv`, `orders.csv`,
-`order_items.csv`, `schema.sql`, `data.sql`, `reset_duckdb.sql`, and
-`verify_dataset.sql` into `data/`.
-
-**Note:** the current `data/` folder contains only the first six of those —
-`reset_duckdb.sql` and `verify_dataset.sql` are absent. That is further evidence
-that what is in `data/` today was not produced by a straightforward run of the
-current generator (see the note below).
-
-**Note on the data currently in `data/`:** it doesn't exactly match any of
-the three presets — real counts are 1,005 customers / 20,000 orders,
-while `medium` would produce exactly 1,000/100,000 and `small` exactly
-200/10,000. Whatever produced the current `data/` folder wasn't a
-straightforward `--size medium` or `--size small` run with current
-defaults, and the exact original invocation isn't recorded anywhere.
-Regenerating with `--size medium` will **not** reproduce the current
-dataset — it'll produce a different (larger) one. That's fine for
-teaching purposes (the schema and query patterns don't depend on exact
-row counts) but don't assume `--size medium` gets you back to what's
-here now.
-
-**2. Build the database** (`build_nova_db.sh`), from **this folder**,
-not `data_generator/`:
+**1. Build the database once** — about 15 seconds; it creates `nova_db.duckdb`
+from `data/schema.sql` and `data/data.sql`:
 
 ```bash
-./build_nova_db.sh
+cd data_stories/nova_retail
+python3 -c "import duckdb; con = duckdb.connect('nova_db.duckdb'); [con.execute(open(f).read()) for f in ('data/schema.sql', 'data/data.sql')]"
 ```
 
-This just replays the pre-generated SQL (`cat data/schema.sql
-data/data.sql | duckdb nova_db.duckdb`) — it does **not** re-run the
-generator. If you want fresh/different data, run stage 1 first.
+On Windows, type `python` instead of `python3`. (`./build_nova_db.sh` does the
+same, but needs a bash shell and the DuckDB command-line tool.) To rebuild,
+delete `nova_db.duckdb` first — the `CREATE TABLE` statements fail if the tables
+already exist.
 
-## Notebooks
+**2. Open a notebook** — from the same folder:
 
-`notebook_1_basics_marimo.py`, `notebook_2_intermediate_marimo.py`,
-`notebook_3_advanced_marimo.py` — connect read-only to `nova_db.duckdb`
-built in stage 2.
+```bash
+marimo edit notebook_1_basics_marimo.py
+```
 
-**`build_notebooks.py` is not part of this pipeline** — it's a leftover
-generator for `.ipynb` versions of these three notebooks
-(`notebook_1_basics.ipynb`, etc.). Those `.ipynb` files are **not present
-anywhere in this repo** (verified — zero `.ipynb` files exist under
-`github/` or `instructor/`); only the `_marimo.py` versions actually
-shipped. Running `build_notebooks.py` would produce `.ipynb` files that
-don't currently exist here — do that intentionally, not by accident.
+The notebooks open `nova_db.duckdb` **read-only**, so they can't change the data.
+
+---
+
+## Regenerating the data (optional — not needed for the course)
+
+`data/` is pre-generated; you never need to regenerate it. If you want
+different data, the generator is `data_generator/nova_retail_generator.py`:
+
+```bash
+cd data_stories/nova_retail/data_generator
+python3 nova_retail_generator.py --size small --seed 2026 --out ../data
+```
+
+- `--out ../data` is required: without it, the output goes to a new
+  `data_generator/nova_dataset/` folder that nothing else reads.
+- `--size` is `small` (200 customers / 10,000 orders), `medium`
+  (1,000 / 100,000), or `large` (10,000 / 1,000,000).
+- The data in `data/` matches **none** of these presets (1,005 customers /
+  20,000 orders), so regenerating replaces it with a different dataset — and
+  the numbers quoted in the notebooks' text will no longer match.
+
+Then delete `nova_db.duckdb` and build again (step 1 above).
+
+`build_notebooks.py` is an old generator script for Jupyter (`.ipynb`)
+versions of the notebooks — it is not part of the course; the notebooks you
+open are the `*_marimo.py` files.
+
+---
+
+*MSIS-2402 — Database Management Systems: Fundamentals of SQL — Winter 2027*

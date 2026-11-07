@@ -13,6 +13,7 @@ It is also the only story here that ships a **quarantine table** for bad rows.
 ## Run it
 
 ```bash
+cd data_stories/shopify_sales_60k_records                 # from the course repository folder
 marimo edit 01_data_setup_marimo.py    # build shopify_sales.duckdb — run first
 marimo edit 02_queries_marimo.py       # the analysis
 ```

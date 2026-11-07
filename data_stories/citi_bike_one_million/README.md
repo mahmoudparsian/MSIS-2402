@@ -1,28 +1,35 @@
-# 🚲 Citi Bike — One Million Rides
+# 🚲 Citi Bike — 10,889 Rides in a One-Million-Line File
 
 **MSIS-2402 · Week 3, Part 1 — Operational Database Analysis** *(→ Week 3, Part 2 for the CTE section)*
 
-**One million New York City bike-share rides**, with timestamps *and* coordinates.
-The largest single-table story in this folder, and the only one that ends in maps.
+**New York City bike-share rides**, with timestamps *and* coordinates — the only story
+that ends in maps.
+
+**The data-quality lesson comes first:** `citibike_tutorial.csv` has 1,001,032 rows, but
+only **10,889** are rides. The other **990,143** lines are completely empty (nothing but
+commas). Notebook 1 finds them, shows why they must not be counted, and builds the
+`rides` table from the 10,889 real rides only. (The folder keeps its original name.)
 
 ---
 
 ## Run it — three notebooks, in order
 
 ```bash
+cd data_stories/citi_bike_one_million                 # from the course repository folder
 marimo edit notebook1_build_database_marimo.py    # build citibike.duckdb — run first
-marimo edit notebook2_analyze_data_marimo.py      # 30 SQL queries
-marimo edit notebook3_maps_marimo.py              # geographic analysis
+marimo edit notebook2_analyze_data_marimo.py      # 30 questions
+pip install folium                                # once — notebook 3 needs it
+marimo edit notebook3_maps_marimo.py              # geographic analysis (internet needed for map tiles)
 ```
 
 | File | Role |
 |---|---|
-| `notebook1_build_database_marimo.py` | Loads the CSV, renames columns, adds derived columns |
-| `notebook2_analyze_data_marimo.py` | **The main analysis** — 30 queries in four parts |
+| `notebook1_build_database_marimo.py` | Loads the CSV, removes the 990,143 empty rows, renames columns, adds derived columns |
+| `notebook2_analyze_data_marimo.py` | **The main analysis** — 30 questions in four parts |
 | `notebook3_maps_marimo.py` | Interactive maps of the station network |
 | `plot_helpers.py` | Chart functions |
 | `map_helpers.py` | Map functions (uses **folium**) |
-| `citibike_tutorial.csv` | **1,001,031 rides** |
+| `citibike_tutorial.csv` | **1,001,032 rows: 10,889 rides + 990,143 empty lines** |
 | `citibike.duckdb` | Built by notebook 1 |
 | `BUILD_PROMPT.md`, `using_LAT_LON_columns.md` | Build notes (provenance) |
 
@@ -95,8 +102,8 @@ list of names. The same result on a map is a picture of where New York actually 
 - **`birth_year` is unreliable.** Some riders report implausible years, which makes
   `rider_age` occasionally absurd. Worth filtering, and worth discussing.
 - **`gender` is coded**, not spelled out — check the values before grouping on it.
-- **One million rows is enough to feel slow** in a bad query. That is a feature: it is
-  the only story here where an inefficient query is noticeably inefficient.
+- **Most of the file is empty lines.** Before trusting any `COUNT(*)` on a new file,
+  check what the rows actually contain — here, 990,143 of 1,001,032 rows are blank.
 
 ---
 

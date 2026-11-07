@@ -11,6 +11,7 @@ which is exactly what makes a good teaching set.
 ## Run it
 
 ```bash
+cd data_stories/olympic_120_years                 # from the course repository folder
 marimo edit olympics_analysis_marimo.py    # interactive
 marimo run  olympics_analysis_marimo.py    # read-only, for students
 ```

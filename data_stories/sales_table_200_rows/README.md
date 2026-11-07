@@ -14,6 +14,7 @@ realistic way to verify a query.
 ## Run it
 
 ```bash
+cd data_stories/sales_table_200_rows                 # from the course repository folder
 marimo edit sales_queries_marimo.py    # interactive
 marimo run  sales_queries_marimo.py    # read-only, for students
 ```

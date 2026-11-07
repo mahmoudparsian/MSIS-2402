@@ -11,6 +11,7 @@ natural fit for the week where `GROUP BY` is the point.
 ## Run it
 
 ```bash
+cd data_stories/coffee_shop_149K_records                 # from the course repository folder
 marimo edit coffee_shop_build_db_marimo.py     # build the database — run first
 marimo edit coffee_shop_sql_analysis_marimo.py # the analysis
 ```

@@ -132,7 +132,7 @@ def _(mo):
 
     **What are we doing?**  
     We use `COUNT(DISTINCT bike_id)` to find how many different bikes appear in the data.  
-    This is different from `COUNT(*)` because the same bike can make thousands of trips.
+    This is different from `COUNT(*)` because the same bike can make several trips (in this data, up to 9).
 
     **SQL concepts:** `COUNT`, `DISTINCT`
     """)
@@ -1001,9 +1001,10 @@ def _(mo):
     We find the bikes with the most total rides and the most total distance traveled.  
     This identifies the "workhorses" of the fleet.
 
-    Only about 1% of rides in this dataset record a bike ID (the rest are `NULL`),
-    so we filter with `WHERE bike_id IS NOT NULL`. Without it, all the `NULL`s
-    form one group of about 990,000 rides and top the list as if they were one bike.
+    `WHERE bike_id IS NOT NULL` is a safety habit when grouping by an ID: rows with a
+    `NULL` ID would all fall into **one** `NULL` group and could top the list as if they
+    were a single bike. (In the raw CSV, 990,143 empty rows had no bike ID; notebook 1
+    removed them, so here the filter removes nothing.)
 
     **SQL concepts:** `WHERE ... IS NOT NULL`, `GROUP BY`, multiple aggregations, `SUM`, fleet analysis
     """)

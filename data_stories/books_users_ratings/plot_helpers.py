@@ -33,6 +33,10 @@ any correlation you like by rescaling, so it is avoided.
 import decimal
 
 import matplotlib.pyplot as plt
+
+# Show "$" in titles and labels as a plain dollar sign. Without this, matplotlib
+# reads the text between two "$" signs (e.g. "$100-$250") as a math formula.
+plt.rcParams["text.parse_math"] = False
 import matplotlib.ticker as ticker
 
 # ── Palette (validated: CVD ΔE 24.7 worst adjacent pair, all contrast ≥ 3:1) ──

@@ -10,15 +10,16 @@ makes this one of only two stories here that can teach time-based analysis.
 ## Run it
 
 ```bash
+cd data_stories/taxi_210K_trips                 # from the course repository folder
 marimo edit taxi_rides_queries_marimo.py    # interactive
 marimo run  taxi_rides_queries_marimo.py    # read-only, for students
 ```
 
 | File | Role |
 |---|---|
-| `taxi_rides_queries_marimo.py` | The notebook — 31 queries |
+| `taxi_rides_queries_marimo.py` | The notebook — 30 questions |
 | `plot_helpers.py` | Chart functions, kept out of the notebook |
-| `taxi.csv` | **210,034 trips** |
+| `taxi.csv` | **210,035 trips** |
 | `taxi_rides.duckdb` | The database |
 | `build_notebook.py` | Generator script (produces `.ipynb`) — not the notebook |
 | `BUILD_PROMPT.md` | The original build specification (provenance) |

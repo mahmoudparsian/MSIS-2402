@@ -14,6 +14,10 @@ Usage inside the notebook:
 import decimal
 
 import matplotlib.pyplot as plt
+
+# Show "$" in titles and labels as a plain dollar sign. Without this, matplotlib
+# reads the text between two "$" signs (e.g. "$100-$250") as a math formula.
+plt.rcParams["text.parse_math"] = False
 import matplotlib.ticker as mticker
 import numpy as np
 import pandas as pd

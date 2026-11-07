@@ -580,9 +580,9 @@ def _(df_7, plot_multi_line):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ### Q14 — Products with Prices Between $100 and $250: Sales Performance
+    ### Q14 — Products with Prices Between \$100 and \$250: Sales Performance
     **Concept:** `WHERE … BETWEEN` + `JOIN` + `GROUP BY`  
-    We filter mid-range products ($100-$250) and see how each category performs in that price band.
+    We filter mid-range products (\$100–\$250) and see how each category performs in that price band.
     """)
     return
 

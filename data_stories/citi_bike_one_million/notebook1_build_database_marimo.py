@@ -17,16 +17,21 @@ def _(mo):
     mo.md(r"""
     # Notebook 1: Build the Citi Bike DuckDB Database
 
-    This notebook reads the raw `citibike_tutorial.csv` file (1,001,032 rows) and creates a clean, 
+    This notebook reads the raw `citibike_tutorial.csv` file and creates a clean,
     analysis-ready DuckDB database called `citibike.duckdb`.
+
+    The file has **1,001,032 rows — but only 10,889 of them are rides.** The other
+    990,143 lines are completely empty (nothing but commas). Finding and removing them
+    is the first data-quality lesson of this story.
 
     **Steps:**
     1. Load the CSV into DuckDB
     2. Rename columns for consistency (snake_case)
     3. Add derived columns (ride duration in minutes, day of week, hour, month, year, age, distance)
     4. Standardize date formats
-    5. Explore deduplication (explain the concept — but keep the full dataset for richer analysis)
-    6. Verify the final table
+    5. Find the 990,143 empty rows and keep only the 10,889 real rides
+    6. Check for duplicate rides (there are none)
+    7. Verify the final table
     """)
     return
 
@@ -166,9 +171,53 @@ def _(con, mo, rides_raw):
 def _(mo):
     mo.md(r"""
     ---
+    ## Step 3b: The Empty Rows
+
+    The count above says 990,143 rows have no `starttime`. Are they rides with one
+    missing value — or not rides at all? Count the rows where **every** column is `NULL`:
+    """)
+    return
+
+
+@app.cell
+def _(con, mo, rides_raw):
+    _df = mo.sql(
+        f"""
+        SELECT
+            COUNT(*)                                          AS total_rows,
+            COUNT(*) FILTER (WHERE COLUMNS(*) IS NULL)        AS completely_empty_rows,
+            COUNT(*) FILTER (WHERE tripduration IS NOT NULL)  AS real_rides
+        FROM rides_raw;
+        """,
+        engine=con
+    )
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    `COLUMNS(*) IS NULL` checks every column at once (a DuckDB shortcut for
+    `tripduration IS NULL AND starttime IS NULL AND …` over all 15 columns).
+
+    **990,143 rows are completely empty** — in the file they are lines with nothing but
+    commas (`,,,,,,,,,,,,,,`). They are not rides, so they must not be counted as rides:
+    left in, every `COUNT(*)` and every percentage would be about 99% blank rows.
+    The 10,889 real rides always have a `tripduration`, so Step 4 keeps exactly the rows
+    `WHERE tripduration IS NOT NULL`.
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ---
     ## Step 4: Create the Clean `rides` Table
 
     In this step we:
+
+    0. **Keep only the real rides** — `WHERE tripduration IS NOT NULL` (Step 3b).
 
     1. **Rename columns** to consistent snake_case:
        - `tripduration` -> `trip_duration`
@@ -243,7 +292,8 @@ def _(con):
                 )),
             3)                                                   AS distance_km
 
-        FROM rides_raw;
+        FROM rides_raw
+        WHERE tripduration IS NOT NULL;   -- drop the 990,143 empty rows (Step 3b)
     """)
 
     _row_count = con.execute("SELECT COUNT(*) FROM rides").fetchall()[0][0]
@@ -278,17 +328,15 @@ def _(con, mo):
 def _(mo):
     mo.md(r"""
     ---
-    ## Step 6: Exploring Deduplication (Concept Only)
+    ## Step 6: Are There Duplicate Rides?
 
     ### What is deduplication?
 
-    Deduplication means **removing rows that are exact copies** of each other.  
-    This can happen when CSV files are appended multiple times or data pipelines re-process records.
+    Deduplication means **removing rows that are exact copies** of each other.
+    Copies appear when a file is appended twice or a pipeline re-processes records.
 
-    ### How would we do it?
-
-    The standard SQL approach is `SELECT DISTINCT *`, which keeps **one copy** of each unique  
-    row and discards all duplicates.
+    The standard SQL approach is `SELECT DISTINCT *`, which keeps **one copy** of each
+    unique row:
 
     ```sql
     -- Example: creating a deduplicated table
@@ -296,18 +344,12 @@ def _(mo):
     SELECT DISTINCT * FROM rides;
     ```
 
-    ### Why we are NOT deduplicating this dataset
+    ### Measure first
 
-    This tutorial CSV was built by repeating a smaller set of ~10,000 unique rides many times  
-    to reach ~1,000,000 rows. If we applied `SELECT DISTINCT *`, we'd go from **~1M rows  
-    down to only ~10,000** — losing 99% of our data!
-
-    For a **teaching dataset**, keeping the full 1M rows is preferable because:
-    - Aggregations (`GROUP BY`, window functions) produce richer, more realistic results
-    - The duplicates don't distort *ratios* or *averages* — they inflate counts proportionally
-    - Working with 1M rows gives a better feel for real-world SQL performance
-
-    Let's **measure** the duplication so we understand it, but leave the table as-is.
+    Before deduplicating, measure: if `COUNT(*)` equals the number of distinct rows,
+    there is nothing to remove. (Run the same check on `rides_raw` and you get
+    10,890 distinct rows: the 10,889 rides plus **one** "distinct" empty row — the
+    990,143 empty lines are all identical.)
     """)
     return
 
@@ -322,10 +364,8 @@ def _(con):
     print(f'Total rows:          {total:>12,}')
     print(f'Distinct rows:       {distinct:>12,}')
     print(f'Duplicate rows:      {dupes:>12,}')
-    print(f'Duplication ratio:   {total / distinct:.1f}x')
     print()
-    print('NOTE: We are keeping ALL rows for analysis purposes.')
-    print('      The duplicates do not affect ratios or averages.')
+    print('No duplicates to remove.' if dupes == 0 else f'{dupes:,} duplicate rows found.')
     return
 
 
@@ -335,7 +375,7 @@ def _(con):
     con.execute("DROP TABLE rides_raw;")
 
     final_count = con.execute("SELECT COUNT(*) FROM rides").fetchall()[0][0]
-    print(f'Final rides table: {final_count:,} rows (full dataset retained)')
+    print(f'Final rides table: {final_count:,} rides (empty rows removed)')
     return
 
 
@@ -428,7 +468,7 @@ def _(mo):
     - Original columns renamed to snake_case
     - Timestamps standardized as proper `TIMESTAMP` types via `STRPTIME`
     - Derived columns for duration (minutes), time parts, rider age, and distance
-    - Full ~1M row dataset retained (deduplication explained but not applied)
+    - Only the 10,889 real rides — the 990,143 empty rows removed (no duplicate rides found)
 
     **Next:** Open `notebook2_analyze_data_marimo.py` to run SQL queries against this database.
     """)
