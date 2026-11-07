@@ -16,6 +16,8 @@
 | **Prerequisite** | None |
 | **Primary tools** | [DuckDB](https://duckdb.org) · [Marimo](https://marimo.io) notebooks · Python · MySQL |
 
+📄 **Syllabus:** [SYLLABUS.md](course_information/SYLLABUS.md) · [PDF](course_information/SYLLABUS.pdf) · **Grading:** [ASSIGNMENTS_and_GRADING.md](course_information/ASSIGNMENTS_and_GRADING.md) · **Labs:** [LABS/](LABS/README.md)
+
 ---
 
 ## Contents
