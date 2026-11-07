@@ -41,9 +41,9 @@ def _(mo):
     mo.md(r"""
     # DuckDB Notebook Setup
 
-    These notebooks are designed for **MSIS-2402** and assume your generated datasets live in a folder named `datasets_2026`.
+    This notebook is part of **MSIS-2402**. It loads all 7 tables (`customers`, `products`, `stores`, `orders`, `order_items`, `payments`, `shipments`) from the course's shared dataset, `../../datasets/oltp_database/`.
 
-    Each notebook:
+    This notebook:
     - connects to DuckDB
     - loads the relevant CSV files
     - presents **10 English business questions**
@@ -51,7 +51,8 @@ def _(mo):
     - explains the query in plain English
     - visualizes selected results with Python
 
-    The notebooks are designed to be **ready to run** after you place them in the same project folder that contains `datasets_2026/`.
+    **Run it from its own folder** so that path works — from the course repository folder:
+    `cd week3_sql_for_analytics/part1_operational_db_window_functions`, then `marimo edit notebook_3_duckdb_analysis_marimo.py`.
     """)
     return
 
