@@ -109,8 +109,9 @@ def _(con, mo, sales):
     df_q1 = mo.sql(
         f"""
         SELECT *
-        FROM sales;
-        """,
+        FROM sales
+        ORDER BY sale_id;
+                """,
         engine=con
     )
     return
@@ -145,8 +146,9 @@ def _(con, mo, sales):
             sale_id,
             product_id,
             total_amount
-        FROM sales;
-        """,
+        FROM sales
+        ORDER BY sale_id;
+                """,
         engine=con
     )
     return
@@ -179,8 +181,9 @@ def _(con, mo, sales):
         f"""
         SELECT *
         FROM sales
+        ORDER BY sale_id
         LIMIT 10;
-        """,
+                """,
         engine=con
     )
     return
@@ -192,6 +195,8 @@ def _(mo):
     ### Explanation
 
     - `LIMIT 10` restricts the result to 10 rows.
+    - `ORDER BY sale_id` makes them the 10 lowest `sale_id`s — without `ORDER BY`,
+      SQL does not promise *which* 10 rows you get.
     - This is a common way to preview data safely.
     """)
     return
@@ -213,8 +218,9 @@ def _(con, mo, sales):
         f"""
         SELECT *
         FROM sales
-        WHERE quantity >= 3;
-        """,
+        WHERE quantity >= 3
+        ORDER BY sale_id;
+                """,
         engine=con
     )
     return
@@ -247,8 +253,9 @@ def _(con, mo, sales):
         f"""
         SELECT *
         FROM sales
-        WHERE total_amount > 300;
-        """,
+        WHERE total_amount > 300
+        ORDER BY sale_id;
+                """,
         engine=con
     )
     return
@@ -310,11 +317,13 @@ def _(mo):
 @app.cell
 def _(con, plt):
     _df_plot = con.execute("""
-        SELECT product_category, COUNT(*) AS num_rows
+        SELECT
+            product_category,
+            COUNT(*) AS num_rows
         FROM sales
         GROUP BY product_category
-        ORDER BY num_rows DESC
-    """).df()
+        ORDER BY num_rows DESC, product_category
+            """).df()
 
     plt.figure(figsize=(8,4))
     plt.bar(_df_plot["product_category"], _df_plot["num_rows"])
@@ -343,9 +352,9 @@ def _(con, mo, sales):
         f"""
         SELECT *
         FROM sales
-        ORDER BY total_amount DESC
+        ORDER BY total_amount DESC, sale_id
         LIMIT 10;
-        """,
+                """,
         engine=con
     )
     return
@@ -373,11 +382,13 @@ def _(mo):
 @app.cell
 def _(con, plt):
     _df_plot = con.execute("""
-        SELECT sale_id, total_amount
+        SELECT
+            sale_id,
+            total_amount
         FROM sales
-        ORDER BY total_amount DESC
+        ORDER BY total_amount DESC, sale_id
         LIMIT 10
-    """).df()
+            """).df()
 
     plt.figure(figsize=(8,4))
     plt.bar(_df_plot["sale_id"].astype(str), _df_plot["total_amount"])
@@ -405,8 +416,8 @@ def _(con, mo, sales):
         f"""
         SELECT *
         FROM sales
-        ORDER BY sale_date;
-        """,
+        ORDER BY sale_date, sale_id;
+                """,
         engine=con
     )
     return
@@ -434,11 +445,13 @@ def _(mo):
 @app.cell
 def _(con, pd, plt):
     _df_plot = con.execute("""
-        SELECT sale_date, total_amount
+        SELECT
+            sale_date,
+            total_amount
         FROM sales
-        ORDER BY sale_date
+        ORDER BY sale_date, sale_id
         LIMIT 50
-    """).df()
+            """).df()
 
     _df_plot["sale_date"] = pd.to_datetime(_df_plot["sale_date"])
     plt.figure(figsize=(8,4))
@@ -500,11 +513,11 @@ def _(con, mo, sales):
         f"""
         SELECT
             product_category,
-            AVG(total_amount) AS avg_total_amount
+            ROUND(AVG(total_amount), 2) AS avg_total_amount
         FROM sales
         GROUP BY product_category
         ORDER BY avg_total_amount DESC;
-        """,
+                """,
         engine=con
     )
     return
@@ -532,12 +545,13 @@ def _(mo):
 @app.cell
 def _(con, plt):
     _df_plot = con.execute("""
-        SELECT product_category, 
-               AVG(total_amount) AS avg_total_amount
+        SELECT
+            product_category,
+            ROUND(AVG(total_amount), 2) AS avg_total_amount
         FROM sales
         GROUP BY product_category
         ORDER BY avg_total_amount DESC
-    """).df()
+            """).df()
 
     plt.figure(figsize=(8,4))
     plt.bar(_df_plot["product_category"], _df_plot["avg_total_amount"])

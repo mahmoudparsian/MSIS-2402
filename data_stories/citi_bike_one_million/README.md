@@ -75,7 +75,7 @@ Because every ride carries start and end coordinates, the station network can be
 rather than described. `notebook3_maps_marimo.py` produces:
 
 - An interactive map of **all stations**, sized by ride count
-- The **top 10 busiest** start stations
+- The **busiest start stations** (the data has only 5 distinct start stations)
 - A static scatter plot on lat/lon axes, for when an interactive map is not practical
 
 Needs **folium** (`pip install folium`) and an internet connection for the map tiles.

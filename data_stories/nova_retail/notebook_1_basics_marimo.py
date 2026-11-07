@@ -252,9 +252,9 @@ def _(mo):
 def _(con, mo):
     _df = mo.sql(
         f"""
-        SELECT SUM(sales_amount) AS total_revenue
+        SELECT ROUND(SUM(sales_amount), 2) AS total_revenue
         FROM order_items;
-        """,
+                """,
         engine=con
     )
     return

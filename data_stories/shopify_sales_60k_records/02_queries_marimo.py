@@ -238,7 +238,7 @@ def _(con, mo):
         SELECT
             product_category,
             COUNT(*) AS total_orders,
-            SUM(revenue) AS total_revenue,
+            ROUND(SUM(revenue), 2) AS total_revenue,
             ROUND(AVG(revenue), 2) AS avg_order_value
         FROM sales
         GROUP BY product_category
@@ -277,7 +277,7 @@ def _(con, mo):
         SELECT
             customer_country,
             COUNT(*) AS order_count,
-            SUM(revenue) AS total_revenue,
+            ROUND(SUM(revenue), 2) AS total_revenue,
             ROUND(AVG(revenue), 2) AS avg_revenue
         FROM sales
         GROUP BY customer_country
@@ -314,7 +314,7 @@ def _(con, mo):
         SELECT
             payment_method,
             COUNT(*) AS order_count,
-            SUM(revenue) AS total_revenue,
+            ROUND(SUM(revenue), 2) AS total_revenue,
             ROUND(AVG(revenue), 2) AS avg_revenue
         FROM sales
         GROUP BY payment_method
@@ -392,7 +392,7 @@ def _(con, mo):
         SELECT
             traffic_source,
             COUNT(*) AS order_count,
-            SUM(revenue) AS total_revenue,
+            ROUND(SUM(revenue), 2) AS total_revenue,
             ROUND(AVG(revenue), 2) AS avg_revenue,
             ROUND(AVG(rating), 2) AS avg_rating
         FROM sales
@@ -472,7 +472,7 @@ def _(con, mo):
             CASE WHEN revenue < 200 THEN '1. Low (<$200)' WHEN revenue < 1000 THEN '2. Medium ($200-$999)' WHEN revenue < 3000 THEN '3. High ($1K-$2,999)' ELSE '4. Premium ($3K+)' END AS revenue_bucket,
             COUNT(*) AS order_count,
             ROUND(AVG(revenue), 2) AS avg_revenue,
-            SUM(revenue) AS total_revenue
+            ROUND(SUM(revenue), 2) AS total_revenue
         FROM sales
         GROUP BY revenue_bucket
         ORDER BY revenue_bucket
@@ -509,7 +509,7 @@ def _(con, mo):
         SELECT
             customer_id,
             COUNT(*) AS total_orders,
-            SUM(revenue) AS total_spent,
+            ROUND(SUM(revenue), 2) AS total_spent,
             ROUND(AVG(revenue), 2) AS avg_order_value
         FROM sales
         GROUP BY customer_id
@@ -550,7 +550,7 @@ def _(con, mo):
             product_category,
             COUNT(*) AS order_count,
             ROUND(AVG(revenue), 2) AS avg_revenue,
-            SUM(revenue) AS total_revenue
+            ROUND(SUM(revenue), 2) AS total_revenue
         FROM sales
         GROUP BY product_category
         HAVING AVG(revenue) > 800
@@ -962,7 +962,7 @@ def _(mo):
 def _(con, mo):
     df_18 = mo.sql(
         f"""
-        WITH product_revenue AS (SELECT product_id, product_category, SUM(revenue) AS total_revenue FROM sales GROUP BY product_id, product_category), ranked AS (SELECT *, ROW_NUMBER() OVER(ORDER BY total_revenue DESC) AS rank, COUNT(*) OVER() AS total_products FROM product_revenue)
+        WITH product_revenue AS (SELECT product_id, product_category, ROUND(SUM(revenue), 2) AS total_revenue FROM sales GROUP BY product_id, product_category), ranked AS (SELECT *, ROW_NUMBER() OVER(ORDER BY total_revenue DESC) AS rank, COUNT(*) OVER() AS total_products FROM product_revenue)
         SELECT
             rank,
             product_id,
@@ -1059,7 +1059,7 @@ def _(mo):
 def _(con, mo):
     df_20 = mo.sql(
         f"""
-        WITH product_category_revenue AS (SELECT product_category, product_id, SUM(revenue) AS total_revenue, COUNT(*) AS order_count, ROW_NUMBER() OVER(PARTITION BY product_category ORDER BY SUM(revenue) DESC) AS rn FROM sales GROUP BY product_category, product_id)
+        WITH product_category_revenue AS (SELECT product_category, product_id, ROUND(SUM(revenue), 2) AS total_revenue, COUNT(*) AS order_count, ROW_NUMBER() OVER(PARTITION BY product_category ORDER BY SUM(revenue) DESC) AS rn FROM sales GROUP BY product_category, product_id)
         SELECT
             product_category,
             product_id,
@@ -1106,7 +1106,7 @@ def _(mo):
 def _(con, mo):
     df_21 = mo.sql(
         f"""
-        WITH country_stats AS (SELECT customer_country, COUNT(*) AS total_orders, SUM(revenue) AS total_revenue, AVG(revenue) AS avg_order_value FROM sales GROUP BY customer_country)
+        WITH country_stats AS (SELECT customer_country, COUNT(*) AS total_orders, ROUND(SUM(revenue), 2) AS total_revenue, ROUND(AVG(revenue), 2) AS avg_order_value FROM sales GROUP BY customer_country)
         SELECT
             customer_country,
             total_orders,
@@ -1149,7 +1149,7 @@ def _(mo):
 def _(con, mo):
     df_22 = mo.sql(
         f"""
-        WITH customer_spending AS (SELECT customer_id, SUM(revenue) AS total_spent, COUNT(*) AS order_count, NTILE(4) OVER(ORDER BY SUM(revenue) DESC) AS spending_quartile FROM sales GROUP BY customer_id)
+        WITH customer_spending AS (SELECT customer_id, ROUND(SUM(revenue), 2) AS total_spent, COUNT(*) AS order_count, NTILE(4) OVER(ORDER BY SUM(revenue) DESC) AS spending_quartile FROM sales GROUP BY customer_id)
         SELECT
             spending_quartile,
             COUNT(*) AS num_customers,
@@ -1194,8 +1194,8 @@ def _(q):
     _sql = """
     WITH monthly AS (
         SELECT DATE_TRUNC('month', order_date) AS month,
-               SUM(revenue)                    AS monthly_revenue,
-               SUM(profit)                     AS monthly_profit
+               ROUND(SUM(revenue), 2)                    AS monthly_revenue,
+               ROUND(SUM(profit), 2)                     AS monthly_profit
         FROM   sales
         GROUP BY month
     )
@@ -1247,7 +1247,7 @@ def _(mo):
 def _(con, mo):
     df_24 = mo.sql(
         f"""
-        WITH product_profit AS (SELECT product_id, product_category, SUM(profit) AS total_profit, SUM(revenue) AS total_revenue, COUNT(*) AS order_count, PERCENT_RANK() OVER(ORDER BY SUM(profit)) AS pct_rank FROM sales GROUP BY product_id, product_category)
+        WITH product_profit AS (SELECT product_id, product_category, ROUND(SUM(profit), 2) AS total_profit, ROUND(SUM(revenue), 2) AS total_revenue, COUNT(*) AS order_count, PERCENT_RANK() OVER(ORDER BY SUM(profit)) AS pct_rank FROM sales GROUP BY product_id, product_category)
         SELECT
             product_id,
             product_category,

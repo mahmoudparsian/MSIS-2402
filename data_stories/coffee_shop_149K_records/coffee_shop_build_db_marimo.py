@@ -79,7 +79,9 @@ def _(mo):
 
     ### What are we doing?
     We read `coffee_shop_sales.xlsx` into a Pandas DataFrame. If the Excel file
-    is not found, we fall back to a CSV version (`coffee_shop_sales.csv`).
+    can't be read (reading `.xlsx` needs the optional `openpyxl` package), we use
+    the CSV version (`coffee_shop_sales.csv`) instead — so the cell may print a
+    "Could not read the .xlsx file" note; that's expected, not an error.
 
     ### Why?
     Some students may not have the `openpyxl` dependency installed.
@@ -98,7 +100,8 @@ def _(Path, pd):
             df = pd.read_excel(xlsx_path)
             source_used = str(xlsx_path)
         except Exception as e:
-            print("Excel read failed:", e)
+            print("Could not read the .xlsx file (the optional openpyxl package is "
+                  "probably not installed) - using coffee_shop_sales.csv instead.")
             if csv_path.exists():
                 df = pd.read_csv(csv_path)
                 source_used = str(csv_path)

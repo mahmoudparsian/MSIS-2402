@@ -100,14 +100,14 @@ def _(con, mo):
         f"""
         SELECT
             o.customer_id,
-            SUM(oi.sales_amount) AS revenue
+            ROUND(SUM(oi.sales_amount), 2) AS revenue
         FROM orders o
         JOIN order_items oi
-        ON o.order_id = oi.order_id
+            ON o.order_id = oi.order_id
         GROUP BY o.customer_id
-        ORDER BY revenue DESC
+        ORDER BY revenue DESC, o.customer_id
         LIMIT 10;
-        """,
+                """,
         engine=con
     )
     if hasattr(df_q1, "to_pandas"):
@@ -138,7 +138,7 @@ def _(mo):
 def _(df_q1, plt):
     plt.figure(figsize=(8,4))
     plt.bar(df_q1["customer_id"].astype(str), df_q1["revenue"])
-    plt.title("Week 3: Top 10 Customers by Revenue")
+    plt.title("Session 6: Top 10 Customers by Revenue")
     plt.xlabel("Customer ID")
     plt.ylabel("Revenue")
     plt.tight_layout()
@@ -162,14 +162,14 @@ def _(con, mo):
         f"""
         SELECT
             o.customer_id,
-            SUM(oi.sales_amount) AS revenue,
+            ROUND(SUM(oi.sales_amount), 2) AS revenue,
             RANK() OVER(ORDER BY SUM(oi.sales_amount) DESC) AS revenue_rank
         FROM orders o
         JOIN order_items oi
-        ON o.order_id = oi.order_id
+            ON o.order_id = oi.order_id
         GROUP BY o.customer_id
-        ORDER BY revenue_rank;
-        """,
+        ORDER BY revenue_rank, o.customer_id;
+                """,
         engine=con
     )
     return
@@ -202,13 +202,13 @@ def _(con, mo):
         f"""
         SELECT
             p.category,
-            SUM(oi.sales_amount) AS revenue
+            ROUND(SUM(oi.sales_amount), 2) AS revenue
         FROM order_items oi
         JOIN products p
-        ON oi.product_id = p.product_id
+            ON oi.product_id = p.product_id
         GROUP BY p.category
         ORDER BY revenue DESC;
-        """,
+                """,
         engine=con
     )
     if hasattr(df_q3, "to_pandas"):
@@ -239,7 +239,7 @@ def _(mo):
 def _(df_q3, plt):
     plt.figure(figsize=(8,4))
     plt.bar(df_q3["category"], df_q3["revenue"])
-    plt.title("Week 3: Revenue by Category")
+    plt.title("Session 6: Revenue by Category")
     plt.xlabel("Category")
     plt.ylabel("Revenue")
     plt.xticks(rotation=45)
@@ -264,14 +264,14 @@ def _(con, mo):
         f"""
         SELECT
             p.category,
-            SUM(oi.sales_amount) AS revenue,
+            ROUND(SUM(oi.sales_amount), 2) AS revenue,
             RANK() OVER(ORDER BY SUM(oi.sales_amount) DESC) AS revenue_rank
         FROM order_items oi
         JOIN products p
-        ON oi.product_id = p.product_id
+            ON oi.product_id = p.product_id
         GROUP BY p.category
-        ORDER BY revenue_rank;
-        """,
+        ORDER BY revenue_rank, p.category;
+                """,
         engine=con
     )
     if hasattr(df_q4, "to_pandas"):
@@ -302,7 +302,7 @@ def _(mo):
 def _(df_q4, plt):
     plt.figure(figsize=(8,4))
     plt.bar(df_q4["category"], df_q4["revenue_rank"])
-    plt.title("Week 3: Category Revenue Rank")
+    plt.title("Session 6: Category Revenue Rank")
     plt.xlabel("Category")
     plt.ylabel("Rank")
     plt.xticks(rotation=45)
@@ -325,12 +325,25 @@ def _(mo):
 def _(con, mo):
     df_q5 = mo.sql(
         f"""
-        WITH product_sales AS (SELECT p.category, p.product_id, SUM(oi.sales_amount) AS revenue FROM order_items oi JOIN products p ON oi.product_id = p.product_id GROUP BY p.category, p.product_id)
+        WITH product_sales AS (
+            SELECT
+                p.category,
+                p.product_id,
+                ROUND(SUM(oi.sales_amount), 2) AS revenue
+            FROM order_items oi
+            JOIN products p
+                ON oi.product_id = p.product_id
+            GROUP BY p.category, p.product_id
+        )
         SELECT *
-        FROM (SELECT *, ROW_NUMBER() OVER(PARTITION BY category ORDER BY revenue DESC) AS rn FROM product_sales) t
+        FROM (
+            SELECT *,
+                   ROW_NUMBER() OVER(PARTITION BY category ORDER BY revenue DESC, product_id) AS rn
+            FROM product_sales
+        ) t
         WHERE rn = 1
         ORDER BY category;
-        """,
+                """,
         engine=con
     )
     return
@@ -363,10 +376,16 @@ def _(con, mo):
         f"""
         SELECT
             order_date,
-            SUM(daily_revenue) OVER(ORDER BY order_date) AS running_revenue
-        FROM (SELECT o.order_date, SUM(oi.sales_amount) AS daily_revenue FROM orders o JOIN order_items oi ON o.order_id = oi.order_id GROUP BY o.order_date) t
+            ROUND(SUM(daily_revenue) OVER(ORDER BY order_date), 2) AS running_revenue
+        FROM (
+            SELECT o.order_date, SUM(oi.sales_amount) AS daily_revenue
+            FROM orders o
+            JOIN order_items oi
+                ON o.order_id = oi.order_id
+            GROUP BY o.order_date
+        ) t
         ORDER BY order_date;
-        """,
+                """,
         engine=con
     )
     if hasattr(df_q6, "to_pandas"):
@@ -399,7 +418,7 @@ def _(df_q6, pd, plt):
     df_plot["order_date"] = pd.to_datetime(df_plot["order_date"])
     plt.figure(figsize=(8,4))
     plt.plot(df_plot["order_date"], df_plot["running_revenue"])
-    plt.title("Week 3: Running Revenue Over Time")
+    plt.title("Session 6: Running Revenue Over Time")
     plt.xlabel("Order Date")
     plt.ylabel("Running Revenue")
     plt.tight_layout()
@@ -423,12 +442,18 @@ def _(con, mo):
         f"""
         SELECT
             customer_id,
-            AVG(order_revenue) AS avg_order_revenue
-        FROM (SELECT o.order_id, o.customer_id, SUM(oi.sales_amount) AS order_revenue FROM orders o JOIN order_items oi ON o.order_id = oi.order_id GROUP BY o.order_id, o.customer_id) t
+            ROUND(AVG(order_revenue), 2) AS avg_order_revenue
+        FROM (
+            SELECT o.order_id, o.customer_id, SUM(oi.sales_amount) AS order_revenue
+            FROM orders o
+            JOIN order_items oi
+                ON o.order_id = oi.order_id
+            GROUP BY o.order_id, o.customer_id
+        ) t
         GROUP BY customer_id
-        ORDER BY avg_order_revenue DESC
+        ORDER BY avg_order_revenue DESC, customer_id
         LIMIT 10;
-        """,
+                """,
         engine=con
     )
     return
@@ -459,12 +484,24 @@ def _(mo):
 def _(con, mo):
     df_q8 = mo.sql(
         f"""
-        WITH customer_revenue AS (SELECT o.customer_id, SUM(oi.sales_amount) AS revenue FROM orders o JOIN order_items oi ON o.order_id = oi.order_id GROUP BY o.customer_id), avg_revenue AS (SELECT AVG(revenue) AS avg_rev FROM customer_revenue)
-        SELECT cr.*
+        WITH customer_revenue AS (
+            SELECT o.customer_id, SUM(oi.sales_amount) AS revenue
+            FROM orders o
+            JOIN order_items oi
+                ON o.order_id = oi.order_id
+            GROUP BY o.customer_id
+        ),
+        avg_revenue AS (
+            SELECT AVG(revenue) AS avg_rev
+            FROM customer_revenue
+        )
+        SELECT
+            cr.customer_id,
+            ROUND(cr.revenue, 2) AS revenue
         FROM customer_revenue cr, avg_revenue ar
         WHERE cr.revenue > ar.avg_rev
-        ORDER BY cr.revenue DESC;
-        """,
+        ORDER BY cr.revenue DESC, cr.customer_id;
+                """,
         engine=con
     )
     return
@@ -498,18 +535,16 @@ def _(con, mo):
         SELECT
             s.store_id,
             s.store_type,
-            SUM(oi.sales_amount) AS revenue,
+            ROUND(SUM(oi.sales_amount), 2) AS revenue,
             RANK() OVER(ORDER BY SUM(oi.sales_amount) DESC) AS revenue_rank
         FROM stores s
         JOIN orders o
-        ON s.store_id = o.store_id
+            ON s.store_id = o.store_id
         JOIN order_items oi
-        ON o.order_id = oi.order_id
-        GROUP BY
-            s.store_id,
-            s.store_type
-        ORDER BY revenue_rank;
-        """,
+            ON o.order_id = oi.order_id
+        GROUP BY s.store_id, s.store_type
+        ORDER BY revenue_rank, s.store_id;
+                """,
         engine=con
     )
     if hasattr(df_q9, "to_pandas"):
@@ -540,7 +575,7 @@ def _(mo):
 def _(df_q9, plt):
     plt.figure(figsize=(8,4))
     plt.bar(df_q9["store_id"].astype(str), df_q9["revenue"])
-    plt.title("Week 3: Store Revenue Ranking")
+    plt.title("Session 6: Store Revenue Ranking")
     plt.xlabel("Store ID")
     plt.ylabel("Revenue")
     plt.tight_layout()
@@ -564,11 +599,17 @@ def _(con, mo):
         f"""
         SELECT
             category,
-            revenue,
-            revenue / SUM(revenue) OVER() AS revenue_share
-        FROM (SELECT p.category, SUM(oi.sales_amount) AS revenue FROM order_items oi JOIN products p ON oi.product_id = p.product_id GROUP BY p.category) t
+            ROUND(revenue, 2) AS revenue,
+            ROUND(revenue / SUM(revenue) OVER(), 4) AS revenue_share
+        FROM (
+            SELECT p.category, SUM(oi.sales_amount) AS revenue
+            FROM order_items oi
+            JOIN products p
+                ON oi.product_id = p.product_id
+            GROUP BY p.category
+        ) t
         ORDER BY revenue DESC;
-        """,
+                """,
         engine=con
     )
     return

@@ -53,7 +53,8 @@ def _(con, mo, sales):
         FROM sales
         GROUP BY country
         HAVING revenue > 20000
-        """,
+        ORDER BY revenue DESC
+                """,
         engine=con
     )
     return
@@ -94,7 +95,7 @@ def _(mo):
 @app.cell
 def _(con, plt):
 
-    df_plot = con.execute('SELECT product, SUM(sales_amount) AS revenue FROM sales GROUP BY product').df()
+    df_plot = con.execute('SELECT product, SUM(sales_amount) AS revenue FROM sales GROUP BY product ORDER BY revenue DESC').df()
     plt.figure()
     plt.pie(df_plot['revenue'], labels=df_plot['product'], autopct='%1.1f%%')
     plt.title('Revenue Share by Product')

@@ -137,7 +137,7 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ### B1. Preview the first 10 rows of the sales table
+    ### B1. Preview the first 10 rows of the sales table (lowest `sale_id` first)
     """)
     return
 
@@ -148,8 +148,9 @@ def _(con, mo, sales):
         f"""
         SELECT *
         FROM sales
+        ORDER BY sale_id
         LIMIT 10;
-        """,
+                """,
         engine=con
     )
     return
@@ -508,9 +509,9 @@ def _(con, mo, sales):
             unit_price,
             total_amount
         FROM sales
-        ORDER BY total_amount DESC
+        ORDER BY total_amount DESC, sale_id
         LIMIT 10;
-        """,
+                """,
         engine=con
     )
     if hasattr(df_7, "to_pandas"):

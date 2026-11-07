@@ -204,7 +204,7 @@ def _(mo):
 def _(df_q3, plt):
     plt.figure(figsize=(8,4))
     plt.bar(df_q3["store_type"], df_q3["num_stores"])
-    plt.title("Week 3: Number of Stores by Type")
+    plt.title("Session 5: Number of Stores by Type")
     plt.xlabel("Store Type")
     plt.ylabel("Number of Stores")
     plt.xticks(rotation=45)
@@ -264,7 +264,7 @@ def _(mo):
 def _(df_q4, plt):
     plt.figure(figsize=(8,4))
     plt.bar(df_q4["country"], df_q4["num_orders"])
-    plt.title("Week 3: Orders by Country")
+    plt.title("Session 5: Orders by Country")
     plt.xlabel("Country")
     plt.ylabel("Number of Orders")
     plt.xticks(rotation=45)
@@ -289,13 +289,13 @@ def _(con, mo):
         f"""
         SELECT
             p.category,
-            SUM(oi.sales_amount) AS revenue
+            ROUND(SUM(oi.sales_amount), 2) AS revenue
         FROM order_items oi
         JOIN products p
-        ON oi.product_id = p.product_id
+            ON oi.product_id = p.product_id
         GROUP BY p.category
         ORDER BY revenue DESC;
-        """,
+                """,
         engine=con
     )
     return (df_q5,)
@@ -324,7 +324,7 @@ def _(mo):
 def _(df_q5, plt):
     plt.figure(figsize=(8,4))
     plt.bar(df_q5["category"], df_q5["revenue"])
-    plt.title("Week 3: Revenue by Category")
+    plt.title("Session 5: Revenue by Category")
     plt.xlabel("Category")
     plt.ylabel("Revenue")
     plt.xticks(rotation=45)
@@ -349,15 +349,15 @@ def _(con, mo):
         f"""
         SELECT
             s.store_type,
-            SUM(oi.sales_amount) AS revenue
+            ROUND(SUM(oi.sales_amount), 2) AS revenue
         FROM stores s
         JOIN orders o
-        ON s.store_id = o.store_id
+            ON s.store_id = o.store_id
         JOIN order_items oi
-        ON o.order_id = oi.order_id
+            ON o.order_id = oi.order_id
         GROUP BY s.store_type
         ORDER BY revenue DESC;
-        """,
+                """,
         engine=con
     )
     return (df_q6,)
@@ -386,7 +386,7 @@ def _(mo):
 def _(df_q6, plt):
     plt.figure(figsize=(8,4))
     plt.bar(df_q6["store_type"], df_q6["revenue"])
-    plt.title("Week 3: Revenue by Store Type")
+    plt.title("Session 5: Revenue by Store Type")
     plt.xlabel("Store Type")
     plt.ylabel("Revenue")
     plt.xticks(rotation=45)
@@ -411,11 +411,11 @@ def _(con, mo):
         f"""
         SELECT
             payment_method,
-            SUM(payment_amount) AS total_paid
+            ROUND(SUM(payment_amount), 2) AS total_paid
         FROM payments
         GROUP BY payment_method
         ORDER BY total_paid DESC;
-        """,
+                """,
         engine=con
     )
     return
@@ -481,7 +481,7 @@ def _(mo):
 def _(df_q8, plt):
     plt.figure(figsize=(8,4))
     plt.bar(df_q8["carrier"], df_q8["shipment_count"])
-    plt.title("Week 3: Shipments by Carrier")
+    plt.title("Session 5: Shipments by Carrier")
     plt.xlabel("Carrier")
     plt.ylabel("Shipment Count")
     plt.xticks(rotation=45)
@@ -506,12 +506,12 @@ def _(con, mo):
         f"""
         SELECT
             product_id,
-            SUM(sales_amount) AS revenue
+            ROUND(SUM(sales_amount), 2) AS revenue
         FROM order_items
         GROUP BY product_id
-        ORDER BY revenue DESC
+        ORDER BY revenue DESC, product_id
         LIMIT 10;
-        """,
+                """,
         engine=con
     )
     return
@@ -544,8 +544,9 @@ def _(con, mo):
         f"""
         SELECT *
         FROM orders
-        WHERE customer_id IS NULL;
-        """,
+        WHERE customer_id IS NULL
+        ORDER BY order_id;
+                """,
         engine=con
     )
     return

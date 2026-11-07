@@ -59,7 +59,7 @@ plt.rcParams.update({
     "axes.labelcolor": INK_SECONDARY,
     "axes.titlecolor": INK,
     "axes.titlesize": 13,
-    "axes.titleweight": "600",
+    "axes.titleweight": "bold",
     "axes.titlelocation": "left",
     "axes.titlepad": 14,
     "axes.grid": True,

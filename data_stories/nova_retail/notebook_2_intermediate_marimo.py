@@ -214,6 +214,7 @@ def _(mo):
     ### Q4 — Top 10 Most-Ordered Products
     **Concept:** `GROUP BY product_id` + `SUM(quantity)` + `LIMIT`  
     Identifies the products that appear most frequently in orders by total quantity.
+    Several products tie on quantity, so `product_id` breaks ties (lowest first).
     """)
     return
 
@@ -229,14 +230,14 @@ def _(con, mo):
             SUM(oi.quantity) AS total_qty_sold
         FROM order_items oi
         JOIN products p
-        ON oi.product_id = p.product_id
+            ON oi.product_id = p.product_id
         GROUP BY
             oi.product_id,
             p.category,
             p.price
-        ORDER BY total_qty_sold DESC
+        ORDER BY total_qty_sold DESC, oi.product_id
         LIMIT 10;
-        """,
+                """,
         engine=con
     )
     return
@@ -455,14 +456,14 @@ def _(con, mo):
             ROUND(COALESCE(SUM(oi.sales_amount), 0), 2) AS total_revenue
         FROM order_items oi
         RIGHT JOIN products p
-        ON oi.product_id = p.product_id
+            ON oi.product_id = p.product_id
         GROUP BY
             p.product_id,
             p.category,
             p.price
-        ORDER BY total_qty_sold ASC
+        ORDER BY total_qty_sold ASC, p.product_id
         LIMIT 15;
-        """,
+                """,
         engine=con
     )
     return

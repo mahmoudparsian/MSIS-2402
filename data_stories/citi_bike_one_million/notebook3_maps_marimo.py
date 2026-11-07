@@ -26,7 +26,7 @@ def _(mo):
 
     **Maps:**
     1. All Stations Map — every station sized by ride count
-    2. Top 10 Busiest Start Stations — interactive + static
+    2. Busiest Start Stations — interactive + static
     3. Top 10 Most Popular Routes — polylines connecting start/end
     4. Station Net Flow — arrivals vs departures (blue=inflow, red=outflow)
     5. Ride Density Heatmap — heat layer showing ride concentration
@@ -105,11 +105,12 @@ def _(df, map_all_stations):
 def _(mo):
     mo.md(r"""
     ---
-    ## Map 2: Top 10 Busiest Start Stations
+    ## Map 2: Busiest Start Stations
 
     **What are we doing?**
 
-    We find the **10 stations with the most ride departures** and plot them on both
+    We rank start stations by ride departures (`LIMIT 10` — but this cleaned data has
+    only **5 distinct start stations**, so all 5 appear) and plot them on both
     an interactive Folium map and a static Matplotlib scatter plot. Each station is
     color-coded and sized by its ride count.
 
@@ -329,7 +330,7 @@ def _(mo):
     | Map | Visualization | Type | SQL Concepts |
     |-----|--------------|------|-------------|
     | 1 | All Stations | Folium interactive | UNION ALL, GROUP BY, CTE |
-    | 2 | Top 10 Busiest Stations | Folium + Matplotlib | GROUP BY, ORDER BY, LIMIT |
+    | 2 | Busiest Start Stations (all 5) | Folium + Matplotlib | GROUP BY, ORDER BY, LIMIT |
     | 3 | Popular Routes | Folium polylines | GROUP BY multiple cols, HAVING |
     | 4 | Station Net Flow | Folium + Matplotlib | CTE, FULL OUTER JOIN, COALESCE |
     | 5 | Ride Density Heatmap | Folium HeatMap + Matplotlib | UNION ALL, GROUP BY |

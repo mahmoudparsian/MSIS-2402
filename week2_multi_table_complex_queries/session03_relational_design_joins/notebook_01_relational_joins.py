@@ -17,7 +17,7 @@ def _(mo):
     mo.md(r"""
     # Session 3 — Relational Databases and JOINs
 
-    This notebook uses the Week 2 relational dataset:
+    This notebook uses the small relational dataset in this folder's `data/`:
 
     - `customers`
     - `orders`
@@ -80,10 +80,11 @@ def _(con, show_query):
         """)
 
     show_query("""
-    SELECT * 
-    FROM customers 
+    SELECT *
+    FROM customers
+    ORDER BY customer_id
     LIMIT 5;
-    """)
+        """)
     return
 
 
@@ -102,8 +103,9 @@ def _(con, mo):
     df_q1 = mo.sql(
         f"""
         SELECT *
-        FROM customers;
-        """,
+        FROM customers
+        ORDER BY customer_id;
+                """,
         engine=con
     )
     return
@@ -135,8 +137,9 @@ def _(con, mo):
     df_q2 = mo.sql(
         f"""
         SELECT *
-        FROM orders;
-        """,
+        FROM orders
+        ORDER BY order_id;
+                """,
         engine=con
     )
     return
@@ -202,7 +205,7 @@ def _(mo):
 def _(df_q3, plt):
     plt.figure(figsize=(8,4))
     plt.bar(df_q3["country"], df_q3["num_customers"])
-    plt.title("Week 2: Customers by Country")
+    plt.title("Session 3: Customers by Country")
     plt.xlabel("Country")
     plt.ylabel("Number of Customers")
     plt.xticks(rotation=45)
@@ -260,7 +263,7 @@ def _(mo):
 def _(df_q4, plt):
     plt.figure(figsize=(8,4))
     plt.bar(df_q4["segment"], df_q4["num_customers"])
-    plt.title("Week 2: Customers by Segment")
+    plt.title("Session 3: Customers by Segment")
     plt.xlabel("Segment")
     plt.ylabel("Number of Customers")
     plt.xticks(rotation=45)
@@ -286,8 +289,9 @@ def _(con, mo):
         SELECT * EXCLUDE (o.customer_id)
         FROM customers c
         JOIN orders o
-        ON c.customer_id = o.customer_id;
-        """,
+            ON c.customer_id = o.customer_id
+        ORDER BY o.order_id;
+                """,
         engine=con
     )
     return
@@ -355,7 +359,7 @@ def _(mo):
 def _(df_q6, plt):
     plt.figure(figsize=(8,4))
     plt.bar(df_q6["country"], df_q6["num_orders"])
-    plt.title("Week 2: Orders by Country")
+    plt.title("Session 3: Orders by Country")
     plt.xlabel("Country")
     plt.ylabel("Number of Orders")
     plt.xticks(rotation=45)
@@ -383,9 +387,9 @@ def _(con, mo):
             COUNT(order_id) AS order_count
         FROM orders
         GROUP BY customer_id
-        ORDER BY order_count DESC
+        ORDER BY order_count DESC, customer_id
         LIMIT 10;
-        """,
+                """,
         engine=con
     )
     return
@@ -418,11 +422,11 @@ def _(con, mo):
         f"""
         SELECT
             category,
-            AVG(price) AS avg_price
+            ROUND(AVG(price), 2) AS avg_price
         FROM products
         GROUP BY category
         ORDER BY avg_price DESC;
-        """,
+                """,
         engine=con
     )
     return (df_q8,)
@@ -451,7 +455,7 @@ def _(mo):
 def _(df_q8, plt):
     plt.figure(figsize=(8,4))
     plt.bar(df_q8["category"], df_q8["avg_price"])
-    plt.title("Week 2: Average Product Price by Category")
+    plt.title("Session 3: Average Product Price by Category")
     plt.xlabel("Category")
     plt.ylabel("Average Price")
     plt.xticks(rotation=45)
@@ -515,13 +519,13 @@ def _(con, mo):
             COUNT(o.order_id) AS order_count
         FROM customers c
         JOIN orders o
-        ON c.customer_id = o.customer_id
+            ON c.customer_id = o.customer_id
         GROUP BY
             c.customer_id,
             c.country
-        ORDER BY order_count DESC
+        ORDER BY order_count DESC, c.customer_id
         LIMIT 10;
-        """,
+                """,
         engine=con
     )
     return (df_q10,)
@@ -550,7 +554,7 @@ def _(mo):
 def _(df_q10, plt):
     plt.figure(figsize=(8,4))
     plt.bar([str(v) for v in df_q10["customer_id"]], df_q10["order_count"])
-    plt.title("Week 2: Top 10 Customers by Order Count")
+    plt.title("Session 3: Top 10 Customers by Order Count")
     plt.xlabel("Customer ID")
     plt.ylabel("Order Count")
     plt.tight_layout()
