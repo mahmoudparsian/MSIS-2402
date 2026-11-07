@@ -87,7 +87,7 @@ def _(mo):
     - `trip_duration_minutes` — how long the trip took   
     - `tip_percentage` — tip as a fraction of fare   
     - `hour_of_day` — the hour when the trip started (0–23)   
-    - `day_of_week` — day name (Monday … Sunday)
+    - `day_of_week` — day name (Monday … Sunday; in this data every ride is on a Thursday)
     """)
     return
 
@@ -204,11 +204,9 @@ def _(mo):
     ---
     ## 2 — Basic Queries
 
-    ```
-    These queries use the fundamental SQL building 
-    blocks: `SELECT`, `WHERE`, `ORDER BY`, `LIMIT`, 
+    These queries use the fundamental SQL building
+    blocks: `SELECT`, `WHERE`, `ORDER BY`, `LIMIT`,
     and simple aggregates like `COUNT`.
-    ```
     """)
     return
 
@@ -240,10 +238,8 @@ def _(mo):
     mo.md(r"""
     ### B2 — What are the 10 longest trips by distance?
 
-    ```
-    `ORDER BY … DESC` with `LIMIT` gives us a Top‑N 
+    `ORDER BY … DESC` with `LIMIT` gives us a Top‑N
     query — one of the most common patterns in SQL.
-    ```
     """)
     return
 
@@ -308,10 +304,8 @@ def _(mo):
     mo.md(r"""
     ### B4 — What are the minimum, maximum, and average fare amounts?
 
-    ```
-    Multiple aggregate functions in one SELECT — 
+    Multiple aggregate functions in one SELECT —
     SQL can compute several summaries in a single pass.
-    ```
     """)
     return
 
@@ -336,10 +330,8 @@ def _(mo):
     mo.md(r"""
     ### B5 — Show 10 sample rides that cost more than $50
 
-    ```
-    Combining `WHERE` with `LIMIT` lets us inspect a 
+    Combining `WHERE` with `LIMIT` lets us inspect a
     filtered subset without flooding the screen.
-    ```
     """)
     return
 
@@ -381,7 +373,10 @@ def _(df_2, plot_bar):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ---## 3 — Basic+ QueriesThese queries introduce `GROUP BY`, aggregate functions on groups, `HAVING`, `DISTINCT`, `BETWEEN`, `IN`, and `CASE`.
+    ---
+    ## 3 — Basic+ Queries
+
+    These queries introduce `GROUP BY`, aggregate functions on groups, `HAVING`, `DISTINCT`, `BETWEEN`, `IN`, and `CASE`.
     """)
     return
 
@@ -389,12 +384,12 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ### BP1 — Total rides per passenger count`GROUP BY` splits the table into groups; 
+    ### BP1 — Total rides per passenger count
 
-    ```
-    `COUNT(*)` counts each group. 
+    `GROUP BY` splits the table into groups;
+
+    `COUNT(*)` counts each group.
     This shows the distribution of passengers per ride.
-    ```
     """)
     return
 
@@ -433,18 +428,16 @@ def _(mo):
     mo.md(r"""
     ### BP2 — Average fare by payment type
 
-    ```
-    Payment type is coded as integers 
+    Payment type is coded as integers
 
-    1=Credit Card, 
-    2=Cash, 
-    3=No Charge, 
-    4=Dispute, 
-    5=Unknown, 
+    1=Credit Card,
+    2=Cash,
+    3=No Charge,
+    4=Dispute,
+    5=Unknown,
     6=Voided
 
     We use `CASE` inside the `GROUP BY` to give them readable labels.
-    ```
     """)
     return
 
@@ -485,14 +478,12 @@ def _(mo):
     mo.md(r"""
     ### BP3 — Average trip distance per vendor
 
-    ```
     Two vendor IDs are present:
 
-    1 = Creative Mobile Technologies, 
+    1 = Creative Mobile Technologies,
     2 = VeriFone Inc.
 
     `GROUP BY vendor_id` compares them.
-    ```
     """)
     return
 
@@ -534,12 +525,19 @@ def _(df_5, plot_grouped_bar):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ### BP4 — Number of rides per day of the week
+    ### BP4 — Rides by part of the day
 
-    ```
-    Using our derived `day_of_week` column with 
-    `GROUP BY` to see which days are busiest.
-    ```
+    All 210,035 rides are from **one day** (January 1, 2015, 00:00–14:59), so we group
+    by *time of day* instead of day of the week. A `CASE` expression turns each
+    `hour_of_day` into a label, and `GROUP BY` counts the rides in each part:
+
+    | Part of the day | Hours |
+    |---|---|
+    | Night | 0–5 |
+    | Morning | 6–11 |
+    | Early afternoon | 12–14 (the data ends at 14:59) |
+
+    `first_hour` (`MIN(hour_of_day)`) is there only to sort the parts in time order.
     """)
     return
 
@@ -549,11 +547,17 @@ def _(con, mo, rides):
     df_6 = mo.sql(
         f"""
         SELECT
-            day_of_week,
-            COUNT(*) AS num_rides
+            CASE
+                WHEN hour_of_day < 6  THEN 'Night (0-5)'
+                WHEN hour_of_day < 12 THEN 'Morning (6-11)'
+                ELSE 'Early afternoon (12-14)'
+            END AS part_of_day,
+            MIN(hour_of_day) AS first_hour,
+            COUNT(*) AS num_rides,
+            ROUND(AVG(total_amount), 2) AS avg_total_amount
         FROM rides
-        GROUP BY day_of_week
-        ORDER BY CASE day_of_week WHEN 'Monday' THEN 1 WHEN 'Tuesday' THEN 2 WHEN 'Wednesday' THEN 3 WHEN 'Thursday' THEN 4 WHEN 'Friday' THEN 5 WHEN 'Saturday' THEN 6 WHEN 'Sunday' THEN 7 END;
+        GROUP BY part_of_day
+        ORDER BY first_hour;
         """,
         engine=con
     )
@@ -565,12 +569,20 @@ def _(con, mo, rides):
 @app.cell
 def _(df_6, plot_bar):
     plot_bar(
-        labels=df_6["day_of_week"].tolist(),
+        labels=df_6["part_of_day"].tolist(),
         values=df_6["num_rides"].tolist(),
-        title="Rides by Day of Week",
-        xlabel="Day", ylabel="Number of Rides",
-        rotate_x=30
+        title="Rides by Part of the Day (January 1, 2015)",
+        xlabel="Part of the day", ylabel="Number of Rides"
     )
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    **Reading it:** more than half of all rides (117,868 of 210,035) happen between
+    midnight and 6 am — New Year's Eve crowds going home.
+    """)
     return
 
 
@@ -579,13 +591,13 @@ def _(mo):
     mo.md(r"""
     ### BP5 — Pickup locations with more than 2,000 rides 
 
-    ```
-    (WHERE vs HAVING)`WHERE` filters **rows before** grouping; 
+    *(WHERE vs HAVING)*
+
+    `WHERE` filters **rows before** grouping;
     `HAVING` filters **groups after** aggregation.
 
-    Here we need `HAVING` because we want to keep only 
+    Here we need `HAVING` because we want to keep only
     locations whose *count* exceeds a threshold.
-    ```
     """)
     return
 
@@ -672,11 +684,9 @@ def _(mo):
     mo.md(r"""
     ### BP8 — Average tip percentage by passenger count
 
-    ```
-    Combines our derived `tip_percentage` 
-    column with `GROUP BY` and `HAVING` to 
+    Combines our derived `tip_percentage`
+    column with `GROUP BY` and `HAVING` to
     exclude groups with very few rides.
-    ```
     """)
     return
 
@@ -758,10 +768,8 @@ def _(mo):
     mo.md(r"""
     ### BP10 — Categorize trips by distance (Short / Medium / Long)
 
-    ```
-    `CASE` expressions create computed categories 
+    `CASE` expressions create computed categories
     on the fly — like adding a virtual column.
-    ```
     """)
     return
 
@@ -800,7 +808,9 @@ def _(df_10, plot_bar):
 def _(mo):
     mo.md(r"""
     ---
-    ## 4 — Intermediate QueriesWindow functions, subqueries, time‑based analytics, correlated filters, and more.
+    ## 4 — Intermediate Queries
+
+    Window functions, subqueries, time‑based analytics, correlated filters, and more.
     """)
     return
 
@@ -849,14 +859,14 @@ def _(mo):
     mo.md(r"""
     ### I2 — Running total of rides per hour 
 
-    ```
-    (window function: SUM … OVER)A **window function** 
-    computes a value across a set of rows related to the 
+    *(window function: SUM … OVER)*
+
+    A **window function**
+    computes a value across a set of rows related to the
     current row — without collapsing the result.
 
-    Here, `SUM(num_rides) OVER (ORDER BY hour_of_day)` 
+    Here, `SUM(num_rides) OVER (ORDER BY hour_of_day)`
     produces a cumulative (running) total.
-    ```
     """)
     return
 
@@ -899,11 +909,11 @@ def _(mo):
     mo.md(r"""
     ### I3 — Trip distance distribution 
 
-    ```
-    (histogram via SQL buckets)We can create 
-    histogram buckets in SQL with `FLOOR(trip_distance)` 
+    *(histogram via SQL buckets)*
+
+    We can create
+    histogram buckets in SQL with `FLOOR(trip_distance)`
     and then plot the distribution.
-    ```
     """)
     return
 
@@ -943,12 +953,10 @@ def _(mo):
     mo.md(r"""
     ### I4 — Average fare per mile by hour of day
 
-    ```
-    Dividing fare by distance gives a 
-    "price per mile" metric. We exclude 
-    very short trips (< 0.5 mi) to 
+    Dividing fare by distance gives a
+    "price per mile" metric. We exclude
+    very short trips (< 0.5 mi) to
     avoid division noise.
-    ```
     """)
     return
 
@@ -988,10 +996,8 @@ def _(mo):
     mo.md(r"""
     ### I5 — Top 5 busiest pickup → drop‑off routes
 
-    ```
-    Combining two `GROUP BY` columns reveals 
+    Combining two `GROUP BY` columns reveals
     popular origin–destination pairs.
-    ```
     """)
     return
 
@@ -1036,12 +1042,11 @@ def _(mo):
     mo.md(r"""
     ### I6 — Percentage of rides per payment type 
 
-    ```
-    (window function: ratio)
-    `COUNT(*) * 100.0 / SUM(COUNT(*)) OVER ()` 
-    computes each group's share of the grand total 
+    *(window function: ratio)*
+
+    `COUNT(*) * 100.0 / SUM(COUNT(*)) OVER ()`
+    computes each group's share of the grand total
     — a window aggregate over the entire result set.
-    ```
     """)
     return
 
@@ -1080,9 +1085,10 @@ def _(mo):
     mo.md(r"""
     ### I7 — Trips where the tip exceeded the fare 
 
-    ```
-    (subquery filter)A subquery in the `WHERE` 
-    clause identifies unusual rides where passengers 
+    *(subquery filter)*
+
+    A subquery in the `WHERE`
+    clause identifies unusual rides where passengers
     tipped more than the fare itself.
     """)
     return
@@ -1115,11 +1121,11 @@ def _(mo):
     mo.md(r"""
     ### I8 — Hour-by-hour average duration and distance 
 
-    ```
-    (multi-metric time series)Grouping by `hour_of_day` 
-    and computing several averages gives a rich picture 
+    *(multi-metric time series)*
+
+    Grouping by `hour_of_day`
+    and computing several averages gives a rich picture
     of how trips differ throughout the day.
-    ```
     """)
     return
 
@@ -1164,12 +1170,11 @@ def _(mo):
     mo.md(r"""
     ### I9 — Fare vs. distance scatter 
 
-    ```
-    (do fares follow distance?)
-    This query extracts a sample of 5,000 rides 
-    so we can plot fare vs. distance and visually 
+    *(do fares follow distance?)*
+
+    This query extracts a sample of 5,000 rides
+    so we can plot fare vs. distance and visually
     check the relationship.
-    ```
     """)
     return
 
@@ -1207,15 +1212,12 @@ def _(df_18, plot_scatter):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ### I10 — Day‑of‑week × hour heatmap data 
+    ### I10 — Pickup location × hour heatmap
 
-    ```
-    (two‑dimensional GROUP BY)
-    Grouping by **two** time dimensions 
-    produces a matrix. 
-
-    We pivot it in pandas for a quick heatmap.
-    ```
+    **Two-dimensional `GROUP BY`:** grouping by **two** columns — `pickup_location_id`
+    and `hour_of_day` — gives one count per (location, hour) pair, a matrix we pivot in
+    pandas and draw as a heatmap. To keep it readable we take only the **8 busiest pickup
+    locations** (a CTE ranks them by number of rides; ties broken by `pickup_location_id`).
     """)
     return
 
@@ -1223,38 +1225,36 @@ def _(mo):
 @app.cell
 def _(con):
     _df = con.execute("""
-        SELECT day_of_week, hour_of_day,
+        WITH top_locations AS (
+            SELECT pickup_location_id
+            FROM rides
+            GROUP BY pickup_location_id
+            ORDER BY COUNT(*) DESC, pickup_location_id
+            LIMIT 8
+        )
+        SELECT pickup_location_id,
+               hour_of_day,
                COUNT(*) AS num_rides
         FROM rides
-        GROUP BY day_of_week, hour_of_day
-        ORDER BY
-            CASE day_of_week
-                WHEN 'Monday'    THEN 1
-                WHEN 'Tuesday'   THEN 2
-                WHEN 'Wednesday' THEN 3
-                WHEN 'Thursday'  THEN 4
-                WHEN 'Friday'    THEN 5
-                WHEN 'Saturday'  THEN 6
-                WHEN 'Sunday'    THEN 7
-            END,
-            hour_of_day;
+        WHERE pickup_location_id IN (SELECT pickup_location_id FROM top_locations)
+        GROUP BY pickup_location_id, hour_of_day
+        ORDER BY pickup_location_id, hour_of_day;
     """).df()
 
-    # Pivot for heatmap
+    # Pivot for heatmap: one row per location (busiest first), one column per hour
     import matplotlib.pyplot as plt
-    pivot = _df.pivot(index="day_of_week", columns="hour_of_day", values="num_rides")
-    day_order = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]
-    pivot = pivot.reindex(day_order)
+    pivot = _df.pivot(index="pickup_location_id", columns="hour_of_day", values="num_rides").fillna(0)
+    pivot = pivot.loc[pivot.sum(axis=1).sort_values(ascending=False).index]
 
-    fig, ax = plt.subplots(figsize=(14, 5))
+    fig, ax = plt.subplots(figsize=(12, 5))
     im = ax.imshow(pivot.values, aspect="auto", cmap="YlOrRd")
-    ax.set_xticks(range(24))
-    ax.set_xticklabels(range(24))
-    ax.set_yticks(range(7))
-    ax.set_yticklabels(day_order)
-    ax.set_xlabel("Hour of Day")
-    ax.set_ylabel("Day of Week")
-    ax.set_title("Ride Volume: Day of Week × Hour of Day", fontweight="bold")
+    ax.set_xticks(range(len(pivot.columns)))
+    ax.set_xticklabels(pivot.columns)
+    ax.set_yticks(range(len(pivot.index)))
+    ax.set_yticklabels([f"Location {i}" for i in pivot.index])
+    ax.set_xlabel("Hour of Day (January 1, 2015)")
+    ax.set_ylabel("Pickup location")
+    ax.set_title("Ride Volume: 8 Busiest Pickup Locations × Hour of Day", fontweight="bold")
     plt.colorbar(im, ax=ax, label="Number of Rides")
     plt.tight_layout()
     plt.show()
@@ -1264,14 +1264,22 @@ def _(con):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
+    **Reading it:** the 8 busiest locations are all in Manhattan; location 79 (East
+    Village, in NYC's official taxi-zone list) is the busiest, with 9,074 pickups. Most
+    of the color sits in the early-morning hours.
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
     ---
     ## 5 — Ranking Function Queries (CTEs + Window Rankings)
 
-    ```
-    These queries use **Common Table Expressions** (`WITH`) 
-    and ranking window functions:`ROW_NUMBER()`, `RANK()`, 
+    These queries use **Common Table Expressions** (`WITH`)
+    and ranking window functions:`ROW_NUMBER()`, `RANK()`,
     `DENSE_RANK()`, `NTILE()`, and `PERCENT_RANK()`.
-    ```
     """)
     return
 
@@ -1281,12 +1289,11 @@ def _(mo):
     mo.md(r"""
     ### R1 — Top 3 pickup locations by ride volume 
 
-    ```
-    (ROW_NUMBER)
-    `ROW_NUMBER()` assigns a unique sequential integer 
-    to each row within a partition.We use a CTE (`WITH`) 
+    *(ROW_NUMBER)*
+
+    `ROW_NUMBER()` assigns a unique sequential integer
+    to each row within a partition. We use a CTE (`WITH`)
     to first compute counts, then filter to the top 3.
-    ```
     """)
     return
 
@@ -1326,13 +1333,12 @@ def _(mo):
     mo.md(r"""
     ### R2 — Rank hours by average fare with ties 
 
-    ```
-    (RANK vs DENSE_RANK)
-    `RANK()` leaves gaps after ties; 
+    *(RANK vs DENSE_RANK)*
+
+    `RANK()` leaves gaps after ties;
     `DENSE_RANK()` does not.
 
     This query shows both side‑by‑side so students can compare.
-    ```
     """)
     return
 
@@ -1375,11 +1381,10 @@ def _(mo):
     mo.md(r"""
     ### R3 — Divide trips into 4 fare quartiles 
 
-    ```
-    (NTILE)
-    `NTILE(4)` splits the ordered data into 4 roughly 
-    equal groups — quartiles.We then summarize each quartile.
-    ```
+    *(NTILE)*
+
+    `NTILE(4)` splits the ordered data into 4 roughly
+    equal groups — quartiles. We then summarize each quartile.
     """)
     return
 
@@ -1428,14 +1433,13 @@ def _(mo):
     mo.md(r"""
     ### R4 — Percentile ranking of pickup locations 
 
-    ```
-    (PERCENT_RANK)
-    `PERCENT_RANK()` returns a value between 0 and 1 
-    indicating where each row stands relative to all 
-    other rows.  
+    *(PERCENT_RANK)*
+
+    `PERCENT_RANK()` returns a value between 0 and 1
+    indicating where each row stands relative to all
+    other rows.
 
     Locations with a `pct_rank` near 1.0 are the busiest.
-    ```
     """)
     return
 
@@ -1471,15 +1475,13 @@ def _(df_22, plot_horizontal_bar):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ### R5 — Top earner per day of week 
+    ### R5 — Top-earning pickup location for each hour
 
-    ```
-    (CTE + ROW_NUMBER partition)
-    This query finds the single highest‑earning pickup 
-    location for each day of the week.
-    `ROW_NUMBER() … PARTITION BY day_of_week` restarts 
-    the numbering within each day, and we keep only rank 1.
-    ```
+    **CTE + `ROW_NUMBER()` with `PARTITION BY`:** for every hour, find the single pickup
+    location with the highest total revenue (`SUM(total_amount)`).
+    `ROW_NUMBER() OVER (PARTITION BY hour_of_day ORDER BY SUM(total_amount) DESC, pickup_location_id)`
+    restarts the numbering for each hour (ties broken by `pickup_location_id`), and we
+    keep only row 1 — 15 rows, one per hour 0–14.
     """)
     return
 
@@ -1488,14 +1490,23 @@ def _(mo):
 def _(con, mo, rides):
     df_23 = mo.sql(
         f"""
-        WITH daily_revenue AS (SELECT day_of_week, pickup_location_id, ROUND(SUM(total_amount), 2) AS total_rev, ROW_NUMBER() OVER(PARTITION BY day_of_week ORDER BY SUM(total_amount) DESC) AS rn FROM rides GROUP BY day_of_week, pickup_location_id)
+        WITH hourly_revenue AS (
+            SELECT
+                hour_of_day,
+                pickup_location_id,
+                ROUND(SUM(total_amount), 2) AS total_rev,
+                ROW_NUMBER() OVER (PARTITION BY hour_of_day
+                                   ORDER BY SUM(total_amount) DESC, pickup_location_id) AS rn
+            FROM rides
+            GROUP BY hour_of_day, pickup_location_id
+        )
         SELECT
-            day_of_week,
+            hour_of_day,
             pickup_location_id,
             total_rev
-        FROM daily_revenue
+        FROM hourly_revenue
         WHERE rn = 1
-        ORDER BY CASE day_of_week WHEN 'Monday' THEN 1 WHEN 'Tuesday' THEN 2 WHEN 'Wednesday' THEN 3 WHEN 'Thursday' THEN 4 WHEN 'Friday' THEN 5 WHEN 'Saturday' THEN 6 WHEN 'Sunday' THEN 7 END;
+        ORDER BY hour_of_day;
         """,
         engine=con
     )
@@ -1507,12 +1518,23 @@ def _(con, mo, rides):
 @app.cell
 def _(df_23, plot_bar):
     plot_bar(
-        labels=[f"{r.day_of_week}\n(Loc {r.pickup_location_id})" for _, r in df_23.iterrows()],
+        labels=[f"{r.hour_of_day}h\n(Loc {r.pickup_location_id})" for _, r in df_23.iterrows()],
         values=df_23["total_rev"].tolist(),
-        title="Top Earning Location per Day of Week",
-        xlabel="Day (Location)", ylabel="Total Revenue ($)",
-        rotate_x=30, fmt_currency=True
+        title="Top-Earning Pickup Location per Hour (January 1, 2015)",
+        xlabel="Hour (location)", ylabel="Total Revenue ($)",
+        rotate_x=0, fmt_currency=True
     )
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    **Reading it:** location 79 (East Village) earns the most in every hour from 0 to 5
+    — the party crowd going home. From 6 am, airport pickups take over: location 132
+    (JFK Airport) in hours 6–9 and 12–14, and location 138 (LaGuardia Airport) in hours
+    10–11. (Zone names: NYC TLC's official taxi-zone list.)
+    """)
     return
 
 
