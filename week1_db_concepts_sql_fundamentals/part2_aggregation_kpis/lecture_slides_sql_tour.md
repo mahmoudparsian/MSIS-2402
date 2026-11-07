@@ -185,8 +185,11 @@ COPY weather
 FROM 'data/weather.csv';
 ```
 
-The source file must be readable from the machine running DuckDB. (DuckDB
-also offers `read_csv_auto()` — see the `duckdb_101_slides.md` deck.)
+`data/weather.csv` holds the **same three rows** as slides 9–10: use `COPY`
+**instead of** those `INSERT`s (on an empty table) — doing both gives every row
+twice. The path is relative to this deck's folder (`part2_aggregation_kpis/`).
+(DuckDB also offers `read_csv_auto()` — see
+[`5_weeks_outline/duckdb_101_slides.md`](../../5_weeks_outline/duckdb_101_slides.md).)
 
 ---
 

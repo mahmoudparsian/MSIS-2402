@@ -423,9 +423,11 @@ are **exactly the same**.
 
 # 🧪 The Live Demo: Store Finder
 
+From the course repository's root folder:
+
 ```
 cd week4_web_db_applications
-python3 demo_02_store_finder.py          (Windows: python ...)
+python3 demo_02_store_finder.py          (Windows: python demo_02_store_finder.py)
 ```
 
 Open **http://localhost:8001** and watch the terminal:

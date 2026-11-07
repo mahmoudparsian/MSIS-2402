@@ -121,7 +121,8 @@ SELECT s.order_id,
        c.customer_name
 FROM sales s
 JOIN customers c
-  ON s.order_id = c.customer_id;   -- 🚨 wrong column!
+  ON s.order_id = c.customer_id    -- 🚨 wrong column!
+ORDER BY s.order_id;
 ```
 
 ⚠️ This **runs without error** — DuckDB has no way to know `order_id`
@@ -442,7 +443,7 @@ JOIN products p ON s.product_id = p.product_id;
 
 ```console
 Binder Error:
-column "c.customer_name" must appear in the GROUP BY clause
+column "customer_name" must appear in the GROUP BY clause
 or must be part of an aggregate function.
 ```
 
@@ -493,7 +494,9 @@ Real operational systems split a "sale" into **two** tables:
 * `order_items` — one row **per line item** within an order
 
 We'll now use the shared OLTP dataset (`datasets/oltp_database/`) — the
-same one Week 3 completes with `stores`, `payments`, and `shipments`.
+same one Week 3 completes with `stores`, `payments`, and `shipments`. From
+this folder, load it with `read_csv_auto('../../datasets/oltp_database/orders.csv')`
+(and the same for each table) — `notebook_3_joins_marimo.py` does it for you.
 
 ---
 

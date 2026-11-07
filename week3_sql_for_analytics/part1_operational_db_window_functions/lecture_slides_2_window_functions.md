@@ -34,9 +34,15 @@ By the end of today:
 * Segment data using `CASE`
 * Apply `PARTITION BY`
 
+---
+
+# 🎯 Learning Objectives (cont.)
+
 Dataset for the ranking/trend examples: the `sales` table
 (`data/week4_sales.csv` — `order_id, order_date, product, price,
-quantity, sales_amount`).
+quantity, sales_amount`). From this deck's folder:
+`CREATE OR REPLACE TABLE sales AS SELECT * FROM read_csv_auto('data/week4_sales.csv');`
+The store examples use the shared tables in `../../datasets/oltp_database/`.
 
 ---
 
@@ -514,7 +520,8 @@ SELECT product,
             ELSE 'Low'
        END AS segment
 FROM sales
-GROUP BY product;
+GROUP BY product
+ORDER BY revenue DESC;
 ```
 
 | product | revenue | segment |
@@ -563,14 +570,13 @@ FROM sales;
 ```
 
 ```console
-Catalog Error:
-Scalar Function with name rank does not exist!
-Did you mean "range"?
+Binder Error:
+Window functions are not supported here
 ```
 
-👉 Without `OVER(...)`, DuckDB doesn't even recognize `RANK` as a window
-function — it looks for (and fails to find) a plain scalar function of
-that name.
+👉 `RANK()` only exists **with** `OVER(...)` — the window tells it which
+rows to rank and in what order. (DuckDB 1.x worded this as
+`Scalar Function with name rank does not exist!`)
 
 ---
 

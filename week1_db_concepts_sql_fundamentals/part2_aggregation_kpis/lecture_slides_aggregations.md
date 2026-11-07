@@ -59,7 +59,13 @@ Core functions:
 * `AVG()`
 
 Dataset for today: the `sales` table (`data/sales_dataset.csv`) —
-`order_id, country, product, price, quantity, sales_amount`.
+`order_id, country, product, price, quantity, sales_amount`. Load it from
+this deck's folder (`part2_aggregation_kpis/`):
+
+```sql
+CREATE OR REPLACE TABLE sales AS
+SELECT * FROM read_csv_auto('data/sales_dataset.csv');
+```
 
 ---
 
@@ -251,7 +257,8 @@ SELECT country,
        SUM(sales_amount) AS revenue
 FROM sales
 GROUP BY country
-HAVING revenue > 95000;
+HAVING revenue > 95000
+ORDER BY revenue DESC;
 ```
 
 | country | revenue |
@@ -297,7 +304,8 @@ SELECT country,
        SUM(sales_amount) AS revenue
 FROM sales
 GROUP BY country
-HAVING revenue > 95000;
+HAVING revenue > 95000
+ORDER BY revenue DESC;
 ```
 
 Business meaning:

@@ -207,6 +207,7 @@ All in [`course_information/`](course_information/):
 
 | Document | What it covers |
 |---|---|
+| [`SYLLABUS.md`](course_information/SYLLABUS.md) ([PDF](course_information/SYLLABUS.pdf)) | The whole course on one page — schedule, outcomes, grading, policies |
 | [`ASSIGNMENTS_and_GRADING.md`](course_information/ASSIGNMENTS_and_GRADING.md) | Grading weights, how each session's lab works, attendance and late policies, Final Exam format |
 | [`DISCUSSIONS_README.md`](course_information/DISCUSSIONS_README.md) | How the class discussions work |
 | [`ACADEMIC_CONDUCT.md`](course_information/ACADEMIC_CONDUCT.md) | Academic integrity expectations |

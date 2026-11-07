@@ -465,7 +465,8 @@ ORDER BY table_name;
 | **orders** | **97604** |
 
 ⚠️ `orders` really has **100,000** rows. `table_rows` is an **estimate** —
-use `COUNT(*)` when you need the truth.
+your number will differ (97,604 here; 100,113 on another load) — use
+`COUNT(*)` when you need the truth.
 
 ---
 

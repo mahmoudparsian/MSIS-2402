@@ -33,9 +33,14 @@ By the end of today:
 * Communicate findings clearly
 * Make data-driven recommendations
 
+---
+
+# 🎯 Learning Objectives (cont.)
+
 Dataset for this walkthrough: the same 7-table `oltp_database` used since
 Week 1 (`customers`, `orders`, `order_items`, `products`, `payments`,
-`shipments`, `stores`). Today's demo runs company-wide, across all six
+`shipments`, `stores`), loaded from this deck's folder with
+`read_csv_auto('../../datasets/oltp_database/<table>.csv')`. Today's demo runs company-wide, across all six
 countries; in the "Try It Yourself" exercise at the end, you repeat it for one
 country of your choice.
 
@@ -98,7 +103,7 @@ Answer:
 # 🧾 Step 1 — Explore
 
 ```sql
-SELECT * FROM customers LIMIT 10;
+SELECT * FROM customers ORDER BY customer_id LIMIT 10;
 ```
 
 💼 Goal — understand:
@@ -114,7 +119,7 @@ SELECT * FROM customers LIMIT 10;
 # 📊 Step 2 — Revenue by Country
 
 ```sql
-SELECT c.country, SUM(oi.sales_amount) AS revenue
+SELECT c.country, ROUND(SUM(oi.sales_amount), 2) AS revenue
 FROM customers c
 JOIN orders o ON o.customer_id = c.customer_id
 JOIN order_items oi ON oi.order_id = o.order_id
@@ -124,12 +129,12 @@ ORDER BY revenue DESC;
 
 | country | revenue |
 |---|---:|
-| Germany | 38,242,802 |
-| Australia | 34,225,578 |
-| USA | 32,966,179 |
-| France | 31,497,062 |
-| UK | 30,655,319 |
-| Canada | 26,113,603 |
+| Germany | 38,242,802.95 |
+| Australia | 34,225,578.67 |
+| USA | 32,966,179.60 |
+| France | 31,497,062.18 |
+| UK | 30,655,319.39 |
+| Canada | 26,113,603.34 |
 
 🧠 Insight: 👉 Germany leads every market — but notice the spread is not
 huge (Germany to Canada is less than 1.5x). No single market dominates the

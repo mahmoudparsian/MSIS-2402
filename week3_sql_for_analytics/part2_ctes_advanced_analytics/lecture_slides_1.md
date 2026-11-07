@@ -45,6 +45,10 @@ Businesses often ask questions like:
 
 Advanced SQL helps answer these.
 
+Data for today's examples: the 7 `oltp_database` tables, loaded from this
+deck's folder with `read_csv_auto('../../datasets/oltp_database/<table>.csv')`
+(`notebook_ecommerce/notebook_ecommerce.py` loads them for you).
+
 ---
 
 # Slide 5 — Common Table Expressions (CTE)

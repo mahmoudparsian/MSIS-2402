@@ -344,7 +344,13 @@ This course focuses heavily on **querying data**.
 From here on we switch to the **real, file-backed** `sales` table —
 loaded from `data/sales.csv` (200 rows), the same table used in
 `notebook_3_duckdb_marimo.py`. (This replaces the small in-class demo
-table from the SELECT examples earlier — same idea, real data.)
+table from the SELECT examples earlier — same idea, real data.) From this
+deck's folder (`part1_single_table_sql/`):
+`CREATE OR REPLACE TABLE sales AS SELECT * FROM read_csv_auto('data/sales.csv');`
+
+---
+
+# slide-26:  Our Week‑1 Dataset (cont.)
 
 Columns:
 
@@ -622,8 +628,11 @@ Example:
 ```sql
 SELECT *  
 FROM sales  
+ORDER BY sale_id  
 LIMIT 10;
 ```
+
+Without `ORDER BY`, *which* 10 rows you get isn't guaranteed.
 
 ---
 

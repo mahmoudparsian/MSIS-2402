@@ -6,11 +6,6 @@
 > **only for the Final Exam**. Install it and take the **practice quiz** at
 > least **one week before the exam**, so there is time to fix any problem.
 
-<!-- TODO(lockdown): product and download link filled in 2026-10-06; the instructor
-     will fill in the remaining TODO(lockdown) items (practice quiz, SCU help, SCU-specific step)
-     below once SCU confirms the product and links. Search the repo for
-     "TODO(lockdown)" to find all of them. -->
-
 ## What it is
 
 The Final Exam is taken on your own laptop inside a **lock-down browser**: a
@@ -21,8 +16,9 @@ while the exam is open. You must have it installed **before** the exam slot.
 |---|---|
 | Product | **Respondus LockDown Browser** |
 | Download page | [SCU LockDown Browser download](https://download.respondus.com/lockdown/download.php?ID=597745928) |
-| Practice quiz | **TODO(lockdown): link to the practice quiz in Camino** |
-| Help from SCU | **TODO(lockdown): SCU help page or support contact** |
+| Practice quiz | In our Camino course: **Quizzes → LockDown Browser Practice Quiz** (not graded; open from the first week of class until the exam) |
+| SCU instructions | [Respondus LockDown Browser — SCU help article](https://santa-clara-univ.zendesk.com/hc/en-us/articles/19533228115731-Respondus-Lockdown-Browser) |
+| Help from SCU | SCU Technology Help: **(408) 554-5700**, [Computing Support Request](https://help.scu.edu/TDClient/111/Portal/Home/), or [live chat](https://www.scu.edu/technology/get-help/) — details on [Get Help](https://www.scu.edu/technology/get-help/) |
 
 ## Install it
 
@@ -30,13 +26,16 @@ while the exam is open. You must have it installed **before** the exam slot.
 2. Download the **Windows** version and run the downloaded installer (`.exe`).
 3. If Windows asks *"Do you want to allow this app to make changes to your
    device?"*, click **Yes**. Follow the installer's instructions.
-4. **TODO(lockdown): any SCU-specific step (e.g. an institution code, or
-   launching it from Camino rather than directly).**
+4. **How you start an exam at SCU:** you do **not** open the quiz in your normal
+   browser. Close all other programs, start LockDown Browser itself from the
+   desktop shortcut (or **Start menu → LockDown Browser**), log in to **Camino** inside it, then open the course and the quiz.
+   Once a quiz is started, you cannot leave LockDown Browser until you submit it.
 
 ## Verify it — take the practice quiz
 
-1. Open the **practice quiz** link above.
-2. Start it. The lock-down browser should open and take over the screen.
+1. Start **LockDown Browser** from the desktop shortcut (or **Start menu → LockDown Browser**).
+2. Log in to **Camino** inside it, open our course, then **Quizzes → LockDown
+   Browser Practice Quiz**, and start it. LockDown Browser takes over the screen.
 3. Answer the practice questions, submit, and confirm you see your score.
 
 ✅ If the practice quiz opened inside the lock-down browser and you could
@@ -48,8 +47,10 @@ submit it, you're ready for the exam.
   (including messaging apps and screen recorders), then try again.
 - **Windows Defender or antivirus blocks it** — allow the app, or ask the
   help desk below; don't turn antivirus off on your own.
-- Anything else: **TODO(lockdown): where to get help (SCU help desk link or
-  email)** — and tell the instructor **before** the exam day, not during it.
+- **Anything else** — on LockDown Browser's start screen, click **"It's not
+  working"** for Respondus' troubleshooting tips and 24/7 live chat, or contact
+  SCU Technology Help (**(408) 554-5700**, or a
+  [Computing Support Request](https://help.scu.edu/TDClient/111/Portal/Home/)) — and tell the instructor **before** the exam day, not during it.
 
 ---
 

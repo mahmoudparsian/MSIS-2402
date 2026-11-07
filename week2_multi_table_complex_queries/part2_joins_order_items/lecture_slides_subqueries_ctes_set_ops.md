@@ -65,13 +65,15 @@ Orders run from **2021-01-01** to **2024-12-31**.
 
 # Slide 5 — Loading It in DuckDB
 
+From this deck's folder (`week2_multi_table_complex_queries/part2_joins_order_items/`):
+
 ```sql
-CREATE TABLE orders AS
-SELECT * FROM read_csv_auto('datasets/oltp_database/orders.csv');
--- repeat for customers, order_items, products, payments, stores
+CREATE OR REPLACE TABLE orders AS
+SELECT * FROM read_csv_auto('../../datasets/oltp_database/orders.csv');
+-- the same for customers, order_items, products, payments, stores
 ```
 
-(The Session 4 notebook already does this for you.)
+(`notebook_3_joins_marimo.py` in this folder already does this for you.)
 
 ---
 
@@ -432,10 +434,17 @@ WHERE NOT EXISTS (
 Two orders, totals 100 and 50. Order 1 has **3** items, order 2 has 1.
 
 ```sql
-SELECT SUM(o.total)
+WITH ord(order_id, total)  AS (VALUES (1, 100), (2, 50)),
+     items(order_id, item) AS (VALUES (1, 'a'), (1, 'b'), (1, 'c'), (2, 'd'))
+SELECT (SELECT SUM(total) FROM ord) AS right_total,
+       SUM(o.total)                 AS fanned_out_total
 FROM ord AS o
 JOIN items AS i ON i.order_id = o.order_id;
 ```
+
+---
+
+# Slide 23 — ⚠️ Trap 2: Join Fan-Out (cont.)
 
 | right_total | fanned_out_total |
 |---:|---:|

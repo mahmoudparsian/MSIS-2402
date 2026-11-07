@@ -57,9 +57,9 @@ This resembles real production databases.
 
 Example:
 
-| customer_id | country | segment |
-|---|---|---|
-| 1 | Germany | Consumer |
+| customer_id | gender | country | segment | signup_date |
+|---|---|---|---|---|
+| 1 | Female | Germany | Consumer | 2021-09-01 |
 
 Questions:
 
@@ -82,7 +82,7 @@ Each row represents one order.
 
 order_items
 
-| order_item_id | order_id | product_id | quantity | sales_amount |
+| order_item_id | order_id | product_id | quantity | category | price | sales_amount |
 
 Each order can contain multiple items.
 
@@ -116,7 +116,7 @@ Stores can be:
 
 payments
 
-| payment_id | order_id | payment_method | payment_amount |
+| payment_id | order_id | payment_method | payment_date | payment_amount |
 
 Allows financial analysis.
 
@@ -126,13 +126,17 @@ Allows financial analysis.
 
 shipments
 
-| shipment_id | order_id | carrier | shipment_date |
+| shipment_id | order_id | carrier | shipment_date | delivery_date |
 
 Used for logistics analysis.
 
 ---
 
 # Slide 12 — Exploring the Data
+
+Load each table once, from this deck's folder (`part1_operational_db_window_functions/`):
+`CREATE OR REPLACE TABLE orders AS SELECT * FROM read_csv_auto('../../datasets/oltp_database/orders.csv');`
+— the same for the other six (`notebook_3_duckdb_analysis_marimo.py` does it for you).
 
 Example query:
 
