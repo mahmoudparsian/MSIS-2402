@@ -15,7 +15,7 @@ def _():
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    # Week 1 — SQL Foundations with a Single Table
+    # Session 1 — SQL Foundations with a Single Table
 
     This notebook uses the **`sales`** table from `data/sales.csv` in this folder.
 

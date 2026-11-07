@@ -126,7 +126,7 @@ def _(mo):
 @app.cell
 def _(con, plt):
 
-    df_plot = con.execute('SELECT country, SUM(sales_amount) AS revenue FROM sales GROUP BY country').df()
+    df_plot = con.execute('SELECT country, SUM(sales_amount) AS revenue FROM sales GROUP BY country ORDER BY revenue DESC').df()
     plt.figure()
     plt.bar(df_plot['country'], df_plot['revenue'])
     plt.title('Revenue by Country')

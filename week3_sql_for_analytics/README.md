@@ -31,8 +31,8 @@ trends and segmentation
 |---|---|
 | [`slides_01_operational_database.md`](session05_operational_db_window_functions/slides_01_operational_database.md) | Slide deck — real operational databases |
 | [`slides_02_window_functions_ranking.md`](session05_operational_db_window_functions/slides_02_window_functions_ranking.md) | Slide deck — window functions and advanced analytics |
-| [`notebook_01_ranking.py`](session05_operational_db_window_functions/notebook_01_ranking.py) | In-class notebook — ranking |
-| [`notebook_02_trends_segmentation.py`](session05_operational_db_window_functions/notebook_02_trends_segmentation.py) | In-class notebook — trends and segmentation |
+| [`notebook_01_ranking.py`](session05_operational_db_window_functions/notebook_01_ranking.py) | In-class notebook — ranking: `GROUP BY` vs. window functions · `ROW_NUMBER`, `RANK`, `DENSE_RANK` on a real tie · top N with and without ties · top N per group (`PARTITION BY`, `QUALIFY`) · why `WHERE` can't filter a rank · the Nth-highest value · 3 practice queries |
+| [`notebook_02_trends_segmentation.py`](session05_operational_db_window_functions/notebook_02_trends_segmentation.py) | In-class notebook — trends and segmentation: running totals (overall, by month, per product) with 3 charts · segments with `CASE` · rank, share of total, and segment in one query · order-size segments · 3 practice queries |
 | [`notebook_03_full_database_exploration.py`](session05_operational_db_window_functions/notebook_03_full_database_exploration.py) | In-class notebook — exploring the full operational database |
 | [`CLASS_DISCUSSION.md`](session05_operational_db_window_functions/CLASS_DISCUSSION.md) | Class discussion — warm-up before the lab |
 | [`data/`](session05_operational_db_window_functions/data/) | `product_orders.csv` — 200 transactions, used by notebooks 1 and 2 and the class discussion |

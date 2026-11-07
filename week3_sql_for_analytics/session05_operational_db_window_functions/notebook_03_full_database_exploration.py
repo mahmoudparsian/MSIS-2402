@@ -15,7 +15,7 @@ def _():
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    # Week 3 — Full Operational Database Exploration
+    # Session 5 — Full Operational Database Exploration
 
     This notebook uses the full operational schema:
 

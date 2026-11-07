@@ -15,7 +15,7 @@ def _():
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    # Week 3 — Advanced SQL Analytics with DuckDB
+    # Session 6 — Advanced SQL Analytics with DuckDB
 
     This notebook focuses on advanced analytics patterns:
 

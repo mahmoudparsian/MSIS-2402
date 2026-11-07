@@ -15,7 +15,7 @@ def _():
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    # Week 2 — Transaction Analytics
+    # Session 4 — Transaction Analytics
 
     This notebook focuses on the transaction-level schema:
 

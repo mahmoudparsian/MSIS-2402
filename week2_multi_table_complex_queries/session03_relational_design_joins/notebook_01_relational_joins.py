@@ -15,7 +15,7 @@ def _():
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    # Week 2 — Relational Databases and JOINs
+    # Session 3 — Relational Databases and JOINs
 
     This notebook uses the Week 2 relational dataset:
 
