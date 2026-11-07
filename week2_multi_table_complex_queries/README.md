@@ -9,14 +9,14 @@
 > Students learn strategies for combining, structuring, and decomposing
 > queries and for reasoning carefully about query results.
 >
-> — [Department course outline](../5_weeks_outline/department_course_outline.md)
+> — [Department course outline](../00_start_here/department_course_outline.md)
 
 ## At a Glance
 
 | Session | Topic | Folder | Lab (in [`LABS/`](../LABS/)) | Lab format |
 |:---:|---|---|---|---|
-| **3** | Relational design and joins | [`part1_relational_design_joins/`](part1_relational_design_joins/) | `week2_lab1/` — keys, relationships, and joins | Marimo notebooks (DuckDB) |
-| **4** | Multi-table joins, subqueries, CTEs and set operations | [`part2_joins_order_items/`](part2_joins_order_items/) | `week2_lab2/` — multi-table queries, subqueries, and CTEs | Marimo notebooks (DuckDB) |
+| **3** | Relational design and joins | [`session03_relational_design_joins/`](session03_relational_design_joins/) | `week2/session03/` — keys, relationships, and joins | Marimo notebooks (DuckDB) |
+| **4** | Multi-table joins, subqueries, CTEs and set operations | [`session04_multi_table_joins/`](session04_multi_table_joins/) | `week2/session04/` — multi-table queries, subqueries, and CTEs | Marimo notebooks (DuckDB) |
 
 ---
 
@@ -27,11 +27,11 @@ diagrams · normalization · `INNER JOIN` and `LEFT JOIN`
 
 | File | What it is |
 |---|---|
-| [`lecture_slides_joins.md`](part1_relational_design_joins/lecture_slides_joins.md) | Slide deck — relational databases and joins |
-| [`lecture_slides_er_diagram.md`](part1_relational_design_joins/lecture_slides_er_diagram.md) | Slide deck — ER diagrams |
-| [`notebook_3_marimo.py`](part1_relational_design_joins/notebook_3_marimo.py) | In-class notebook — relational databases and joins |
-| [`CLASS_DISCUSSION_01.md`](part1_relational_design_joins/CLASS_DISCUSSION_01.md) | Class discussion — warm-up before the lab |
-| [`data/`](part1_relational_design_joins/data/) | `customers.csv`, `orders.csv`, `products.csv` — a small 3-table dataset (200 / 800 / 100 rows), used by the notebook and the class discussion |
+| [`slides_01_relational_databases_joins.md`](session03_relational_design_joins/slides_01_relational_databases_joins.md) | Slide deck — relational databases and joins |
+| [`slides_02_er_diagrams.md`](session03_relational_design_joins/slides_02_er_diagrams.md) | Slide deck — ER diagrams |
+| [`notebook_01_relational_joins.py`](session03_relational_design_joins/notebook_01_relational_joins.py) | In-class notebook — relational databases and joins |
+| [`CLASS_DISCUSSION.md`](session03_relational_design_joins/CLASS_DISCUSSION.md) | Class discussion — warm-up before the lab |
+| [`data/`](session03_relational_design_joins/data/) | `customers.csv`, `orders.csv`, `products.csv` — a small 3-table dataset (200 / 800 / 100 rows), used by the notebook and the class discussion |
 
 ## Session 4 — Multi-Table Joins and Transaction Analytics
 
@@ -42,11 +42,11 @@ diagrams · normalization · `INNER JOIN` and `LEFT JOIN`
 
 | File | What it is |
 |---|---|
-| [`lecture_slides_joins.md`](part2_joins_order_items/lecture_slides_joins.md) | Slide deck — joins and transaction analytics |
-| [`lecture_slides_subqueries_ctes_set_ops.md`](part2_joins_order_items/lecture_slides_subqueries_ctes_set_ops.md) | Slide deck — subqueries, CTEs and set operations (decomposing queries) |
-| [`notebook_3_joins_marimo.py`](part2_joins_order_items/notebook_3_joins_marimo.py) | In-class notebook — transaction analytics |
-| [`CLASS_DISCUSSION_02.md`](part2_joins_order_items/CLASS_DISCUSSION_02.md) | Class discussion — warm-up before the lab |
-| [`data/`](part2_joins_order_items/data/) | `customers.csv`, `products.csv`, `sales.csv` — the small tables used in the joins slides. The notebook and class discussion use the shared database in [`datasets/oltp_database/`](../datasets/oltp_database/) instead |
+| [`slides_01_joins_transaction_analytics.md`](session04_multi_table_joins/slides_01_joins_transaction_analytics.md) | Slide deck — joins and transaction analytics |
+| [`slides_02_subqueries_ctes_set_ops.md`](session04_multi_table_joins/slides_02_subqueries_ctes_set_ops.md) | Slide deck — subqueries, CTEs and set operations (decomposing queries) |
+| [`notebook_01_transaction_analytics.py`](session04_multi_table_joins/notebook_01_transaction_analytics.py) | In-class notebook — transaction analytics |
+| [`CLASS_DISCUSSION.md`](session04_multi_table_joins/CLASS_DISCUSSION.md) | Class discussion — warm-up before the lab |
+| [`data/`](session04_multi_table_joins/data/) | `customers.csv`, `products.csv`, `sales.csv` — the small tables used in the joins slides. The notebook and class discussion use the shared database in [`datasets/oltp_database/`](../datasets/oltp_database/) instead |
 
 ---
 
@@ -67,8 +67,8 @@ from **its own folder**, because it reads its data by a relative path:
 
 | Session | Run (two commands) | Reads |
 |:---:|---|---|
-| 3 | `cd week2_multi_table_complex_queries/part1_relational_design_joins` then `marimo edit notebook_3_marimo.py` | `data/customers.csv`, `data/orders.csv`, `data/products.csv` |
-| 4 | `cd week2_multi_table_complex_queries/part2_joins_order_items` then `marimo edit notebook_3_joins_marimo.py` | `../../datasets/oltp_database/` (the shared database) |
+| 3 | `cd week2_multi_table_complex_queries/session03_relational_design_joins` then `marimo edit notebook_01_relational_joins.py` | `data/customers.csv`, `data/orders.csv`, `data/products.csv` |
+| 4 | `cd week2_multi_table_complex_queries/session04_multi_table_joins` then `marimo edit notebook_01_transaction_analytics.py` | `../../datasets/oltp_database/` (the shared database) |
 
 ## Further Practice
 

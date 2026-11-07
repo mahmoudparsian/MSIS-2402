@@ -11,18 +11,18 @@
 > security, performance, and governance issues involved in managing
 > organizational data.
 >
-> — [Department course outline](../5_weeks_outline/department_course_outline.md)
+> — [Department course outline](../00_start_here/department_course_outline.md)
 
 ## At a Glance
 
 | Session | Topic | Lab (in [`LABS/`](../LABS/)) | Lab format |
 |:---:|---|---|---|
-| **9** | Transactions, concurrency, and modern data systems | `week5_lab1/` — transactions and concurrency | Lab A: Marimo notebook (DuckDB). Lab B: Markdown handout with **two** `mysql` sessions at once |
-| **10** | Performance, security, and governance | `week5_lab2/` — query plans and indexes; users, grants, and views | Markdown handouts in the `mysql` client |
+| **9** | Transactions, concurrency, and modern data systems | `week5/session09/` — transactions and concurrency | Lab A: Marimo notebook (DuckDB). Lab B: Markdown handout with **two** `mysql` sessions at once |
+| **10** | Performance, security, and governance | `week5/session10/` — query plans and indexes; users, grants, and views | Markdown handouts in the `mysql` client |
 
 Both live demos and three of the four graded labs use MySQL with the
 `isba_shop` database loaded, as set up before
-[Session 7](../week4_web_db_applications/README.md). Lab 2a starts from a
+[Session 7](../week4_web_db_applications/README.md). Session 10 Lab A starts from a
 **fresh** load — re-run the same load command before it.
 
 ---
@@ -36,9 +36,9 @@ and lakehouses · NoSQL families · cloud databases
 
 | File | What it is |
 |---|---|
-| [`lecture_slides_01_transactions_modern_data.md`](lecture_slides_01_transactions_modern_data.md) | Slide deck (Marp) |
-| [`demo_01_transactions_mysql.sql`](demo_01_transactions_mysql.sql) | Live demo — two terminals (A and B) connected to `isba_shop`: isolation, a consistent snapshot, and a checkout that fails halfway; the expected output is in the comments |
-| [`CLASS_DISCUSSION_01.md`](CLASS_DISCUSSION_01.md) | Class discussion — warm-up before the lab |
+| [`slides_01_transactions_modern_data.md`](session09_transactions_modern_data/slides_01_transactions_modern_data.md) | Slide deck (Marp) |
+| [`demo_01_transactions_mysql.sql`](session09_transactions_modern_data/demo_01_transactions_mysql.sql) | Live demo — two terminals (A and B) connected to `isba_shop`: isolation, a consistent snapshot, and a checkout that fails halfway; the expected output is in the comments |
+| [`CLASS_DISCUSSION.md`](session09_transactions_modern_data/CLASS_DISCUSSION.md) | Class discussion — warm-up before the lab |
 
 **Running a MySQL demo:** open two terminals (A and B) and connect each to
 the course data with `mysql -u root isba_shop` (Windows:
@@ -56,11 +56,11 @@ and recovery
 
 | File | What it is |
 |---|---|
-| [`lecture_slides_02_performance_security_governance.md`](lecture_slides_02_performance_security_governance.md) | Slide deck (Marp) |
-| [`demo_02_performance_security_mysql.sql`](demo_02_performance_security_mysql.sql) | Live demo — an index on `shipments`, a least-privilege account for the web application (used from a second terminal), and a backup proven by restoring it; the expected output is in the comments |
-| [`CLASS_DISCUSSION_02.md`](CLASS_DISCUSSION_02.md) | Class discussion — warm-up before the lab |
+| [`slides_01_performance_security_governance.md`](session10_performance_security_governance/slides_01_performance_security_governance.md) | Slide deck (Marp) |
+| [`demo_01_performance_security_mysql.sql`](session10_performance_security_governance/demo_01_performance_security_mysql.sql) | Live demo — an index on `shipments`, a least-privilege account for the web application (used from a second terminal), and a backup proven by restoring it; the expected output is in the comments |
+| [`CLASS_DISCUSSION.md`](session10_performance_security_governance/CLASS_DISCUSSION.md) | Class discussion — warm-up before the lab |
 
-> **Note:** run `demo_02_performance_security_mysql.sql` one statement at a
+> **Note:** run `demo_01_performance_security_mysql.sql` one statement at a
 > time, connected as in Session 9 — never as a single script.
 
 ---

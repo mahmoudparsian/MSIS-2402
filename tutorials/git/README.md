@@ -58,8 +58,8 @@ the course's own files — save a copy under a new name in the same folder, and
 work on the copy.**
 
 - For a lab, the new name is its submission name: save
-  `week1_lab1a_student_marimo.py` as `lopez_maria_week1_lab1a_marimo.py` (your
-  name in front, `_student` dropped) in the same `LABS/week1_lab1/` folder — see
+  `session01_lab_a_student_marimo.py` as `lopez_maria_session01_lab_a_marimo.py` (your
+  name in front, `_student` dropped) in the same `LABS/week1/session01/` folder — see
   [`LABS/README.md`](../../LABS/README.md).
 - `git pull` never changes or deletes files you created, so your copy is safe.
 - Keep the copy **in the same folder**: notebooks find their data by a relative

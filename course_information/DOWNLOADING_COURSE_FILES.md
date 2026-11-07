@@ -36,8 +36,8 @@ after the release, then download).
 | 5 | [`session05-labs.zip`](https://github.com/mahmoudparsian/MSIS-2402/releases/download/weekly-zips/session05-labs.zip) | 10 | [`session10-labs.zip`](https://github.com/mahmoudparsian/MSIS-2402/releases/download/weekly-zips/session10-labs.zip) |
 
 Session *N*'s labs are the `LABS/` folder `weekW_labL` with
-N = 2 × (W − 1) + L: Session 1 = `week1_lab1`, Session 2 = `week1_lab2`,
-Session 3 = `week2_lab1`, … Session 10 = `week5_lab2`.
+N = 2 × (W − 1) + L: Session 1 = `week1/session01`, Session 2 = `week1/session02`,
+Session 3 = `week2/session03`, … Session 10 = `week5/session10`.
 
 ## 🗂️ What Is Inside a ZIP File
 
@@ -48,13 +48,13 @@ repository, so every notebook finds its data. For example:
 week1_db_concepts_sql_fundamentals.zip
 └── MSIS-2402-week1_db_concepts_sql_fundamentals/
     ├── week1_db_concepts_sql_fundamentals/
-    │   ├── part1_single_table_sql/      ← Session 1
-    │   └── part2_aggregation_kpis/      ← Session 2
+    │   ├── session01_single_table_sql/      ← Session 1
+    │   └── session02_aggregation_kpis/      ← Session 2
     └── datasets/oltp_database/          ← the course data
 
 session01-labs.zip
 └── MSIS-2402-session01-labs/
-    ├── LABS/week1_lab1/                 ← Lab A, Lab B (and solutions, once added)
+    ├── LABS/week1/session01/                 ← Lab A, Lab B (and solutions, once added)
     └── datasets/oltp_database/
 ```
 
@@ -71,18 +71,18 @@ Example: Session 1's lab.
 3. Open **Terminal** and go into the lab's folder:
 
    ```bash
-   cd ~/Downloads/MSIS-2402-session01-labs/LABS/week1_lab1
+   cd ~/Downloads/MSIS-2402-session01-labs/LABS/week1/session01
    ```
 
 4. Open the notebook with Marimo:
 
    ```bash
-   marimo edit week1_lab1a_student_marimo.py
+   marimo edit session01_lab_a_student_marimo.py
    ```
 
 For a week ZIP, the folder to `cd` into is the part folder that holds the
 notebook — for Session 1:
-`cd ~/Downloads/MSIS-2402-week1_db_concepts_sql_fundamentals/week1_db_concepts_sql_fundamentals/part1_single_table_sql`.
+`cd ~/Downloads/MSIS-2402-week1_db_concepts_sql_fundamentals/week1_db_concepts_sql_fundamentals/session01_single_table_sql`.
 Each week's `README.md` (inside the ZIP) lists the folder and command for
 every notebook.
 
@@ -101,19 +101,19 @@ Example: Session 1's lab.
    path has one extra level. This is normal:
 
    ```
-   Downloads\session01-labs\MSIS-2402-session01-labs\LABS\week1_lab1
+   Downloads\session01-labs\MSIS-2402-session01-labs\LABS\week1/session01
    ```
 
 4. Open **PowerShell** and go into that folder:
 
    ```powershell
-   cd $HOME\Downloads\session01-labs\MSIS-2402-session01-labs\LABS\week1_lab1
+   cd $HOME\Downloads\session01-labs\MSIS-2402-session01-labs\LABS\week1/session01
    ```
 
 5. Open the notebook with Marimo:
 
    ```powershell
-   marimo edit week1_lab1a_student_marimo.py
+   marimo edit session01_lab_a_student_marimo.py
    ```
 
 If `marimo` is "not recognized", see the installation guide in

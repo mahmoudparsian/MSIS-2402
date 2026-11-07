@@ -11,14 +11,14 @@
 > application are used to demonstrate how data moves through a real
 > application.
 >
-> — [Department course outline](../5_weeks_outline/department_course_outline.md)
+> — [Department course outline](../00_start_here/department_course_outline.md)
 
 ## At a Glance
 
 | Session | Topic | Lab (in [`LABS/`](../LABS/)) | Lab format |
 |:---:|---|---|---|
-| **7** | Client–server databases (MySQL) | `week4_lab1/` — a database server and its clients (Lab A); constraints and views (Lab B) | Markdown handouts; you work in the `mysql` command-line client |
-| **8** | Web application architecture | `week4_lab2/` — a simple database-backed web application | A small Python + DuckDB web app (`shop_app_starter.py`) and Markdown handouts |
+| **7** | Client–server databases (MySQL) | `week4/session07/` — a database server and its clients (Lab A); constraints and views (Lab B) | Markdown handouts; you work in the `mysql` command-line client |
+| **8** | Web application architecture | `week4/session08/` — a simple database-backed web application | A small Python + DuckDB web app (`shop_app_starter.py`) and Markdown handouts |
 
 **Before Session 7 starts** (the lab needs both):
 
@@ -39,9 +39,9 @@ dialects · views · `information_schema`
 
 | File | What it is |
 |---|---|
-| [`lecture_slides_01_client_server_mysql.md`](lecture_slides_01_client_server_mysql.md) | Slide deck (Marp) |
-| [`demo_01_client_server_mysql.sql`](demo_01_client_server_mysql.sql) | Live demo — run in two terminals (A and B) connected to the `isba_shop` database; the expected output is in the comments |
-| [`CLASS_DISCUSSION_01.md`](CLASS_DISCUSSION_01.md) | Class discussion — warm-up before the lab |
+| [`slides_01_client_server_mysql.md`](session07_client_server_mysql/slides_01_client_server_mysql.md) | Slide deck (Marp) |
+| [`demo_01_client_server_mysql.sql`](session07_client_server_mysql/demo_01_client_server_mysql.sql) | Live demo — run in two terminals (A and B) connected to the `isba_shop` database; the expected output is in the comments |
+| [`CLASS_DISCUSSION.md`](session07_client_server_mysql/CLASS_DISCUSSION.md) | Class discussion — warm-up before the lab |
 
 **Running a MySQL demo:** open two terminals (A and B) and connect each to
 the course data with `mysql -u root isba_shop` (Windows:
@@ -58,23 +58,23 @@ URLs · HTTP requests, responses, and status codes · forms and `GET` vs.
 
 | File | What it is |
 |---|---|
-| [`lecture_slides_02_web_app_architecture.md`](lecture_slides_02_web_app_architecture.md) | Slide deck (Marp) |
-| [`demo_02_store_finder.py`](demo_02_store_finder.py) | Live demo — a small "Store Finder" web app built with the Python standard library and DuckDB |
-| [`CLASS_DISCUSSION_02.md`](CLASS_DISCUSSION_02.md) | Class discussion — warm-up before the lab |
+| [`slides_01_web_app_architecture.md`](session08_web_app_architecture/slides_01_web_app_architecture.md) | Slide deck (Marp) |
+| [`demo_01_store_finder.py`](session08_web_app_architecture/demo_01_store_finder.py) | Live demo — a small "Store Finder" web app built with the Python standard library and DuckDB |
+| [`CLASS_DISCUSSION.md`](session08_web_app_architecture/CLASS_DISCUSSION.md) | Class discussion — warm-up before the lab |
 
 **Running the web demo:** from the course repository folder (the one that
 contains `README.md` and `datasets/` — `MSIS-2402-main` if you downloaded the
 ZIP):
 
 ```bash
-cd week4_web_db_applications
-python3 demo_02_store_finder.py        # Windows: python demo_02_store_finder.py
+cd week4_web_db_applications/session08_web_app_architecture
+python3 demo_01_store_finder.py        # Windows: python demo_01_store_finder.py
 ```
 
 Then open <http://localhost:8001> in your browser. The terminal prints every
 request and SQL statement as it happens. Stop the server with **Ctrl+C**.
-The demo reads the shared database in `../datasets/oltp_database/`, so it
-must be started from this folder.
+The demo reads the shared database in `../../datasets/oltp_database/`, so it
+must be started from its session folder.
 
 ---
 

@@ -39,21 +39,21 @@ data.
 
 ## Where to Find Them
 
-Each discussion is a `CLASS_DISCUSSION_0N.md` file: **01** goes with the
-week's first session, **02** with its second.
+Each discussion is the `CLASS_DISCUSSION.md` file in its session folder
+(for example, `week1_db_concepts_sql_fundamentals/session01_single_table_sql/CLASS_DISCUSSION.md`).
 
 | Week | Session | Discussion | Topics |
 |:---:|:---:|---|---|
-| **1** | 1 | [Foundations](../week1_db_concepts_sql_fundamentals/part1_single_table_sql/CLASS_DISCUSSION_01.md) | `SELECT`, `WHERE`, `ORDER BY`, `LIMIT` — predicting a filtered row count before running it; what a top-10 list really shows; low- vs. high-cardinality columns |
-| | 2 | [Aggregation & KPIs](../week1_db_concepts_sql_fundamentals/part2_aggregation_kpis/CLASS_DISCUSSION_02.md) | `COUNT` / `SUM` / `AVG`, `GROUP BY`, `WHERE` vs. `HAVING`; volume vs. value; debugging an aggregate inside `WHERE` |
-| **2** | 3 | [Relational Modeling & JOINs](../week2_multi_table_complex_queries/part1_relational_design_joins/CLASS_DISCUSSION_01.md) | Primary and foreign keys, `INNER JOIN` vs. `LEFT JOIN`, and checking referential integrity with `LEFT JOIN … IS NULL` |
-| | 4 | [Transaction Analytics](../week2_multi_table_complex_queries/part2_joins_order_items/CLASS_DISCUSSION_02.md) | Revenue by category, revenue concentration, an ambiguous-column bug, and line-item vs. order-level averages |
-| **3** | 5 | [Window Functions](../week3_sql_for_analytics/part1_operational_db_window_functions/CLASS_DISCUSSION_01.md) | `RANK()` vs. `DENSE_RANK()` on a tie, reading a running total, ranking with `PARTITION BY`, debugging a missing `OVER()` |
-| | 6 | [CTEs & Ranking Analytics](../week3_sql_for_analytics/part2_ctes_advanced_analytics/CLASS_DISCUSSION_02.md) | Multi-CTE queries, `ROW_NUMBER()` for one winner per group, `SUM(…) OVER ()` for shares of a total, and why `HAVING` can't see a window function's result |
-| **4** | 7 | [Client–Server Databases](../week4_web_db_applications/CLASS_DISCUSSION_01.md) | What a database server does that an embedded database doesn't; checking a MySQL load; who keeps data clean; SQL that works in DuckDB but not in MySQL |
-| | 8 | [Web Application Architecture](../week4_web_db_applications/CLASS_DISCUSSION_02.md) | One search traced from browser to database; form values arriving as text; how many queries a page really runs; aggregating in SQL vs. Python; a search that crashes |
-| **5** | 9 | [Transactions and Modern Data Systems](../week5_modern_data_systems/CLASS_DISCUSSION_01.md) | Atomicity in a checkout, data that doesn't add up, the lost-update timeline, a failed statement inside a transaction in DuckDB vs. MySQL, row vs. column storage |
-| | 10 | [Performance, Security, and Governance](../week5_modern_data_systems/CLASS_DISCUSSION_02.md) | Least privilege, selectivity and when an index helps, re-identification in "anonymous" counts, a view for an intern, a mistyped `DELETE` |
+| **1** | 1 | [Foundations](../week1_db_concepts_sql_fundamentals/session01_single_table_sql/CLASS_DISCUSSION.md) | `SELECT`, `WHERE`, `ORDER BY`, `LIMIT` — predicting a filtered row count before running it; what a top-10 list really shows; low- vs. high-cardinality columns |
+| | 2 | [Aggregation & KPIs](../week1_db_concepts_sql_fundamentals/session02_aggregation_kpis/CLASS_DISCUSSION.md) | `COUNT` / `SUM` / `AVG`, `GROUP BY`, `WHERE` vs. `HAVING`; volume vs. value; debugging an aggregate inside `WHERE` |
+| **2** | 3 | [Relational Modeling & JOINs](../week2_multi_table_complex_queries/session03_relational_design_joins/CLASS_DISCUSSION.md) | Primary and foreign keys, `INNER JOIN` vs. `LEFT JOIN`, and checking referential integrity with `LEFT JOIN … IS NULL` |
+| | 4 | [Transaction Analytics](../week2_multi_table_complex_queries/session04_multi_table_joins/CLASS_DISCUSSION.md) | Revenue by category, revenue concentration, an ambiguous-column bug, and line-item vs. order-level averages |
+| **3** | 5 | [Window Functions](../week3_sql_for_analytics/session05_operational_db_window_functions/CLASS_DISCUSSION.md) | `RANK()` vs. `DENSE_RANK()` on a tie, reading a running total, ranking with `PARTITION BY`, debugging a missing `OVER()` |
+| | 6 | [CTEs & Ranking Analytics](../week3_sql_for_analytics/session06_ctes_advanced_analytics/CLASS_DISCUSSION.md) | Multi-CTE queries, `ROW_NUMBER()` for one winner per group, `SUM(…) OVER ()` for shares of a total, and why `HAVING` can't see a window function's result |
+| **4** | 7 | [Client–Server Databases](../week4_web_db_applications/session07_client_server_mysql/CLASS_DISCUSSION.md) | What a database server does that an embedded database doesn't; checking a MySQL load; who keeps data clean; SQL that works in DuckDB but not in MySQL |
+| | 8 | [Web Application Architecture](../week4_web_db_applications/session08_web_app_architecture/CLASS_DISCUSSION.md) | One search traced from browser to database; form values arriving as text; how many queries a page really runs; aggregating in SQL vs. Python; a search that crashes |
+| **5** | 9 | [Transactions and Modern Data Systems](../week5_modern_data_systems/session09_transactions_modern_data/CLASS_DISCUSSION.md) | Atomicity in a checkout, data that doesn't add up, the lost-update timeline, a failed statement inside a transaction in DuckDB vs. MySQL, row vs. column storage |
+| | 10 | [Performance, Security, and Governance](../week5_modern_data_systems/session10_performance_security_governance/CLASS_DISCUSSION.md) | Least privilege, selectivity and when an index helps, re-identification in "anonymous" counts, a view for an intern, a mistyped `DELETE` |
 
 ---
 

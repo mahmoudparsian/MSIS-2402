@@ -10,14 +10,14 @@
 > module establishes the core database and SQL concepts used throughout the
 > remainder of the course.
 >
-> — [Department course outline](../5_weeks_outline/department_course_outline.md)
+> — [Department course outline](../00_start_here/department_course_outline.md)
 
 ## At a Glance
 
 | Session | Topic | Folder | Lab (in [`LABS/`](../LABS/)) | Lab format |
 |:---:|---|---|---|---|
-| **1** | Single-table SQL | [`part1_single_table_sql/`](part1_single_table_sql/) | `week1_lab1/` — retrieving and filtering data: `SELECT`, `WHERE`, `ORDER BY`, `DISTINCT`, `LIMIT` | Marimo notebooks (DuckDB) |
-| **2** | Aggregation and KPIs | [`part2_aggregation_kpis/`](part2_aggregation_kpis/) | `week1_lab2/` — summarizing and modifying data: `GROUP BY`, `HAVING`, `CASE`, `INSERT` / `UPDATE` / `DELETE` | Marimo notebooks (DuckDB) |
+| **1** | Single-table SQL | [`session01_single_table_sql/`](session01_single_table_sql/) | `week1/session01/` — retrieving and filtering data: `SELECT`, `WHERE`, `ORDER BY`, `DISTINCT`, `LIMIT` | Marimo notebooks (DuckDB) |
+| **2** | Aggregation and KPIs | [`session02_aggregation_kpis/`](session02_aggregation_kpis/) | `week1/session02/` — summarizing and modifying data: `GROUP BY`, `HAVING`, `CASE`, `INSERT` / `UPDATE` / `DELETE` | Marimo notebooks (DuckDB) |
 
 **Before Session 1:** install the course software —
 [`software_installation/`](../software_installation/README.md).
@@ -32,10 +32,10 @@ a first look at `GROUP BY`
 
 | File | What it is |
 |---|---|
-| [`lecture_slides_01_sql_basics.md`](part1_single_table_sql/lecture_slides_01_sql_basics.md) | Slide deck — SQL foundations |
-| [`notebook_3_duckdb_marimo.py`](part1_single_table_sql/notebook_3_duckdb_marimo.py) | In-class notebook — SQL foundations with a single table |
-| [`CLASS_DISCUSSION_01.md`](part1_single_table_sql/CLASS_DISCUSSION_01.md) | Class discussion — warm-up before the lab |
-| [`data/`](part1_single_table_sql/data/) | `sales.csv` — 200 sales, used by the notebook and the class discussion |
+| [`slides_01_sql_basics.md`](session01_single_table_sql/slides_01_sql_basics.md) | Slide deck — SQL foundations |
+| [`notebook_01_single_table_sql.py`](session01_single_table_sql/notebook_01_single_table_sql.py) | In-class notebook — SQL foundations with a single table |
+| [`CLASS_DISCUSSION.md`](session01_single_table_sql/CLASS_DISCUSSION.md) | Class discussion — warm-up before the lab |
+| [`data/`](session01_single_table_sql/data/) | `sales.csv` — 200 sales, used by the notebook and the class discussion |
 
 ## Session 2 — Aggregation and KPIs
 
@@ -47,13 +47,13 @@ modifying data with `INSERT`, `UPDATE`, `DELETE` · cleaning text (`TRIM`, `LOWE
 
 | File | What it is |
 |---|---|
-| [`lecture_slides_aggregations.md`](part2_aggregation_kpis/lecture_slides_aggregations.md) | Slide deck — aggregation and KPIs |
-| [`lecture_slides_sql_tour.md`](part2_aggregation_kpis/lecture_slides_sql_tour.md) | Slide deck — a tour of DuckDB SQL, including `INSERT` / `UPDATE` / `DELETE` |
-| [`lecture_slides_text_and_date_functions.md`](part2_aggregation_kpis/lecture_slides_text_and_date_functions.md) | Slide deck — text and date functions for analytics: clean text before grouping, group by year and month, days between dates, the last N days |
-| [`notebook_1_marimo.py`](part2_aggregation_kpis/notebook_1_marimo.py) | In-class notebook — aggregation and KPIs, then text and date functions (same examples as the slides) |
-| [`notebook_2_marimo.py`](part2_aggregation_kpis/notebook_2_marimo.py) | In-class notebook — `WHERE` vs. `HAVING`, KPIs, and business thinking |
-| [`CLASS_DISCUSSION_02.md`](part2_aggregation_kpis/CLASS_DISCUSSION_02.md) | Class discussion — warm-up before the lab |
-| [`data/`](part2_aggregation_kpis/data/) | `sales_dataset.csv` (200 transactions — notebooks and class discussion) and `weather.csv` (used in the SQL-tour slides). The text-and-date slides and `notebook_1_marimo.py` also read Session 1's dated sales, [`../part1_single_table_sql/data/sales.csv`](part1_single_table_sql/data/sales.csv) |
+| [`slides_01_aggregations_kpis.md`](session02_aggregation_kpis/slides_01_aggregations_kpis.md) | Slide deck — aggregation and KPIs |
+| [`slides_02_duckdb_sql_tour.md`](session02_aggregation_kpis/slides_02_duckdb_sql_tour.md) | Slide deck — a tour of DuckDB SQL, including `INSERT` / `UPDATE` / `DELETE` |
+| [`slides_03_text_and_date_functions.md`](session02_aggregation_kpis/slides_03_text_and_date_functions.md) | Slide deck — text and date functions for analytics: clean text before grouping, group by year and month, days between dates, the last N days |
+| [`notebook_01_aggregation_kpis.py`](session02_aggregation_kpis/notebook_01_aggregation_kpis.py) | In-class notebook — aggregation and KPIs, then text and date functions (same examples as the slides) |
+| [`notebook_02_having_kpis.py`](session02_aggregation_kpis/notebook_02_having_kpis.py) | In-class notebook — `WHERE` vs. `HAVING`, KPIs, and business thinking |
+| [`CLASS_DISCUSSION.md`](session02_aggregation_kpis/CLASS_DISCUSSION.md) | Class discussion — warm-up before the lab |
+| [`data/`](session02_aggregation_kpis/data/) | `sales_dataset.csv` (200 transactions — notebooks and class discussion) and `weather.csv` (used in the SQL-tour slides). The text-and-date slides and `notebook_01_aggregation_kpis.py` also read Session 1's dated sales, [`../session01_single_table_sql/data/sales.csv`](session01_single_table_sql/data/sales.csv) |
 
 ---
 
@@ -74,8 +74,8 @@ from **its own folder**, because it reads its data by a relative path:
 
 | Session | Run (two commands) | Reads |
 |:---:|---|---|
-| 1 | `cd week1_db_concepts_sql_fundamentals/part1_single_table_sql` then `marimo edit notebook_3_duckdb_marimo.py` | `data/sales.csv` |
-| 2 | `cd week1_db_concepts_sql_fundamentals/part2_aggregation_kpis` then `marimo edit notebook_1_marimo.py` (or `notebook_2_marimo.py`) | `data/sales_dataset.csv`; `notebook_1_marimo.py` also reads `../part1_single_table_sql/data/sales.csv` |
+| 1 | `cd week1_db_concepts_sql_fundamentals/session01_single_table_sql` then `marimo edit notebook_01_single_table_sql.py` | `data/sales.csv` |
+| 2 | `cd week1_db_concepts_sql_fundamentals/session02_aggregation_kpis` then `marimo edit notebook_01_aggregation_kpis.py` (or `notebook_02_having_kpis.py`) | `data/sales_dataset.csv`; `notebook_01_aggregation_kpis.py` also reads `../session01_single_table_sql/data/sales.csv` |
 
 ## Shared Dataset
 

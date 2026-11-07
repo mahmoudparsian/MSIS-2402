@@ -19,11 +19,9 @@ copies, samples, or raw sources for the data stories.
 |---|---|---:|---|
 | [`oltp_database/`](oltp_database/) | **The course database** — a retail business in 7 related tables | 22 MB | Weeks 1–5, the labs, and the Final Exam |
 | [`oltp_database/mysql/`](oltp_database/mysql/README.md) | The same 7 tables as one MySQL load script | 25 MB | Weeks 4–5 (MySQL) |
-| [`week1_single_table/`](week1_single_table/) | One `sales` table, 200 rows | 12 KB | Copy of Week 1, Part 1's data |
-| [`week2_relational/`](week2_relational/) | `customers`, `orders`, `products` (small) | 32 KB | Copy of Week 2, Part 1's data |
 | [`samples/`](samples/) | 50-row samples of three course tables | 12 KB | Previewing columns |
 | [`books_dataset/`](books_dataset/) | Book-Crossing books, users, and ratings (raw) | 115 MB | The [`books_users_ratings`](../data_stories/books_users_ratings/README.md) data story |
-| [`diabetes_130_hospitals/`](diabetes_130_hospitals/) | UCI Diabetes 130-US Hospitals (zipped original) | 3 MB | Source of Week 3's [`notebook_diabetic`](../week3_sql_for_analytics/part2_ctes_advanced_analytics/notebook_diabetic/README.md) |
+| [`diabetes_130_hospitals/`](diabetes_130_hospitals/) | UCI Diabetes 130-US Hospitals (zipped original) | 3 MB | Source of Week 3's [`notebook_diabetic`](../week3_sql_for_analytics/session06_ctes_advanced_analytics/notebook_diabetic/README.md) |
 
 ---
 
@@ -72,12 +70,6 @@ command — see [`oltp_database/mysql/README.md`](oltp_database/mysql/README.md)
 
 ## The Smaller Sets
 
-- **`week1_single_table/sales.csv`** — 200 sales with `sale_id`, `sale_date`,
-  `product_id`, `product_category`, `quantity`, `unit_price`, `total_amount`. An
-  exact copy of `week1_db_concepts_sql_fundamentals/part1_single_table_sql/data/sales.csv`.
-- **`week2_relational/`** — `customers` (200), `orders` (800), and `products`
-  (100), with the same columns as the course database. An exact copy of
-  `week2_multi_table_complex_queries/part1_relational_design_joins/data/`.
 - **`samples/`** — 50 rows each from `customers`, `orders`, and `order_items`,
   for a quick look at the columns.
 

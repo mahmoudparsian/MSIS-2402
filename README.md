@@ -74,7 +74,7 @@ behaves in real applications (connections, transactions, locking, security).
 ## Course Schedule
 
 The five weeks follow the department's
-[official course outline](5_weeks_outline/department_course_outline.md).
+[official course outline](00_start_here/department_course_outline.md).
 
 | Week | Module | Session | Lab topic |
 |:---:|---|:---:|---|
@@ -135,7 +135,7 @@ in [`ASSIGNMENTS_and_GRADING.md`](course_information/ASSIGNMENTS_and_GRADING.md)
 3. **Read the grading policy** in
    [`ASSIGNMENTS_and_GRADING.md`](course_information/ASSIGNMENTS_and_GRADING.md).
 4. **Skim the course roadmap** and try the two orientation notebooks in
-   [`5_weeks_outline/`](5_weeks_outline/README.md) — `sql_notebook_01.py` is the
+   [`00_start_here/`](00_start_here/README.md) — `notebook_01_welcome.py` is the
    best first notebook to open.
 
 **Getting the course files:** download **one ZIP per week and one per
@@ -153,13 +153,13 @@ session to pick up newly released labs.
 
 | Folder | Contents |
 |---|---|
-| [`5_weeks_outline/`](5_weeks_outline/README.md) | Course introduction — the course roadmap ([PDF](5_weeks_outline/5_weeks_outline.pdf)), the [official course outline](5_weeks_outline/department_course_outline.md), DuckDB 101 slides, and two orientation notebooks |
+| [`00_start_here/`](00_start_here/README.md) | Course introduction — the course roadmap ([PDF](00_start_here/5_weeks_outline.pdf)), the [official course outline](00_start_here/department_course_outline.md), DuckDB 101 slides, and two orientation notebooks |
 | [`week1_db_concepts_sql_fundamentals/`](week1_db_concepts_sql_fundamentals/) | Week 1 — Database Concepts and SQL Fundamentals |
 | [`week2_multi_table_complex_queries/`](week2_multi_table_complex_queries/) | Week 2 — Working with Multiple Tables and Complex Queries |
 | [`week3_sql_for_analytics/`](week3_sql_for_analytics/) | Week 3 — SQL for Data Analytics |
 | [`week4_web_db_applications/`](week4_web_db_applications/) | Week 4 — Introduction to Web Database Applications |
 | [`week5_modern_data_systems/`](week5_modern_data_systems/) | Week 5 — Modern Data Systems and Database Management |
-| [`LABS/`](LABS/README.md) | **This term's labs**, published during each session (one folder per session); solutions are added after the deadlines |
+| [`LABS/`](LABS/README.md) | **This term's labs**, published during each session (`LABS/week1/session01/` …); solutions are added after the deadlines |
 
 ### Course information and setup
 
@@ -176,28 +176,29 @@ session to pick up newly released labs.
 | [`tutorials/`](tutorials/README.md) | Standalone self-study guides, by topic and by week: loading CSV/Parquet files, `GROUP BY`, joins, window functions, deduplication, normalization, user-defined functions, transactions, the DuckDB command line, and [Git](tutorials/git/README.md) |
 | [`data_stories/`](data_stories/README.md) | Eight end-to-end case studies on real-world-sized datasets — Book-Crossing, Citi Bike, coffee shop, Olympics, Shopify, NYC taxi, Nova Retail, and a 200-row sales table. Its README maps each story to a week and says which ones need a build step first |
 | [`books/`](books/) | Reference material |
-| [`tools/`](tools/) | Notebook conversion and validation scripts |
 
 ### Inside a week folder
 
-**Weeks 1–3** are each split into two self-contained **part** folders (for
-example, `week1_db_concepts_sql_fundamentals/part1_single_table_sql/`). Every
-part folder has the same layout; the examples below link to Week 1, Part 1.
+Every week holds **one folder per class session** (for example,
+`week1_db_concepts_sql_fundamentals/session01_single_table_sql/` and
+`session02_aggregation_kpis/`), numbered 01–10 across the course to match the
+labs (`LABS/week1/session01/`) and Camino (**Session 1 Lab A**). The examples
+below link to Session 1.
 
 | File / folder | Contents |
 |---|---|
-| `lecture_slides_*.md` | Slide decks — e.g. [`lecture_slides_01_sql_basics.md`](week1_db_concepts_sql_fundamentals/part1_single_table_sql/lecture_slides_01_sql_basics.md) |
-| `notebook_*_marimo.py` | In-class teaching notebooks — e.g. [`notebook_3_duckdb_marimo.py`](week1_db_concepts_sql_fundamentals/part1_single_table_sql/notebook_3_duckdb_marimo.py) |
-| `CLASS_DISCUSSION_0N.md` | The session's class discussion — a short warm-up before the lab — e.g. [`CLASS_DISCUSSION_01.md`](week1_db_concepts_sql_fundamentals/part1_single_table_sql/CLASS_DISCUSSION_01.md) |
-| [`data/`](week1_db_concepts_sql_fundamentals/part1_single_table_sql/data/) | The part's datasets |
+| `slides_NN_*.md` | Slide decks, in teaching order — e.g. [`slides_01_sql_basics.md`](week1_db_concepts_sql_fundamentals/session01_single_table_sql/slides_01_sql_basics.md) |
+| `notebook_NN_*.py` | In-class teaching notebooks (Marimo), in order — e.g. [`notebook_01_single_table_sql.py`](week1_db_concepts_sql_fundamentals/session01_single_table_sql/notebook_01_single_table_sql.py) |
+| `CLASS_DISCUSSION.md` | The session's class discussion — a short warm-up before the lab — e.g. [`CLASS_DISCUSSION.md`](week1_db_concepts_sql_fundamentals/session01_single_table_sql/CLASS_DISCUSSION.md) |
+| [`data/`](week1_db_concepts_sql_fundamentals/session01_single_table_sql/data/) | Data used only by this session (most sessions read the shared [`datasets/`](datasets/README.md)) |
 
-> **Tip:** notebooks find their data by relative path — the part's own
+> **Tip:** notebooks find their data by relative path — the session's own
 > `data/` folder or the shared [`datasets/`](datasets/README.md) — so run
-> `marimo edit` from inside the part folder.
+> `marimo edit` from inside the session folder.
 
-**Weeks 4–5** have no part folders. Each holds, directly in the week folder,
-one lecture deck, one live-demo script, and one class discussion per session
-— e.g. [`week4_web_db_applications/`](week4_web_db_applications/).
+In **Weeks 4–5** each session folder holds one lecture deck, one live-demo
+script (`demo_01_*`), and the class discussion — e.g.
+[`week4_web_db_applications/session07_client_server_mysql/`](week4_web_db_applications/session07_client_server_mysql/).
 
 Every week folder has its own `README.md` with the details.
 

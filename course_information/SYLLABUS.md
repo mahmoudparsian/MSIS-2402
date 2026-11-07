@@ -67,7 +67,7 @@ Weeks 4–5 to show how a client–server database behaves in real applications
 ## 3. Learning Outcomes
 
 The five weeks follow the department's
-[official course outline](../5_weeks_outline/department_course_outline.md).
+[official course outline](../00_start_here/department_course_outline.md).
 By the end of the course, students will be able to:
 
 | # | Outcome | Week |
@@ -201,7 +201,7 @@ Total points out of 1,000, rounded to the nearest whole point first
 | Item | Rule |
 |---|---|
 | **Where** | Camino — two assignments per session (N = 1 … 10): **Session N Lab A** and **Session N Lab B** |
-| **File names** | `lastname_firstname_` + the lab's released file name without `_student`, all lower case, no spaces (e.g. `lopez_maria_week1_lab1a_marimo.py`). Each lab's header lists its exact files |
+| **File names** | `lastname_firstname_` + the lab's released file name without `_student`, all lower case, no spaces (e.g. `lopez_maria_session01_lab_a_marimo.py`). Each lab's header lists its exact files |
 | **Re-uploading** | Allowed until the deadline; the **last** upload counts, and its time is the submission time |
 | **Lab A late** | Not accepted — Lab A is done and submitted in class |
 | **Lab B late** | −3 points (10% of 30) for each started 24-hour period after the deadline, counted from the last upload: up to 24 h late −3, 24–48 h −6, 48–72 h −9, more than 72 h late: 0 for Lab B. The penalty never takes Lab B below 0 |
@@ -276,7 +276,7 @@ Camino stays open for you until then. Send the instructor your OAE letter
 | [`LAPTOP.md`](LAPTOP.md) | Laptop requirement |
 | [`REQUIRED_SOFTWARE.md`](REQUIRED_SOFTWARE.md) | Every tool and why it is used |
 | [`ACADEMIC_CONDUCT.md`](ACADEMIC_CONDUCT.md) | Classroom conduct |
-| [`5_weeks_outline/`](../5_weeks_outline/README.md) | Course roadmap and the department's course outline |
+| [`00_start_here/`](../00_start_here/README.md) | Course roadmap and the department's course outline |
 
 ---
 

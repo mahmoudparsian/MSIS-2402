@@ -33,8 +33,8 @@ from its folder.
 Open a notebook from **inside its own folder**:
 
 ```bash
-cd week1_db_concepts_sql_fundamentals/part1_single_table_sql
-marimo edit notebook_3_duckdb_marimo.py
+cd week1_db_concepts_sql_fundamentals/session01_single_table_sql
+marimo edit notebook_01_single_table_sql.py
 ```
 
 Or start Marimo with no file name to browse and open notebooks from the

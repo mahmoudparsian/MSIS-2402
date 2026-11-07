@@ -116,7 +116,7 @@ your other nine.
    Session 9's Lab B uses it too.
 4. Read [How to Submit a Lab](ASSIGNMENTS_and_GRADING.md#3-how-to-submit-a-lab)
    — it shows the exact file names, for example
-   `lopez_maria_week1_lab1a_marimo.py`.
+   `lopez_maria_session01_lab_a_marimo.py`.
 
 ## Attendance
 

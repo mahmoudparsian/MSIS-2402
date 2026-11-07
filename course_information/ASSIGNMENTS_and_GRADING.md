@@ -101,12 +101,12 @@ File names for each lab format (example student: Maria Lopez, Session 1):
 
 | Lab format (sessions) | Submit for Lab A | Submit for Lab B |
 |---|---|---|
-| Marimo notebook (1–6, and 9 Lab A) | `lopez_maria_week1_lab1a_marimo.py` — your completed notebook | `lopez_maria_week1_lab1b_marimo.py` |
-| MySQL handout (7, 9 Lab B, 10) | `lopez_maria_week4_lab1a.md` — for each task: the SQL you ran, the output, your written answers | `lopez_maria_week4_lab1b.md` |
-| Web application (8) | `lopez_maria_week4_lab2a_shop_app.py` (your modified app) **and** `lopez_maria_week4_lab2a.md` (answers) | `lopez_maria_week4_lab2b_shop_app.py` **and** `lopez_maria_week4_lab2b.md` |
+| Marimo notebook (1–6, and 9 Lab A) | `lopez_maria_session01_lab_a_marimo.py` — your completed notebook | `lopez_maria_session01_lab_b_marimo.py` |
+| MySQL handout (7, 9 Lab B, 10) | `lopez_maria_session07_lab_a.md` — for each task: the SQL you ran, the output, your written answers | `lopez_maria_session07_lab_b.md` |
+| Web application (8) | `lopez_maria_session08_lab_a_shop_app.py` (your modified app) **and** `lopez_maria_session08_lab_a.md` (answers) | `lopez_maria_session08_lab_b_shop_app.py` **and** `lopez_maria_session08_lab_b.md` |
 
-Session 9 mixes formats: `lopez_maria_week5_lab1a_marimo.py` and
-`lopez_maria_week5_lab1b_mysql.md`.
+Session 9 mixes formats: `lopez_maria_session09_lab_a_marimo.py` and
+`lopez_maria_session09_lab_b_mysql.md`.
 A `.txt` file is accepted wherever `.md` is shown. Before uploading a
 notebook, run it top to bottom once (in `marimo edit`, **Run all**) so every
 cell works.
