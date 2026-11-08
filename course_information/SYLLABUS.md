@@ -21,7 +21,7 @@ applies, and the instructor will correct this page.
 | **Quarter** | Winter 2027 |
 | **Format** | 5 weeks · 10 sessions (2 per week) · 95 minutes per session |
 | **Meetings** | Tuesday and Thursday, 7:35–9:10 pm Pacific Time |
-| **Session dates** | *To be announced on Camino* <!-- TODO(syllabus): add the 10 session dates from the Leavey graduate calendar (My Leavey Portal), not the undergraduate Registrar calendar --> |
+| **Session dates** | Weeks 1–5 of the quarter, January 5 – February 4, 2027: Jan 5, 7, 12, 14, 19, 21, 26, 28 · Feb 2, 4 |
 | **Classroom** | *To be announced on Camino* <!-- TODO(syllabus): room --> |
 | **Prerequisite** | None |
 | **Learning management system** | Camino (Canvas) — lab submissions, Final Exam, announcements, Zoom link |

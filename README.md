@@ -11,7 +11,7 @@
 |---|---|
 | **Format** | 5 weeks · 10 sessions (2 per week, 95 minutes each) |
 | **Credit** | 2 units |
-| **Quarter** | Winter 2027 |
+| **Quarter** | Winter 2027 — weeks 1–5 (January 5 – February 4, 2027) |
 | **Instructor** | Dr. Mahmoud Parsian |
 | **Prerequisite** | None |
 | **Primary tools** | [DuckDB](https://duckdb.org) · [Marimo](https://marimo.io) notebooks · Python · MySQL |

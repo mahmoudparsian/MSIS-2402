@@ -2,7 +2,7 @@
 
 [← Course home](../README.md) · **Course information**
 
-*Posted November 2026, before the course starts on January 4, 2027.*
+*Posted November 2026, before the first session on Tuesday, January 5, 2027.*
 
 ---
 
@@ -133,7 +133,7 @@ The full rules are in
 If anything is unclear, ask in class, or come to
 [office hours](QUESTIONS_and_OFFICE_HOURS.md).
 
-See you on January 4!
+See you on Tuesday, January 5!
 
 Dr. Mahmoud Parsian
 
