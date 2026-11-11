@@ -215,7 +215,7 @@ The first command should print a version starting with `v2.`; the second
 should return **42**. The version line looks like this — the code at the
 end differs by build (do not type this):
 ```text
-v2.0.0 (Cinnamon Teal) …
+v2.0.0 (Cyanoptera) …
 ```
 If typing `duckdb` still fails, see **Help Only If Needed** at the end.
 It explains how to start DuckDB using the location of its program file.
@@ -656,5 +656,5 @@ Check `.help` and `duckdb -help` for the options of your installed version.
 
 Every SQL example and its expected result was re-checked with DuckDB
 2.0.0 on 2026-10-25. The CLI-only parts (dot-commands, display modes,
-scripts, full-path commands) were tested with CLI 1.5.5 on macOS.
+scripts, full-path commands) were re-tested with CLI 2.0.0 on macOS (2026-11-11).
 Installation permissions depend on your Mac.

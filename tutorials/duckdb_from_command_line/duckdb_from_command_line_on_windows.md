@@ -120,7 +120,7 @@ Try `duckdb --version`. If not recognized, use the manual route
 
 # 6. Windows Option A: WinGet (not yet)
 
-As of October 2026, WinGet's `DuckDB.cli` package stops at **1.5.6** —
+As of November 2026, WinGet's `DuckDB.cli` package stops at **1.5.6** —
 below this course's **2.0** requirement. **Use Option B for now.**
 
 You can check whether WinGet has caught up (in either shell):
@@ -248,7 +248,7 @@ The first command should print a version starting with `v2.`; the second
 should return **42**. The version line looks like this — the code at the
 end differs by build (do not type this):
 ```text
-v2.0.0 (Cinnamon Teal) …
+v2.0.0 (Cyanoptera) …
 ```
 If typing `duckdb` still fails, see **Help Only If Needed** at the end.
 It explains how to start DuckDB using the location of its program file.
@@ -701,4 +701,4 @@ Check `.help` and `duckdb -help` for the options of your installed version.
 Windows setup was checked against official documentation (download names
 on duckdb.org/install and WinGet's package list, 2026-10-25), not tested on
 a Windows PC. Every SQL example and its expected result was re-checked with
-DuckDB 2.0.0; the CLI-only parts were tested with CLI 1.5.5 on macOS.
+DuckDB 2.0.0; the CLI-only parts were re-tested with CLI 2.0.0 on macOS (2026-11-11).
