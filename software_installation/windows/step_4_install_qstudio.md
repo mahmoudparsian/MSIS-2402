@@ -141,16 +141,10 @@ qStudio also ships with a built-in example: **File → Open DuckDB Example .sql*
 > **"The database file was created with a newer version of DuckDB"?**
 > The course uses DuckDB **2.0** in Python, and a file written by DuckDB 2.0
 > can't be read by an older DuckDB. qStudio has its own built-in copy of
-> DuckDB, and qStudio 5.01 (December 2025) ships DuckDB 1.4. First update
-> qStudio to the latest version from
-> [timestored.com](https://www.timestored.com/qstudio/download). If the error
-> stays, have Python write the file in the older format, which both versions
-> can read:
->
-> ```python
-> con = duckdb.connect("my_file.duckdb",
->                      config={"storage_compatibility_version": "v1.4.0"})
-> ```
+> DuckDB: **qStudio 5.09 or newer** ships DuckDB 2.0 and reads these files;
+> older versions (5.01–5.08) ship DuckDB 1.4 and can't. Check your version
+> under **Help → About**. If it is older than 5.09, install the latest
+> version (Step 1) and open the file again.
 >
 > Databases you create **in qStudio** (Step 3) don't have this problem.
 
@@ -176,7 +170,7 @@ recognizes by default. Click **"More info"**, then **"Run anyway"**.
 
 You may have an older version of qStudio. Go to
 **https://www.timestored.com/qstudio/download/** and download the latest
-version (5.08 or newer).
+version (5.09 or newer).
 
 ### My tables disappeared
 

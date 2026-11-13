@@ -20,7 +20,7 @@ You will use qStudio to practice writing SQL queries on your own and to explore 
 | Java | **Required** — qStudio will not run without it (Java 21 recommended) |
 | Operating system | macOS |
 | Internet connection | Required for download |
-| Disk space | ~500 MB (the Mac download alone is 162 MB), plus ~200 MB for Java |
+| Disk space | ~500 MB (the Mac download alone is about 210 MB), plus ~200 MB for Java |
 
 ---
 
@@ -64,16 +64,25 @@ skipping this step is the #1 reason qStudio fails to launch.
 
 ## Step 1 — Download qStudio
 
-1. Open your web browser and go to: **https://www.timestored.com/qstudio/download/**
-2. Click **"Download .App Mac with Java"** — this downloads a `.zip` file
+1. Open your web browser and go to: **https://github.com/timestored/qstudio/releases/latest**
+2. Under **Assets**, click the `.dmg` file for your Mac (Apple menu → **About This Mac** tells you which one):
+   - **Apple Silicon** (Chip: Apple M1, M2, M3, …): **`QStudio-5.09-macos-arm64.dmg`**
+   - **Intel** (Processor: Intel): **`QStudio-5.09-macos-x64.dmg`**
+
+   (A newer version may show a higher number than 5.09 — that's fine; pick `arm64` or `x64` the same way.)
 3. The file will download to your Downloads folder
+
+> **Don't use the Mac download on timestored.com.** As of November 2026, its
+> "Download .App Mac with Java" (`qstudio-mac.zip`) is still the old qStudio 5.01,
+> which can't open the `.duckdb` files our Python notebooks create (see Step 4 below).
+> The Windows downloads there are up to date.
 
 ---
 
 ## Step 2 — Install qStudio
 
-1. Find **`qstudio-mac.zip`** in your Downloads folder and double-click it — macOS unzips it automatically into an app called **QStudio**
-2. Drag **QStudio** into the **Applications** folder
+1. Find the **`QStudio-…-macos-….dmg`** file in your Downloads folder and double-click it — a window opens showing **QStudio** and an **Applications** folder
+2. Drag **QStudio** onto the **Applications** folder, then close the window (you can eject the QStudio disk in Finder's sidebar)
 3. Open **Applications** and double-click **QStudio**
 4. If macOS says the app is from an "unidentified developer":
    - Go to **System Settings → Privacy & Security**
@@ -155,16 +164,10 @@ qStudio also ships with a built-in example: **File → Open DuckDB Example .sql*
 > **"The database file was created with a newer version of DuckDB"?**
 > The course uses DuckDB **2.0** in Python, and a file written by DuckDB 2.0
 > can't be read by an older DuckDB. qStudio has its own built-in copy of
-> DuckDB, and qStudio 5.01 (December 2025) ships DuckDB 1.4. First update
-> qStudio to the latest version from
-> [timestored.com](https://www.timestored.com/qstudio/download). If the error
-> stays, have Python write the file in the older format, which both versions
-> can read:
->
-> ```python
-> con = duckdb.connect("my_file.duckdb",
->                      config={"storage_compatibility_version": "v1.4.0"})
-> ```
+> DuckDB: **qStudio 5.09 or newer** ships DuckDB 2.0 and reads these files;
+> older versions (5.01–5.08) ship DuckDB 1.4 and can't. Check your version
+> under **Help → About**. If it is older than 5.09, install the latest
+> version (Step 1) and open the file again.
 >
 > Databases you create **in qStudio** (Step 3) don't have this problem.
 
@@ -188,7 +191,7 @@ This is a macOS security feature. Go to **System Settings → Privacy & Security
 
 You may have an older version of qStudio. Go to
 **https://www.timestored.com/qstudio/download/** and download the latest
-version (5.08 or newer).
+version (5.09 or newer).
 
 ### My tables disappeared
 

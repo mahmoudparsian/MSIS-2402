@@ -22,7 +22,7 @@ Exam. Each is described below.
 | 6 | [Matplotlib](#6-matplotlib) | Charts in the notebooks | `pip install matplotlib` |
 | 7 | [sqlglot](#7-sqlglot) | SQL parser behind Marimo's SQL cells | `pip install sqlglot` |
 | 8 | [Java](#8-java) | Runtime needed by qStudio | [adoptium.net](https://adoptium.net) — version 21 |
-| 9 | [qStudio](#9-qstudio) | Desktop SQL editor | [timestored.com](https://www.timestored.com/qstudio/download) |
+| 9 | [qStudio](#9-qstudio) | Desktop SQL editor | [timestored.com](https://www.timestored.com/qstudio/download) (Windows) · [GitHub](https://github.com/timestored/qstudio/releases/latest) (Mac) |
 | 10 | [Lock-down browser](#10-lock-down-browser-final-exam-only) | Required for the Final Exam only | See below |
 
 ---
@@ -192,8 +192,12 @@ qStudio is a free, open-source SQL editor for writing and testing queries.
 You will use it alongside Marimo to practice SQL and explore databases
 visually.
 
-**Version:** the latest. Download it from the link above — qStudio is a
-desktop application, not a pip package.
+**Version:** 5.09 or newer (the first version that reads DuckDB 2.0 files).
+qStudio is a desktop application, not a pip package. **Windows:** download it
+from the link above. **Mac:** download the `.dmg` from
+[GitHub](https://github.com/timestored/qstudio/releases/latest) instead —
+timestored.com's Mac download is still the old 5.01. Step-by-step:
+`software_installation/*/step_4_install_qstudio.md`.
 
 ---
 
@@ -215,7 +219,7 @@ in Step 6 of the [installation guide](../software_installation/README.md).
 |:---:|---|
 | **1** | Install Python from [python.org](https://www.python.org/downloads/) |
 | **2** | Install the Python packages (command below) |
-| **3** | Install Java, then download and install qStudio from [timestored.com](https://www.timestored.com/qstudio/download) |
+| **3** | Install Java, then download and install qStudio 5.09 or newer — Windows: [timestored.com](https://www.timestored.com/qstudio/download); Mac: the `.dmg` on [GitHub](https://github.com/timestored/qstudio/releases/latest) |
 | **4** | Install MySQL Community Server from [dev.mysql.com](https://dev.mysql.com/downloads/) |
 
 ```bash
