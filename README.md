@@ -221,8 +221,6 @@ All in [`course_information/`](course_information/):
 | [`DOWNLOADING_COURSE_FILES.md`](course_information/DOWNLOADING_COURSE_FILES.md) | ZIP downloads — one per week, one per session's labs, no git needed |
 | [`LAPTOP.md`](course_information/LAPTOP.md) | Laptop requirement for in-class labs |
 | [`REQUIRED_SOFTWARE.md`](course_information/REQUIRED_SOFTWARE.md) | Every tool used in the course and why |
-| [`installing_duckdb_on_macbook.md`](course_information/installing_duckdb_on_macbook.md) | DuckDB install guide — macOS |
-| [`installing_duckdb_on_windows.md`](course_information/installing_duckdb_on_windows.md) | DuckDB install guide — Windows |
 | [`marimo_duckdb_notebooks.md`](course_information/marimo_duckdb_notebooks.md) | Setting up and running the course's Marimo notebooks |
 
 ---
