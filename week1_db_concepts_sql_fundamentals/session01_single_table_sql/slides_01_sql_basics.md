@@ -12,7 +12,7 @@ paginate: true
 
 # slide-1: MSIS-2402 <br> SQL Fundamentals
 
-* Database Management Systems – Fundamentals of SQL  
+* Database Management Systems: Fundamentals of SQL  
 
 * Instructor: Dr. Mahmoud Parsian
 
@@ -350,7 +350,7 @@ deck's folder (`session01_single_table_sql/`):
 
 ---
 
-# slide-26:  Our Week‑1 Dataset (cont.)
+# slide-27:  Our Week‑1 Dataset (cont.)
 
 Columns:
 
@@ -365,7 +365,7 @@ total_amount
 ```
 ---
 
-# slide-27:  Example Rows
+# slide-28:  Example Rows
 
 | sale_id | sale_date | product_category | quantity | unit_price | total_amount |
 |---|---|---|---|---|---|
@@ -380,7 +380,7 @@ Possible questions:
 
 ---
 
-# slide-28:  Basic SQL Query Pattern
+# slide-29:  Basic SQL Query Pattern
 
 Typical SQL structure:
 
@@ -393,7 +393,7 @@ LIMIT n;
 ```
 ---
 
-# slide-29: `SELECT` Clause
+# slide-30: `SELECT` Clause
 
 `SELECT` specifies which columns to return.
 
@@ -406,7 +406,7 @@ FROM sales;
 ```
 ---
 
-# slide-30: `FROM` Clause
+# slide-31: `FROM` Clause
 
 FROM specifies the source table.
 
@@ -419,7 +419,7 @@ FROM sales;
 ```
 ---
 
-# slide-31:  `WHERE` Clause
+# slide-32:  `WHERE` Clause
 
 `WHERE` filters rows.
 
@@ -433,7 +433,7 @@ WHERE quantity >= 3;
 
 ---
 
-# slide-32: 🔍 Filtering Data
+# slide-33: 🔍 Filtering Data
 
 ```sql
 SELECT product_category, 
@@ -445,13 +445,13 @@ WHERE product_category = 'Electronics';
 
 ---
 
-# slide-33: 🧠 `WHERE` Clause
+# slide-34: 🧠 `WHERE` Clause
 
 ### Filters rows **BEFORE** analysis
 
 ---
 
-# slide-34: 💼 Business Question
+# slide-35: 💼 Business Question
 
 ### “Show me all Electronics transactions”
 
@@ -463,7 +463,7 @@ WHERE product_category = 'Electronics';
 
 ---
 
-# slide-35: 🔢 Numeric Filtering
+# slide-36: 🔢 Numeric Filtering
 
 ```sql
 SELECT product_category, 
@@ -475,13 +475,13 @@ WHERE unit_price > 300;
 
 ---
 
-# slide-36: 💼 Business Meaning
+# slide-37: 💼 Business Meaning
 
 ### “Show high-value transactions”
 
 ---
 
-# slide-37: 🔗 `AND` Condition
+# slide-38: 🔗 `AND` Condition
 
 ```sql
 SELECT product_category, 
@@ -494,7 +494,7 @@ WHERE product_category = 'Electronics'
 
 ---
 
-# slide-38: 🧠 Concept Check
+# slide-39: 🧠 Concept Check
 
 Which is stricter?
 
@@ -507,7 +507,7 @@ Which is stricter?
 
 ---
 
-# slide-39: 🔄 `OR` Condition
+# slide-40: 🔄 `OR` Condition
 
 ```sql
 SELECT product_category, 
@@ -522,7 +522,7 @@ WHERE product_category = 'Electronics'
 
 <style scoped>section { font-size: 25px; } pre { font-size: 21px; }</style>
 
-# slide-40: ⚠️ `AND` Runs Before `OR`
+# slide-41: ⚠️ `AND` Runs Before `OR`
 
 *Goal: Electronics **or** Sports items priced over $400.*
 
@@ -548,7 +548,7 @@ LIMIT 3;
 
 <style scoped>section { font-size: 25px; } pre { font-size: 21px; }</style>
 
-# slide-41: ✅ Use Parentheses
+# slide-42: ✅ Use Parentheses
 
 ```sql
 SELECT sale_id, product_category, unit_price
@@ -572,7 +572,7 @@ When a `WHERE` mixes `AND` and `OR`, **always** add parentheses.
 
 ---
 
-# slide-42: Truth table
+# slide-43: Truth table
 
 | A | B | A AND B | A OR B | NOT A | A XOR B |
 | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -583,7 +583,7 @@ When a `WHERE` mixes `AND` and `OR`, **always** add parentheses.
 
 ---
 
-# slide-43: `ORDER BY` Clause
+# slide-44: `ORDER BY` Clause
 
 #### `ORDER BY` sorts results: (`A -> Z`) (`1 -> 10`)
 
@@ -605,7 +605,7 @@ ORDER BY total_amount ASC;
 
 ---
 
-# slide-44: `ORDER BY` Clause (`DESC`)
+# slide-45: `ORDER BY` Clause (`DESC`)
 
 #### `ORDER BY` sorts results: (`Z -> A`)(`10 -> 1`)
 
@@ -619,7 +619,7 @@ ORDER BY total_amount DESC;
 
 ---
 
-# slide-45: `LIMIT` Clause
+# slide-46: `LIMIT` Clause
 
 LIMIT restricts output size.
 
@@ -636,7 +636,7 @@ Without `ORDER BY`, *which* 10 rows you get isn't guaranteed.
 
 ---
 
-# slide-46: `DISTINCT` Clause
+# slide-47: `DISTINCT` Clause
 
 `DISTINCT` removes duplicates.
 
@@ -649,7 +649,7 @@ FROM sales;
 
 ---
 
-# slide-47: Reading SQL in Plain English
+# slide-48: Reading SQL in Plain English
 
 Query:
 
@@ -668,7 +668,7 @@ Show the five highest sales where `quantity ≥ 2`.
 
 ---
 
-# slide-48: Business Questions We Can Answer
+# slide-49: Business Questions We Can Answer
 
 Example queries: **10 Largest Sales**
 
@@ -681,7 +681,7 @@ LIMIT 10;
 
 ---
 
-# slide-49: Common Beginner Mistakes
+# slide-50: Common Beginner Mistakes
 
 Typical mistakes:
 
@@ -700,7 +700,7 @@ WHERE quantity > 2;
 
 ---
 
-# slide-50: Why SQL Is Powerful
+# slide-51: Why SQL Is Powerful
 
 SQL lets us ask questions directly to data.
 
@@ -719,7 +719,7 @@ This immediately reveals the largest transactions.
 
 <style scoped>section { font-size: 22px; } pre, table { font-size: 18px; }</style>
 
-# slide-51: 🧮 Derived Column
+# slide-52: 🧮 Derived Column
 
 A **derived column** is computed from other columns in the same row.
 Give it a clear name with `AS`:
@@ -746,13 +746,13 @@ LIMIT 3;
 
 ---
 
-# slide-52: 💼 Business Insight
+# slide-53: 💼 Business Insight
 
 `Revenue = unit_price × quantity`
 
 ---
 
-# slide-53: 🔥 First KPI
+# slide-54: 🔥 First KPI
 
 👉 `line_value` = revenue per sale
 
@@ -760,7 +760,7 @@ LIMIT 3;
 
 <style scoped>section { font-size: 25px; } pre { font-size: 21px; }</style>
 
-# slide-54: 🏷️ Derived Labels with `CASE`
+# slide-55: 🏷️ Derived Labels with `CASE`
 
 `CASE` turns a value into a **label** — SQL's if / else-if / else:
 
@@ -787,7 +787,7 @@ LIMIT 5;
 
 ---
 
-# slide-55: 🧠 How `CASE` Reads
+# slide-56: 🧠 How `CASE` Reads
 
 * Checks each `WHEN` **top to bottom** and stops at the **first** true one
   * so `quantity = 1` never reaches `quantity <= 3`
@@ -801,7 +801,7 @@ the second? Decide (`<` vs. `<=`), then test a row right at the edge.
 
 ---
 
-# slide-56: 📊 Quick Visualization (Concept)
+# slide-57: 📊 Quick Visualization (Concept)
 
 ### SQL → extract
 
@@ -812,7 +812,7 @@ the second? Decide (`<` vs. `<=`), then test a row right at the edge.
 
 ---
 
-# slide-57: 🧪 In-Class Exercise
+# slide-58: 🧪 In-Class Exercise
 
 Write queries for:
 
@@ -824,7 +824,7 @@ Write queries for:
 ```
 ---
 
-# slide-58: 💬 Discussion
+# slide-59: 💬 Discussion
 
 Ask:
 
@@ -834,7 +834,7 @@ Ask:
 
 ---
 
-# slide-59: 🧠 What did we learn?
+# slide-60: 🧠 What did we learn?
 
 * `SELECT`
 * `FROM`
@@ -848,13 +848,13 @@ Ask:
 
 ---
 
-# slide-60: 🎯 Most Important Idea
+# slide-61: 🎯 Most Important Idea
 
 SQL = asking business questions
 
 ---
 
-# slide-61: 🚀 Next Session
+# slide-62: 🚀 Next Session
 
 We move to:
 
@@ -866,7 +866,7 @@ We move to:
 
 ---
 
-# slide-62: Week‑1 Summary
+# slide-63: Week‑1 Summary
 
 Today we learned:
 
@@ -878,11 +878,9 @@ Today we learned:
 
 ---
 
-# slide-63: 🙌 End of Deck 1
+# slide-64: 🙌 End of Deck 1
 
 Questions?
-
----
 
 Coming up:
 

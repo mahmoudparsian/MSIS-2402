@@ -36,4 +36,4 @@ marimo edit notebook_01_welcome.py
 
 ---
 
-*MSIS-2402 — Database Management Systems - Fundamentals of SQL — Winter 2027*
+*MSIS-2402 — Database Management Systems: Fundamentals of SQL — Winter 2027*

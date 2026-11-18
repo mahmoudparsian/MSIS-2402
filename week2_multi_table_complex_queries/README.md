@@ -33,7 +33,7 @@ diagrams · normalization · `INNER JOIN` and `LEFT JOIN`
 | [`CLASS_DISCUSSION.md`](session03_relational_design_joins/CLASS_DISCUSSION.md) | Class discussion — warm-up before the lab |
 | [`data/`](session03_relational_design_joins/data/) | `customers.csv`, `orders.csv`, `products.csv` — a small 3-table dataset (200 / 800 / 100 rows), used by the notebook and the class discussion |
 
-## Session 4 — Multi-Table Joins and Transaction Analytics
+## Session 4 — Multi-Table Joins, Subqueries, CTEs and Set Operations
 
 **Topics:** joining through the `order_items` junction table · insights from
 `LEFT JOIN` · `USING` · `FULL OUTER JOIN` for reconciling two lists · transaction analytics on the shared retail schema · subqueries

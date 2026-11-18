@@ -27,8 +27,8 @@
 ## Session 1 — Single-Table SQL
 
 **Topics:** what a relational database is · `SELECT`, `WHERE`, `ORDER BY`,
-`DISTINCT`, `LIMIT` · `AND` before `OR` (use parentheses) · derived columns ·
-a first look at `GROUP BY`
+`DISTINCT`, `LIMIT` · `AND` before `OR` (use parentheses) · derived columns and
+labels (`CASE`) · a first look at `GROUP BY`
 
 | File | What it is |
 |---|---|

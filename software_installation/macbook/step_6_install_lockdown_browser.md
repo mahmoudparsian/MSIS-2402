@@ -55,4 +55,4 @@ submit it, you're ready for the exam.
 
 ---
 
-*MSIS-2402 — Database Management Systems - Fundamentals of SQL — Winter 2027*
+*MSIS-2402 — Database Management Systems: Fundamentals of SQL — Winter 2027*

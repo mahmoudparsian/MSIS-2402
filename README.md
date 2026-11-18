@@ -230,7 +230,7 @@ All in [`course_information/`](course_information/):
 ## About the Notebooks
 
 Every notebook in this course is a **[Marimo](https://marimo.io)** notebook — a
-plain `.py` file (most end in `_marimo.py`), not a Jupyter `.ipynb` file. Marimo notebooks are plain
+plain `.py` file (some file names end in `_marimo.py`), not a Jupyter `.ipynb` file. Marimo notebooks are plain
 Python files with **reactive** cells — change one cell and everything that
 depends on it re-runs automatically, so results are never stale — and they
 include native **SQL cells** that run directly against DuckDB.

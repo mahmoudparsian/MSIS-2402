@@ -2,7 +2,7 @@
 
 [← Setup guide](README.md) · **Step 4**
 
-**Course:** MSIS-2402 — Database Management Systems - Fundamentals of SQL  
+**Course:** MSIS-2402 — Database Management Systems: Fundamentals of SQL  
 **Quarter:** Winter 2027  
 **Author:** Dr. Mahmoud Parsian  
 
@@ -241,4 +241,4 @@ If you've tried the troubleshooting steps above and are still stuck:
 
 ---
 
-*MSIS-2402 — Database Management Systems - Fundamentals of SQL — Winter 2027*
+*MSIS-2402 — Database Management Systems: Fundamentals of SQL — Winter 2027*

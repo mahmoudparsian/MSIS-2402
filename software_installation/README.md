@@ -2,7 +2,7 @@
 
 [← Course home](../README.md) · **Software installation**
 
-**Course:** MSIS-2402 — Database Management Systems - Fundamentals of SQL  
+**Course:** MSIS-2402 — Database Management Systems: Fundamentals of SQL  
 **Quarter:** Winter 2027  
 **Author:** Dr. Mahmoud Parsian  
 
@@ -39,4 +39,4 @@ problems.
 
 ---
 
-*MSIS-2402 — Database Management Systems - Fundamentals of SQL — Winter 2027*
+*MSIS-2402 — Database Management Systems: Fundamentals of SQL — Winter 2027*

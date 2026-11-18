@@ -12,7 +12,7 @@ paginate: true
 
 # slide-1: MSIS-2402 <br> Installing DuckDB (Mac)
 
-* Database Management Systems – Fundamentals of SQL
+* Database Management Systems: Fundamentals of SQL
 
 * Instructor: Dr. Mahmoud Parsian
 

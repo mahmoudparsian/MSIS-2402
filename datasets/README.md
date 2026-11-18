@@ -95,4 +95,4 @@ command — see [`oltp_database/mysql/README.md`](oltp_database/mysql/README.md)
 
 ---
 
-*MSIS-2402 — Database Management Systems - Fundamentals of SQL — Winter 2027*
+*MSIS-2402 — Database Management Systems: Fundamentals of SQL — Winter 2027*

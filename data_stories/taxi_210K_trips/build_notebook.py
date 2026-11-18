@@ -20,7 +20,7 @@ cells = []
 # TITLE
 # ═══════════════════════════════════════════════════════════════════════════════
 cells.append(md("""# NYC Taxi Rides — SQL Data Story
-## Database Management Systems - Fundamentals of SQL (MSIS-2402)
+## Database Management Systems: Fundamentals of SQL (MSIS-2402)
 
 This notebook uses **DuckDB** to explore ~210,000 NYC yellow‑taxi trips from January 2015.
 Each section introduces a SQL concept, shows the query, displays the result, and (where helpful) plots it.
@@ -874,7 +874,7 @@ cells.append(md("""---
 | **Ranking** | `WITH` (CTEs), `ROW_NUMBER`, `RANK`, `DENSE_RANK`, `NTILE`, `PERCENT_RANK`, `PARTITION BY` |
 
 ---
-*Notebook generated for MSIS-2402 — Database Management Systems - Fundamentals of SQL, Santa Clara University.*"""))
+*Notebook generated for MSIS-2402 — Database Management Systems: Fundamentals of SQL, Santa Clara University.*"""))
 
 cells.append(code("""# Close the DuckDB connection
 con.close()
