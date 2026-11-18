@@ -24,10 +24,14 @@ covered in the DuckDB-vs-MySQL comparison in
 
 | Item | Requirement |
 |------|-------------|
-| Software | MySQL Community Server (free, open-source) |
+| Software | MySQL Community Server — the **latest version** (26.7 or newer) (free, open-source) |
 | Operating system | macOS |
 | Internet connection | Required for download |
 | Disk space | ~500 MB |
+
+> **Why the latest version?** The course's MySQL demos and labs were
+> checked on MySQL **26.7**, so the newest release keeps what you see
+> matching the class materials. Homebrew installs the newest version.
 
 ---
 
@@ -64,7 +68,7 @@ covered in the DuckDB-vs-MySQL comparison in
 mysql --version
 ```
 
-You should see something like `mysql  Ver 9.x.x for macos ...`.
+You should see something like `mysql  Ver 26.x.x for macos ...` (26.7 or newer).
 
 A fresh Homebrew install of MySQL has **no root password set yet** —
 you can connect right away:

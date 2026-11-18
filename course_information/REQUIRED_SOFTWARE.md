@@ -16,7 +16,7 @@ Exam. Each is described below.
 |:---:|---|---|---|
 | 1 | [Python](#1-python) | The language the notebooks run on | [python.org](https://www.python.org/downloads/) — 3.11+ |
 | 2 | [DuckDB](#2-duckdb) | The course's main SQL engine (in-process) | `pip install "duckdb>=2.0"` |
-| 3 | [MySQL](#3-mysql) | A client–server database (Weeks 4–5) | [dev.mysql.com](https://dev.mysql.com/downloads/) |
+| 3 | [MySQL](#3-mysql) | A client–server database (Weeks 4–5) | [dev.mysql.com](https://dev.mysql.com/downloads/) — the latest (26.7+) |
 | 4 | [Marimo](#4-marimo-notebook) | Reactive Python notebooks with SQL cells | `pip install "marimo[sql]"` |
 | 5 | [Pandas](#5-pandas) | DataFrames for query results | `pip install pandas` |
 | 6 | [Matplotlib](#6-matplotlib) | Charts in the notebooks | `pip install matplotlib` |
@@ -74,6 +74,9 @@ Server** from [dev.mysql.com](https://dev.mysql.com/downloads/)
   levels, and access control.
 - Supports server-side features such as stored procedures, triggers,
   replication, and administration.
+
+**Version:** the latest (26.7 or newer) — the course's MySQL demos and labs
+were checked on MySQL 26.7.
 
 Step-by-step install: Step 5 of the
 [installation guide](../software_installation/README.md).

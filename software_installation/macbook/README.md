@@ -26,7 +26,7 @@ This folder contains everything you need to set up your Mac for MSIS-2402. Follo
 | [sqlglot](https://github.com/tobymao/sqlglot) | SQL parser Marimo itself needs to run SQL cells | any recent | Step 2 | Steps 2, 3 |
 | [Java](https://adoptium.net) | Required by qStudio — qStudio is written in Java and won't open without it | 21 (recommended) | Step 4 | Step 4 |
 | [qStudio](https://github.com/timestored/qstudio/releases/latest) | Free SQL editor for writing and exploring queries visually | 5.09 or newer | Step 4 | Step 4 |
-| [MySQL](https://dev.mysql.com/downloads/) | Client–server relational database — the multi-user counterpart to DuckDB's in-process design | 8.0+ | Step 5 | Step 5 |
+| [MySQL](https://dev.mysql.com/downloads/) | Client–server relational database — the multi-user counterpart to DuckDB's in-process design | the latest (26.7 or newer) | Step 5 | Step 5 |
 
 This table is just a reference — **the actual install commands are in the steps below, not here.**
 

@@ -124,7 +124,7 @@ for macOS or Windows in [`software_installation/`](../software_installation/READ
 |:---:|---|---|
 | 1 | Python 3.11 or newer | Runs the notebooks |
 | 2 | DuckDB 2.0 or newer (`pip install "duckdb>=2.0"`) | The course's main SQL engine (Weeks 1–5) |
-| 3 | MySQL | Client–server database (Weeks 4–5) |
+| 3 | MySQL, the latest version (26.7 or newer) | Client–server database (Weeks 4–5) |
 | 4 | Marimo | Reactive Python notebooks with SQL cells |
 | 5 | Pandas | Query results as data frames |
 | 6 | Matplotlib | Charts in the notebooks |
