@@ -1,5 +1,6 @@
 # Publish a read-only HTML page for every Marimo notebook in LABS/ and the week
-# folders on GitHub Pages, for the "👁️ View" links in the READMEs:
+# folders, and a code page for each plain .py script in the week folders, on
+# GitHub Pages, for the "👁️ View" links in the READMEs:
 #   https://mahmoudparsian.github.io/MSIS-2402/LABS/week1/session01/session01_lab_a_student_marimo.html
 #   https://mahmoudparsian.github.io/MSIS-2402/   (index of all pages)
 # One-time setup: Settings -> Pages -> Build and deployment -> Source: "GitHub Actions".
@@ -40,7 +41,7 @@ jobs:
           python-version: "3.12"
 
       - name: Install the student packages
-        run: pip install "duckdb>=2.0" pandas matplotlib marimo sqlglot
+        run: pip install "duckdb>=2.0" pandas matplotlib marimo sqlglot pygments
 
       - name: Render the notebooks
         run: bash .github/scripts/build_notebook_pages.sh _site

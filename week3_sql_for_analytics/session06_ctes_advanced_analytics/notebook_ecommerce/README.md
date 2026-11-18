@@ -9,7 +9,7 @@ functions, ranking, and running totals**.
 
 | | |
 |---|---|
-| **Notebook** | [`notebook_ecommerce.py`](notebook_ecommerce.py) |
+| **Notebook** | [`notebook_ecommerce.py`](notebook_ecommerce.py) · [👁️ View](https://mahmoudparsian.github.io/MSIS-2402/week3_sql_for_analytics/session06_ctes_advanced_analytics/notebook_ecommerce/notebook_ecommerce.html) |
 | **Data** | 5 tables from [`datasets/oltp_database/`](../../../datasets/oltp_database/), loaded directly from CSV |
 | **Each question has** | The SQL, a plain-English explanation, and — for half of them — a chart |
 

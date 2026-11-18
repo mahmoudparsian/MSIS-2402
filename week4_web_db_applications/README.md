@@ -59,7 +59,7 @@ URLs · HTTP requests, responses, and status codes · forms and `GET` vs.
 | File | What it is |
 |---|---|
 | [`slides_01_web_app_architecture.md`](session08_web_app_architecture/slides_01_web_app_architecture.md) | Slide deck (Marp) |
-| [`demo_01_store_finder.py`](session08_web_app_architecture/demo_01_store_finder.py) | Live demo — a small "Store Finder" web app built with the Python standard library and DuckDB |
+| [`demo_01_store_finder.py`](session08_web_app_architecture/demo_01_store_finder.py) · [👁️ View](https://mahmoudparsian.github.io/MSIS-2402/week4_web_db_applications/session08_web_app_architecture/demo_01_store_finder.html) | Live demo — a small "Store Finder" web app built with the Python standard library and DuckDB |
 | [`CLASS_DISCUSSION.md`](session08_web_app_architecture/CLASS_DISCUSSION.md) | Class discussion — warm-up before the lab |
 
 **Running the web demo:** from the course repository folder (the one that

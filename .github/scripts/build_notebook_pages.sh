@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Render every Marimo notebook in LABS/ and the week folders as a read-only
 # HTML page (text, SQL and results), for the "👁️ View" links in the READMEs.
+# Plain .py scripts in the week folders get a syntax-colored code page.
 #
 #   bash .github/scripts/build_notebook_pages.sh [OUT_DIR]      (default: _site)
 #
@@ -40,6 +41,43 @@ for nb in $(grep -rl --include='*.py' 'marimo.App' LABS week[0-9]_* 2>/dev/null 
   [ $had_p = 0 ] && rm -rf "$dir/__pycache__"
 done
 rm -f "$dest/.log"
+
+# Plain Python scripts in the week folders (not notebooks): a read-only code
+# page with syntax colors and line numbers (Pygments).
+"$py" - "$dest" <<'EOF'
+import html, subprocess, sys
+from pathlib import Path
+from pygments import highlight
+from pygments.formatters import HtmlFormatter
+from pygments.lexers import PythonLexer
+site = Path(sys.argv[1])
+files = subprocess.run(["git", "ls-files", "week[0-9]_*/*.py", "week[0-9]_*/**/*.py"],
+                       capture_output=True, text=True).stdout.split()
+fmt = HtmlFormatter(linenos="table", style="friendly")
+n = 0
+for f in sorted(set(files)):
+    src = Path(f).read_text(encoding="utf-8")
+    if "marimo.App" in src:
+        continue                      # notebooks are rendered by marimo above
+    out = site / (f[:-3] + ".html")
+    out.parent.mkdir(parents=True, exist_ok=True)
+    name = html.escape(Path(f).name)
+    out.write_text(f"""<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{name} — MSIS-2402</title>
+<style>body{{font-family:system-ui,sans-serif;margin:0}}
+header{{background:#eef6fb;border-bottom:1px solid #cde3f0;padding:.6rem 1rem;font-size:.9rem}}
+main{{padding:1rem;overflow-x:auto}}h1{{font-size:1.2rem;margin:.2rem 0 .8rem}}
+.highlight pre,.linenos pre{{margin:0;font-size:.85rem;line-height:1.45}}td.linenos{{color:#999;padding-right:.8rem;user-select:none}}
+{fmt.get_style_defs('.highlight')}</style></head><body>
+<header>Read-only view of a <b>Python script</b> (not a notebook) · <code>{html.escape(f)}</code> ·
+<a href="https://github.com/mahmoudparsian/MSIS-2402/blob/main/{html.escape(f)}">open on GitHub</a></header>
+<main><h1>{name}</h1>{highlight(src, PythonLexer(), fmt)}</main></body></html>
+""", encoding="utf-8")
+    print(f"code    {f}")
+    n += 1
+print(f"{n} Python scripts shown as code pages")
+EOF
 
 # index.html: a list of every page, by folder.
 "$py" - "$dest" <<'EOF'

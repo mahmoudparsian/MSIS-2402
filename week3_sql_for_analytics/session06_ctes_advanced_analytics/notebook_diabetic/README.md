@@ -47,9 +47,9 @@ data. If you modify the CSV files, re-run step 1.
 |---|---|
 | [`database_schema.md`](database_schema.md) | **Read this first.** The data, the schema, every design decision, and an ER diagram |
 | [`database_schema.sql`](database_schema.sql) | The schema itself, run as-is by `build_database.py` |
-| [`build_database.py`](build_database.py) | Builds `diabetic_hospitals.duckdb` from the CSV files |
-| [`notebook_diabetic_marimo.py`](notebook_diabetic_marimo.py) | The Marimo notebook — queries and charts |
-| [`plot_helpers.py`](plot_helpers.py) | Chart functions used by the notebook (`plot_bar`, `plot_hbar`, `plot_pie`, `plot_line`), so the notebook itself stays focused on SQL |
+| [`build_database.py`](build_database.py) · [👁️ View](https://mahmoudparsian.github.io/MSIS-2402/week3_sql_for_analytics/session06_ctes_advanced_analytics/notebook_diabetic/build_database.html) | Builds `diabetic_hospitals.duckdb` from the CSV files |
+| [`notebook_diabetic_marimo.py`](notebook_diabetic_marimo.py) · [👁️ View](https://mahmoudparsian.github.io/MSIS-2402/week3_sql_for_analytics/session06_ctes_advanced_analytics/notebook_diabetic/notebook_diabetic_marimo.html) | The Marimo notebook — queries and charts |
+| [`plot_helpers.py`](plot_helpers.py) · [👁️ View](https://mahmoudparsian.github.io/MSIS-2402/week3_sql_for_analytics/session06_ctes_advanced_analytics/notebook_diabetic/plot_helpers.html) | Chart functions used by the notebook (`plot_bar`, `plot_hbar`, `plot_pie`, `plot_line`), so the notebook itself stays focused on SQL |
 | [`data/`](data/) | Raw source files: `diabetic_data.csv` and `IDS_mapping.csv` |
 
 ## Schema at a Glance
