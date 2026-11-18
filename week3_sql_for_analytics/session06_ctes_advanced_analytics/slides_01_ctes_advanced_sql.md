@@ -30,6 +30,7 @@ By the end of Week 3 students will:
 • use window functions  
 • perform ranking analytics  
 • compute running totals  
+• compare each row with the previous one (`LAG`)  
 • solve complex business analytics queries
 
 ---
@@ -201,7 +202,85 @@ FROM (
 
 ---
 
-# Slide 14 — Moving Averages
+# Slide 14 — `LAG`: Compare with the Previous Row
+
+`LAG(col)` returns `col` from the **previous row** in the window's order —
+no self-join needed. Revenue per year, and the change from the year before:
+
+```sql
+WITH yearly AS (
+    SELECT YEAR(o.order_date) AS year,
+           ROUND(SUM(oi.sales_amount), 2) AS revenue
+    FROM orders o
+    JOIN order_items oi ON oi.order_id = o.order_id
+    GROUP BY year
+)
+SELECT year,
+       revenue,
+       LAG(revenue) OVER (ORDER BY year) AS prev_revenue,
+       ROUND(revenue - LAG(revenue) OVER (ORDER BY year), 2) AS change
+FROM yearly
+ORDER BY year;
+```
+
+---
+
+# Slide 15 — `LAG`: Result
+
+| year | revenue | prev_revenue | change |
+|---:|---:|---:|---:|
+| 2021 | 48382478.07 | NULL | NULL |
+| 2022 | 48926380.12 | 48382478.07 | 543902.05 |
+| 2023 | 48293613.68 | 48926380.12 | -632766.44 |
+| 2024 | 48098074.26 | 48293613.68 | -195539.42 |
+
+The **first** row has no previous row, so `LAG` returns `NULL` — and so does
+any arithmetic with it. `LEAD(col)` is the mirror image: the **next** row.
+
+---
+
+# Slide 16 — `LAG` per Customer (`PARTITION BY`)
+
+Days between orders — `PARTITION BY customer_id` restarts `LAG` per customer:
+
+```sql
+WITH gaps AS (
+    SELECT customer_id,
+           order_date,
+           order_date - LAG(order_date) OVER (
+               PARTITION BY customer_id ORDER BY order_date, order_id
+           ) AS days_since_prev,
+           ROW_NUMBER() OVER (
+               PARTITION BY customer_id ORDER BY order_date, order_id
+           ) AS order_no
+    FROM orders
+)
+SELECT customer_id, order_no, order_date, days_since_prev
+FROM gaps
+WHERE customer_id IN (1, 2) AND order_no <= 3
+ORDER BY customer_id, order_no;
+```
+
+---
+
+# Slide 17 — `LAG` per Customer: Result
+
+| customer_id | order_no | order_date | days_since_prev |
+|---:|---:|---|---:|
+| 1 | 1 | 2021-01-25 | NULL |
+| 1 | 2 | 2021-01-30 | 5 |
+| 1 | 3 | 2021-02-26 | 27 |
+| 2 | 1 | 2021-01-07 | NULL |
+| 2 | 2 | 2021-01-11 | 4 |
+| 2 | 3 | 2021-01-14 | 3 |
+
+Each customer's **first** order gets `NULL`: `LAG` never looks across a
+partition boundary. Subtracting two dates gives the number of days;
+`order_id` breaks ties between orders on the same day.
+
+---
+
+# Slide 18 — Moving Averages
 
 Example — a trailing 7-day average (today + 6 prior rows):
 
@@ -214,7 +293,7 @@ AVG(sales_amount) OVER (
 
 ---
 
-# Slide 15 — Business Insight Example
+# Slide 19 — Business Insight Example
 
 Top 10 customers by revenue.
 
@@ -230,7 +309,7 @@ LIMIT 10;
 
 ---
 
-# Slide 16 — Ranking Customers
+# Slide 20 — Ranking Customers
 
 ```sql
 SELECT customer_id,
@@ -245,7 +324,7 @@ GROUP BY customer_id;
 
 <style scoped>section { font-size: 21px; } pre, table { font-size: 17px; }</style>
 
-# Slide 17 — Category Sales Ranking
+# Slide 21 — Category Sales Ranking
 
 `order_items` **and** `products` both have a `category` column — leaving
 it unqualified is ambiguous:
@@ -278,7 +357,7 @@ GROUP BY p.category;
 
 ---
 
-# Slide 18 — SQL Analytics Pattern
+# Slide 22 — SQL Analytics Pattern
 
 ```sql
 SELECT dimension,
@@ -291,7 +370,7 @@ This pattern — dimension, metric, rank — appears constantly in analytics.
 
 ---
 
-# Slide 19 — Real Analytics Workflow
+# Slide 23 — Real Analytics Workflow
 
 1. Join tables  
 2. Aggregate metrics  
@@ -300,7 +379,7 @@ This pattern — dimension, metric, rank — appears constantly in analytics.
 
 ---
 
-# Slide 20 — SQL Summary (Weeks 1–3)
+# Slide 24 — SQL Summary (Weeks 1–3)
 
 You can now:
 

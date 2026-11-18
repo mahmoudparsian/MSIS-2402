@@ -444,7 +444,7 @@ JOIN items AS i ON i.order_id = o.order_id;
 
 ---
 
-# Slide 23 — ⚠️ Trap 2: Join Fan-Out (cont.)
+# Slide 24 — ⚠️ Trap 2: Join Fan-Out (cont.)
 
 | right_total | fanned_out_total |
 |---:|---:|
@@ -458,7 +458,7 @@ table the number really lives in.
 
 ---
 
-# Slide 24 — 🩹 `LEFT JOIN` + `COALESCE`
+# Slide 25 — 🩹 `LEFT JOIN` + `COALESCE`
 
 A `LEFT JOIN` keeps unmatched rows — with `NULL`s. `COALESCE` turns them
 into a usable value:
@@ -479,7 +479,7 @@ ORDER BY december_orders;
 
 ---
 
-# Slide 25 — `LEFT JOIN` + `COALESCE` — Result
+# Slide 26 — `LEFT JOIN` + `COALESCE` — Result
 
 | december_orders | customers |
 |---:|---:|
@@ -493,7 +493,7 @@ ORDER BY december_orders;
 
 ---
 
-# Slide 26 — 🧠 Reasoning About Results
+# Slide 27 — 🧠 Reasoning About Results
 
 Before trusting a number, ask:
 
@@ -505,7 +505,7 @@ Before trusting a number, ask:
 
 ---
 
-# Slide 27 — 🧭 Choosing a Tool
+# Slide 28 — 🧭 Choosing a Tool
 
 | You want to... | Use |
 |---|---|
@@ -519,7 +519,7 @@ Before trusting a number, ask:
 
 ---
 
-# Slide 28 — 🧪 In-Class Exercise
+# Slide 29 — 🧪 In-Class Exercise
 
 Use a CTE and a scalar subquery:
 
@@ -533,7 +533,7 @@ Which version is easier to read?
 
 ---
 
-# Slide 29 — 💬 Discussion
+# Slide 30 — 💬 Discussion
 
 * When would you choose `NOT EXISTS` over `LEFT JOIN ... IS NULL`?
 * A manager says "revenue doubled after we added the shipments table to the
@@ -542,13 +542,13 @@ Which version is easier to read?
 
 ---
 
-# Slide 30 — 🎯 Most Important Idea
+# Slide 31 — 🎯 Most Important Idea
 
 > **Break a hard question into named steps — then check each step's grain.**
 
 ---
 
-# Slide 31 — Today's Summary
+# Slide 32 — Today's Summary
 
 * Scalar, `IN`, `EXISTS`, and correlated subqueries
 * Derived tables and **CTEs** (`WITH`)
@@ -560,11 +560,9 @@ Which version is easier to read?
 
 ---
 
-# Slide 32 — 🙌 End of Week 2
+# Slide 33 — 🙌 End of Week 2
 
 Questions?
-
----
 
 Next week:
 

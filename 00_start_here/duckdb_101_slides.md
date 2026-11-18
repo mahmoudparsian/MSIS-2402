@@ -77,7 +77,7 @@ CSV → DuckDB → SQL → Pandas / Visualization
 
 ---
 
-### Slide 4 — DuckDB vs Traditional Databases (cont.)
+### Slide 5 — DuckDB vs Traditional Databases (cont.)
 
 DuckDB is designed for:
 
@@ -86,7 +86,7 @@ transactional apps (that's what MySQL/Postgres are for).
 
 ---
 
-### Slide 5 — Installing DuckDB
+### Slide 6 — Installing DuckDB
 
 Install using pip:
 
@@ -107,7 +107,7 @@ Full step-by-step setup: the course's **`software_installation/`** guide.
 
 ---
 
-### Slide 6 — Using DuckDB in Python
+### Slide 7 — Using DuckDB in Python
 
 Example:
 
@@ -129,7 +129,7 @@ DuckDB executes **standard SQL queries**, right inside your Python process.
 
 ---
 
-### Slide 7 — Reading a CSV File
+### Slide 8 — Reading a CSV File
 
 DuckDB can read CSV files directly — no `CREATE TABLE` or import step needed.
 First, let's create a small sample file so this example is fully
@@ -155,10 +155,10 @@ sample_sales.to_csv("sales.csv", index=False)   # written to the folder you star
 
 ---
 
-### Slide 7 — Reading a CSV File (cont.)
+### Slide 9 — Reading a CSV File (cont.)
 
 Now query the file directly with SQL — in a Marimo SQL cell, or in Python
-with `con.sql("...")` on the `con` from Slide 6:
+with `con.sql("...")` on the `con` from Slide 7:
 
 ```sql
 SELECT *
@@ -173,7 +173,7 @@ DuckDB automatically:
 
 ---
 
-### Slide 8 — Creating a Table from CSV
+### Slide 10 — Creating a Table from CSV
 
 Convert CSV → table:
 
@@ -191,7 +191,7 @@ DESCRIBE sales;
 
 ---
 
-### Slide 9 — Query Example
+### Slide 11 — Query Example
 
 ```sql
 SELECT product_category,
@@ -209,7 +209,7 @@ Which product category generates the most revenue?
 
 ---
 
-### Slide 10 — DuckDB + Pandas
+### Slide 12 — DuckDB + Pandas
 
 ```python
 # reuse the same `con` from Slide 8 — the `sales` table already exists there
@@ -228,7 +228,7 @@ table, ready for `matplotlib` or anything else in the Python data stack.
 
 ---
 
-### Slide 11 — Visualization Example
+### Slide 13 — Visualization Example
 
 ```python
 import matplotlib.pyplot as plt
@@ -251,7 +251,7 @@ plt.show()
 
 ---
 
-### Slide 11 — Visualization Example (cont.)
+### Slide 14 — Visualization Example (cont.)
 
 Workflow:
 
@@ -259,7 +259,7 @@ SQL → Pandas → Visualization
 
 ---
 
-### Slide 12 — Reading Multiple CSV Files
+### Slide 15 — Reading Multiple CSV Files
 
 If your data is split across several files (e.g. `sales_jan.csv`,
 `sales_feb.csv`, `sales_mar.csv` in a `data/` folder — an example, these files
@@ -281,7 +281,7 @@ Useful for:
 
 ---
 
-### Slide 13 — DuckDB vs Spark vs BigQuery
+### Slide 16 — DuckDB vs Spark vs BigQuery
 
 | System    | Best Use Case                        |
 |-----------|----------------------------------------|
@@ -300,7 +300,7 @@ BigQuery / Snowflake → cloud
 
 ---
 
-### Slide 14 — DuckDB in 30 Seconds
+### Slide 17 — DuckDB in 30 Seconds
 
 Complete workflow example — CSV to chart, in one script:
 
@@ -324,7 +324,7 @@ plt.show()
 
 ---
 
-### Slide 14 — DuckDB in 30 Seconds (cont.)
+### Slide 18 — DuckDB in 30 Seconds (cont.)
 
 Pipeline:
 
@@ -332,7 +332,7 @@ CSV → DuckDB → SQL → Pandas → Visualization
 
 ---
 
-### Slide 15 — Summary-1
+### Slide 19 — Summary-1
 
 DuckDB is:
 
@@ -347,7 +347,7 @@ CSV → DuckDB → SQL → Python Visualization
 
 ---
 
-### Slide 16 — Summary-2
+### Slide 20 — Summary-2
 
 We will use DuckDB throughout this course to:
 

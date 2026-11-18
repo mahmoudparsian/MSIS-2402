@@ -729,8 +729,6 @@ Today we learned:
 
 Questions?
 
----
-
 Next deck (same session):
 
 **Subqueries, CTEs (`WITH`) and set operations —
