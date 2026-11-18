@@ -243,6 +243,10 @@ marimo run  path/to/notebook_marimo.py   # view as a read-only app
 > **Tip:** open a notebook from **inside its own folder** — notebooks find their
 > data by relative path.
 
+**👁️ View:** the week READMEs and each lab session's README have a **👁️ View**
+link next to every notebook — a read-only page with all its results, nothing to
+install ([all pages](https://mahmoudparsian.github.io/MSIS-2402/)).
+
 See [`marimo_duckdb_notebooks.md`](course_information/marimo_duckdb_notebooks.md)
 for setup details.
 

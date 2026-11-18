@@ -29,7 +29,7 @@ diagrams · normalization · `INNER JOIN` and `LEFT JOIN`
 |---|---|
 | [`slides_01_relational_databases_joins.md`](session03_relational_design_joins/slides_01_relational_databases_joins.md) | Slide deck — relational databases and joins |
 | [`slides_02_er_diagrams.md`](session03_relational_design_joins/slides_02_er_diagrams.md) | Slide deck — ER diagrams |
-| [`notebook_01_relational_joins.py`](session03_relational_design_joins/notebook_01_relational_joins.py) | In-class notebook — relational databases and joins |
+| [`notebook_01_relational_joins.py`](session03_relational_design_joins/notebook_01_relational_joins.py) · [👁️ View](https://mahmoudparsian.github.io/MSIS-2402/week2_multi_table_complex_queries/session03_relational_design_joins/notebook_01_relational_joins.html) | In-class notebook — relational databases and joins |
 | [`CLASS_DISCUSSION.md`](session03_relational_design_joins/CLASS_DISCUSSION.md) | Class discussion — warm-up before the lab |
 | [`data/`](session03_relational_design_joins/data/) | `customers.csv`, `orders.csv`, `products.csv` — a small 3-table dataset (200 / 800 / 100 rows), used by the notebook and the class discussion |
 
@@ -44,7 +44,7 @@ diagrams · normalization · `INNER JOIN` and `LEFT JOIN`
 |---|---|
 | [`slides_01_joins_transaction_analytics.md`](session04_multi_table_joins/slides_01_joins_transaction_analytics.md) | Slide deck — joins and transaction analytics |
 | [`slides_02_subqueries_ctes_set_ops.md`](session04_multi_table_joins/slides_02_subqueries_ctes_set_ops.md) | Slide deck — subqueries, CTEs and set operations (decomposing queries) |
-| [`notebook_01_transaction_analytics.py`](session04_multi_table_joins/notebook_01_transaction_analytics.py) | In-class notebook — transaction analytics |
+| [`notebook_01_transaction_analytics.py`](session04_multi_table_joins/notebook_01_transaction_analytics.py) · [👁️ View](https://mahmoudparsian.github.io/MSIS-2402/week2_multi_table_complex_queries/session04_multi_table_joins/notebook_01_transaction_analytics.html) | In-class notebook — transaction analytics |
 | [`CLASS_DISCUSSION.md`](session04_multi_table_joins/CLASS_DISCUSSION.md) | Class discussion — warm-up before the lab |
 | [`data/`](session04_multi_table_joins/data/) | `customers.csv`, `products.csv`, `sales.csv` — the small tables used in the joins slides. The notebook and class discussion use the shared database in [`datasets/oltp_database/`](../datasets/oltp_database/) instead |
 
@@ -59,6 +59,9 @@ due by **11:59 pm Pacific Time** the day after class ([how](../course_informatio
 Solutions are added after the deadlines.
 
 ## Running the Notebooks
+
+**👁️ View** next to a notebook above opens a read-only page of it with all its results —
+nothing to install. To run or change a notebook, use the commands below.
 
 All commands start in the **course repository folder** — the folder that
 contains `README.md`, `datasets/`, and the `week…` folders (named

@@ -33,7 +33,7 @@ labels (`CASE`) · a first look at `GROUP BY`
 | File | What it is |
 |---|---|
 | [`slides_01_sql_basics.md`](session01_single_table_sql/slides_01_sql_basics.md) | Slide deck — SQL foundations |
-| [`notebook_01_single_table_sql.py`](session01_single_table_sql/notebook_01_single_table_sql.py) | In-class notebook — SQL foundations with a single table |
+| [`notebook_01_single_table_sql.py`](session01_single_table_sql/notebook_01_single_table_sql.py) · [👁️ View](https://mahmoudparsian.github.io/MSIS-2402/week1_db_concepts_sql_fundamentals/session01_single_table_sql/notebook_01_single_table_sql.html) | In-class notebook — SQL foundations with a single table |
 | [`CLASS_DISCUSSION.md`](session01_single_table_sql/CLASS_DISCUSSION.md) | Class discussion — warm-up before the lab |
 | [`data/`](session01_single_table_sql/data/) | `sales.csv` — 200 sales, used by the notebook and the class discussion |
 
@@ -50,8 +50,8 @@ modifying data with `INSERT`, `UPDATE`, `DELETE` · cleaning text (`TRIM`, `LOWE
 | [`slides_01_aggregations_kpis.md`](session02_aggregation_kpis/slides_01_aggregations_kpis.md) | Slide deck — aggregation and KPIs |
 | [`slides_02_duckdb_sql_tour.md`](session02_aggregation_kpis/slides_02_duckdb_sql_tour.md) | Slide deck — a tour of DuckDB SQL, including `INSERT` / `UPDATE` / `DELETE` |
 | [`slides_03_text_and_date_functions.md`](session02_aggregation_kpis/slides_03_text_and_date_functions.md) | Slide deck — text and date functions for analytics: clean text before grouping, group by year and month, days between dates, the last N days |
-| [`notebook_01_aggregation_kpis.py`](session02_aggregation_kpis/notebook_01_aggregation_kpis.py) | In-class notebook — aggregation and KPIs, then text and date functions (same examples as the slides) |
-| [`notebook_02_having_kpis.py`](session02_aggregation_kpis/notebook_02_having_kpis.py) | In-class notebook — `WHERE` vs. `HAVING`, KPIs, and business thinking |
+| [`notebook_01_aggregation_kpis.py`](session02_aggregation_kpis/notebook_01_aggregation_kpis.py) · [👁️ View](https://mahmoudparsian.github.io/MSIS-2402/week1_db_concepts_sql_fundamentals/session02_aggregation_kpis/notebook_01_aggregation_kpis.html) | In-class notebook — aggregation and KPIs, then text and date functions (same examples as the slides) |
+| [`notebook_02_having_kpis.py`](session02_aggregation_kpis/notebook_02_having_kpis.py) · [👁️ View](https://mahmoudparsian.github.io/MSIS-2402/week1_db_concepts_sql_fundamentals/session02_aggregation_kpis/notebook_02_having_kpis.html) | In-class notebook — `WHERE` vs. `HAVING`, KPIs, and business thinking |
 | [`CLASS_DISCUSSION.md`](session02_aggregation_kpis/CLASS_DISCUSSION.md) | Class discussion — warm-up before the lab |
 | [`data/`](session02_aggregation_kpis/data/) | `sales_dataset.csv` (200 transactions — notebooks and class discussion) and `weather.csv` (used in the SQL-tour slides). The text-and-date slides and `notebook_01_aggregation_kpis.py` also read Session 1's dated sales, [`../session01_single_table_sql/data/sales.csv`](session01_single_table_sql/data/sales.csv) |
 
@@ -66,6 +66,9 @@ due by **11:59 pm Pacific Time** the day after class ([how](../course_informatio
 Solutions are added after the deadlines.
 
 ## Running the Notebooks
+
+**👁️ View** next to a notebook above opens a read-only page of it with all its results —
+nothing to install. To run or change a notebook, use the commands below.
 
 All commands start in the **course repository folder** — the folder that
 contains `README.md`, `datasets/`, and the `week…` folders (named

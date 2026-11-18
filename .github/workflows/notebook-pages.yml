@@ -1,0 +1,62 @@
+# Publish a read-only HTML page for every Marimo notebook in LABS/ and the week
+# folders on GitHub Pages, for the "👁️ View" links in the READMEs:
+#   https://mahmoudparsian.github.io/MSIS-2402/LABS/week1/session01/session01_lab_a_student_marimo.html
+#   https://mahmoudparsian.github.io/MSIS-2402/   (index of all pages)
+# One-time setup: Settings -> Pages -> Build and deployment -> Source: "GitHub Actions".
+name: Notebook pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "week1_*/**"
+      - "week2_*/**"
+      - "week3_*/**"
+      - "week4_*/**"
+      - "week5_*/**"
+      - "LABS/**"
+      - "datasets/oltp_database/**"
+      - ".github/scripts/build_notebook_pages.sh"
+      - ".github/workflows/notebook-pages.yml"
+  workflow_dispatch:   # adds a "Run workflow" button on the Actions tab
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: notebook-pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install the student packages
+        run: pip install "duckdb>=2.0" pandas matplotlib marimo sqlglot
+
+      - name: Render the notebooks
+        run: bash .github/scripts/build_notebook_pages.sh _site
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

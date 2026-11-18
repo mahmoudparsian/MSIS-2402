@@ -31,9 +31,9 @@ trends and segmentation
 |---|---|
 | [`slides_01_operational_database.md`](session05_operational_db_window_functions/slides_01_operational_database.md) | Slide deck — real operational databases |
 | [`slides_02_window_functions_ranking.md`](session05_operational_db_window_functions/slides_02_window_functions_ranking.md) | Slide deck — window functions and advanced analytics |
-| [`notebook_01_ranking.py`](session05_operational_db_window_functions/notebook_01_ranking.py) | In-class notebook — ranking: `GROUP BY` vs. window functions · `ROW_NUMBER`, `RANK`, `DENSE_RANK` on a real tie · top N with and without ties · top N per group (`PARTITION BY`, `QUALIFY`) · why `WHERE` can't filter a rank · the Nth-highest value · 3 practice queries |
-| [`notebook_02_trends_segmentation.py`](session05_operational_db_window_functions/notebook_02_trends_segmentation.py) | In-class notebook — trends and segmentation: running totals (overall, by month, per product) with 3 charts · segments with `CASE` · rank, share of total, and segment in one query · order-size segments · 3 practice queries |
-| [`notebook_03_full_database_exploration.py`](session05_operational_db_window_functions/notebook_03_full_database_exploration.py) | In-class notebook — exploring the full operational database |
+| [`notebook_01_ranking.py`](session05_operational_db_window_functions/notebook_01_ranking.py) · [👁️ View](https://mahmoudparsian.github.io/MSIS-2402/week3_sql_for_analytics/session05_operational_db_window_functions/notebook_01_ranking.html) | In-class notebook — ranking: `GROUP BY` vs. window functions · `ROW_NUMBER`, `RANK`, `DENSE_RANK` on a real tie · top N with and without ties · top N per group (`PARTITION BY`, `QUALIFY`) · why `WHERE` can't filter a rank · the Nth-highest value · 3 practice queries |
+| [`notebook_02_trends_segmentation.py`](session05_operational_db_window_functions/notebook_02_trends_segmentation.py) · [👁️ View](https://mahmoudparsian.github.io/MSIS-2402/week3_sql_for_analytics/session05_operational_db_window_functions/notebook_02_trends_segmentation.html) | In-class notebook — trends and segmentation: running totals (overall, by month, per product) with 3 charts · segments with `CASE` · rank, share of total, and segment in one query · order-size segments · 3 practice queries |
+| [`notebook_03_full_database_exploration.py`](session05_operational_db_window_functions/notebook_03_full_database_exploration.py) · [👁️ View](https://mahmoudparsian.github.io/MSIS-2402/week3_sql_for_analytics/session05_operational_db_window_functions/notebook_03_full_database_exploration.html) | In-class notebook — exploring the full operational database |
 | [`CLASS_DISCUSSION.md`](session05_operational_db_window_functions/CLASS_DISCUSSION.md) | Class discussion — warm-up before the lab |
 | [`data/`](session05_operational_db_window_functions/data/) | `product_orders.csv` — 200 transactions, used by notebooks 1 and 2 and the class discussion |
 
@@ -46,8 +46,8 @@ top-N per group · end-to-end analysis
 |---|---|
 | [`slides_01_ctes_advanced_sql.md`](session06_ctes_advanced_analytics/slides_01_ctes_advanced_sql.md) | Slide deck — advanced SQL for business analytics |
 | [`slides_02_case_study_sql_to_decision.md`](session06_ctes_advanced_analytics/slides_02_case_study_sql_to_decision.md) | Slide deck — case study: *From SQL to Decision*, an end-to-end analysis from query to business recommendation |
-| [`notebook_ecommerce/`](session06_ctes_advanced_analytics/notebook_ecommerce/) | Example notebook — CTE and window-function questions on the course's retail schema |
-| [`notebook_diabetic/`](session06_ctes_advanced_analytics/notebook_diabetic/) | Example notebook — advanced SQL and charts on the UCI *Diabetes 130-US Hospitals* dataset (about 100,000 hospital encounters) |
+| [`notebook_ecommerce/`](session06_ctes_advanced_analytics/notebook_ecommerce/) · [👁️ View](https://mahmoudparsian.github.io/MSIS-2402/week3_sql_for_analytics/session06_ctes_advanced_analytics/notebook_ecommerce/notebook_ecommerce.html) | Example notebook — CTE and window-function questions on the course's retail schema |
+| [`notebook_diabetic/`](session06_ctes_advanced_analytics/notebook_diabetic/) · [👁️ View](https://mahmoudparsian.github.io/MSIS-2402/week3_sql_for_analytics/session06_ctes_advanced_analytics/notebook_diabetic/notebook_diabetic_marimo.html) | Example notebook — advanced SQL and charts on the UCI *Diabetes 130-US Hospitals* dataset (about 100,000 hospital encounters) |
 | [`CLASS_DISCUSSION.md`](session06_ctes_advanced_analytics/CLASS_DISCUSSION.md) | Class discussion — warm-up before the lab |
 
 Each example notebook folder has its own `README.md`.
@@ -63,6 +63,9 @@ due by **11:59 pm Pacific Time** the day after class ([how](../course_informatio
 Solutions are added after the deadlines.
 
 ## Running the Notebooks
+
+**👁️ View** next to a notebook above opens a read-only page of it with all its results —
+nothing to install. To run or change a notebook, use the commands below.
 
 All commands start in the **course repository folder** — the folder that
 contains `README.md`, `datasets/`, and the `week…` folders (named

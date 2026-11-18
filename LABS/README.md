@@ -66,6 +66,11 @@ marimo edit session01_lab_a_student_marimo.py
 If you haven't set up the course software yet, see
 [`software_installation/`](../software_installation/README.md).
 
+**👁️ View:** each session's `README.md` has a **👁️ View** link next to every
+notebook. It opens a read-only page of the notebook — tasks, SQL and results —
+with nothing to install; it is ready a few minutes after the lab is released.
+To do a lab, you still download it and run it with `marimo edit`.
+
 ### Getting new labs
 
 - **No git?** Download that session's ZIP (`sessionNN-labs.zip`, ready about a
