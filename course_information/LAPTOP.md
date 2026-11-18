@@ -37,7 +37,8 @@ of your other nine (see [`ASSIGNMENTS_and_GRADING.md`](ASSIGNMENTS_and_GRADING.m
 §5, Course Policy #1). It exists to absorb an ordinary, undocumented bad day —
 not as a reason to skip preparing. If you have a documented emergency,
 illness, or university-approved absence, contact the instructor in advance or
-within 48 hours to arrange an alternative (see the *Exception* note in §4).
+within 48 hours to arrange an alternative (see the *Exception* note in
+[`ASSIGNMENTS_and_GRADING.md`](ASSIGNMENTS_and_GRADING.md#4-class-attendance) §4).
 
 ## 💡 Recommendations
 

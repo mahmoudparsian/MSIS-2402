@@ -3,7 +3,7 @@
 [← Course home](../README.md) · **Course information**
 
 Every notebook in this course is a [Marimo](https://marimo.io) notebook — a
-plain Python file (`*_marimo.py`) with reactive cells and native SQL cells
+plain Python file (a `.py` file) with reactive cells and native SQL cells
 that run against DuckDB. You'll find them in each week's folders, in
 [`LABS/`](../LABS/), and in [`data_stories/`](../data_stories/).
 
@@ -43,6 +43,12 @@ current folder:
 ```bash
 marimo edit
 ```
+
+## Just Looking? 👁️ View
+
+To read a notebook with all its results — without installing anything — use
+the **👁️ View** link next to it in the week READMEs or in a lab session's
+`README.md` ([all pages](https://mahmoudparsian.github.io/MSIS-2402/)).
 
 ---
 

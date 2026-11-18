@@ -6,46 +6,10 @@
 
 ---
 
-## Update (November 5, 2026): Lab B is due the day after class
-
-Hello everyone,
-
-Good news about the **Lab B** deadline. Our class meets on **Tuesday and
-Thursday, 7:35–9:10 pm**. A deadline of 11:59 pm on the same day left you
-less than three hours after class, and that is not enough time.
-
-**Lab B is now due at 11:59 pm Pacific Time the day after class:**
-
-| Class session | Lab B is due |
-|---|---|
-| Tuesday | **Wednesday**, 11:59 pm Pacific Time |
-| Thursday | **Friday**, 11:59 pm Pacific Time |
-
-Nothing else changes:
-
-- **Lab A** is still done and submitted **in class**, before class ends.
-- Late Lab B still loses **3 points for each started 24 hours** after the
-  deadline, and more than 72 hours late scores 0. The 24 hours now start
-  from the new deadline.
-- **Lab B solutions** still appear 72 hours after the Lab B deadline.
-
-The rest of this page and
-[`ASSIGNMENTS_and_GRADING.md`](ASSIGNMENTS_and_GRADING.md) already show the
-new deadline.
-
-Dr. Mahmoud Parsian
-
----
-
 Hello everyone,
 
 The labs are where you practice SQL in this course, and they are **700 of
 your 1,000 points**. Here is how they work. Please read this before Session 1.
-
-> **If you read an earlier version of this repository:** the labs now have
-> a new format. Lab A is now **finished in class**, Lab B is due at
-> **11:59 pm the day after class**, every lab has exactly **6 tasks**, and the
-> optional **c** labs are gone.
 
 ---
 
@@ -112,8 +76,8 @@ your other nine.
    ([`software_installation/`](../software_installation/README.md)). Lab A is
    timed, so there is no class time to fix an installation.
 3. **Before Session 7**, install MySQL and load the course data (Step 5 of the
-   installation guide). Lab A of Sessions 7 and 10 uses it in class, and
-   Session 9's Lab B uses it too.
+   installation guide). Both labs of Sessions 7 and 10, and Session 9's
+   Lab B, use it.
 4. Read [How to Submit a Lab](ASSIGNMENTS_and_GRADING.md#3-how-to-submit-a-lab)
    — it shows the exact file names, for example
    `lopez_maria_session01_lab_a_marimo.py`.

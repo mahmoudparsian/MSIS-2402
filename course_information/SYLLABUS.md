@@ -244,7 +244,10 @@ Camino stays open for you until then. Send the instructor your OAE letter
 - **Your own work.** You may use any appropriate resources to help you
   understand and complete your labs, but the work you submit must reflect
   your own understanding and effort. Discussing general SQL concepts with
-  classmates is fine; sharing queries or notebooks is not (Course Policy #5).
+  classmates is fine; sharing queries or notebooks is not ([Course Policy #5](ASSIGNMENTS_and_GRADING.md#5-course-policies)).
+- **AI tools.** You may use AI tools (ChatGPT, Claude, Copilot) to learn
+  concepts and to debug your own SQL. What you submit must be your own work.
+  The Final Exam is taken in the LockDown Browser, without AI tools.
 - **SCU Academic Integrity:** <https://www.scu.edu/academic-integrity/> —
   the university's pledge, policy, and resources.
 - **Classroom conduct:** respect, resourcefulness, honesty, and constructive
@@ -259,7 +262,7 @@ Camino stays open for you until then. Send the instructor your OAE letter
 
 | Need | Where |
 |---|---|
-| A question about course content | Ask in class, come to office hours, post on **Camino Discussions** (students, the TA, and the instructor respond), or [email the instructor](mailto:mparsian@scu.edu) |
+| A question about course content | Ask in class, come to office hours, post on **Camino Discussions** (students and the instructor respond), or [email the instructor](mailto:mparsian@scu.edu) |
 | Installing the course software | [`software_installation/`](../software_installation/README.md) and its troubleshooting pages |
 | LockDown Browser or other SCU technology | SCU Technology Help: (408) 554-5700, or a [Computing Support Request](https://help.scu.edu/TDClient/111/Portal/Home/) |
 

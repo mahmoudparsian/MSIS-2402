@@ -35,8 +35,8 @@ after the release, then download).
 | 4 | [`session04-labs.zip`](https://github.com/mahmoudparsian/MSIS-2402/releases/download/weekly-zips/session04-labs.zip) | 9 | [`session09-labs.zip`](https://github.com/mahmoudparsian/MSIS-2402/releases/download/weekly-zips/session09-labs.zip) |
 | 5 | [`session05-labs.zip`](https://github.com/mahmoudparsian/MSIS-2402/releases/download/weekly-zips/session05-labs.zip) | 10 | [`session10-labs.zip`](https://github.com/mahmoudparsian/MSIS-2402/releases/download/weekly-zips/session10-labs.zip) |
 
-Session *N*'s labs are the `LABS/` folder `weekW_labL` with
-N = 2 × (W − 1) + L: Session 1 = `week1/session01`, Session 2 = `week1/session02`,
+Session *N*'s labs are in `LABS/weekW/sessionNN/` (two sessions per week):
+Session 1 = `week1/session01`, Session 2 = `week1/session02`,
 Session 3 = `week2/session03`, … Session 10 = `week5/session10`.
 
 ## 🗂️ What Is Inside a ZIP File
@@ -80,7 +80,7 @@ Example: Session 1's lab.
    marimo edit session01_lab_a_student_marimo.py
    ```
 
-For a week ZIP, the folder to `cd` into is the part folder that holds the
+For a week ZIP, the folder to `cd` into is the session folder that holds the
 notebook — for Session 1:
 `cd ~/Downloads/MSIS-2402-week1_db_concepts_sql_fundamentals/week1_db_concepts_sql_fundamentals/session01_single_table_sql`.
 Each week's `README.md` (inside the ZIP) lists the folder and command for
@@ -101,13 +101,13 @@ Example: Session 1's lab.
    path has one extra level. This is normal:
 
    ```
-   Downloads\session01-labs\MSIS-2402-session01-labs\LABS\week1/session01
+   Downloads\session01-labs\MSIS-2402-session01-labs\LABS\week1\session01
    ```
 
 4. Open **PowerShell** and go into that folder:
 
    ```powershell
-   cd $HOME\Downloads\session01-labs\MSIS-2402-session01-labs\LABS\week1/session01
+   cd $HOME\Downloads\session01-labs\MSIS-2402-session01-labs\LABS\week1\session01
    ```
 
 5. Open the notebook with Marimo:

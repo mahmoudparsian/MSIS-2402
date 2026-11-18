@@ -139,7 +139,8 @@ instructor support, is part of the session.
 2. **Final Exam.** The Final Exam is **2 hours**, proctored in person in a
    separately scheduled exam slot, and **closed books, closed notes, closed
    software, closed Internet, and no phones**. You take it on your laptop in
-   a **lock-down browser, which is required** — install it and run a test
+   a **lock-down browser, which is required** — install it and take the
+   **LockDown Browser Practice Quiz** (Camino → Quizzes) at least one week
    before the exam. It has **20 questions, 300 points**:
 
    | Part | Questions | Points |
@@ -174,7 +175,7 @@ instructor support, is part of the session.
    | Last Lab B upload | Penalty |
    |---|---:|
    | by 11:59 pm the day after class | none |
-   | up to 24 hours late (e.g. 12:30 am) | −3 |
+   | up to 24 hours late (e.g. at 12:30 am, 31 minutes after the deadline) | −3 |
    | 24–48 hours late | −6 |
    | 48–72 hours late | −9 |
    | more than 72 hours late | not graded: 0 for Lab B |
@@ -190,7 +191,7 @@ The 1,000-point scale keeps grading simple, transparent, and easy to
 understand:
 
 - You always know exactly where you stand.
-- No percentage conversions are required — divide by 10:
+- To get a percentage, divide your points by 10:
 
 | Points | Percentage |
 |---:|---:|

@@ -117,7 +117,7 @@ pip install "marimo[sql]"
 | To… | Run |
 |---|---|
 | Open a notebook | `marimo edit <notebook>.py` |
-| Check that a notebook runs correctly | `python3 <notebook>.py` |
+| Check that a notebook runs correctly | `python3 <notebook>.py` (Windows: `python <notebook>.py`) |
 
 ---
 
