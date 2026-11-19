@@ -210,7 +210,7 @@ SQL testing outside of Python.
 
 Download it from [DuckDB CLI for Windows](https://duckdb.org/install/?platform=windows&environment=cli)
 (`duckdb-cli-windows-amd64.tar.gz` for most PCs). **Don't use WinGet yet:**
-as of October 2026 `winget install DuckDB.cli` installs 1.5.6, below the
+as of November 2026 `winget install DuckDB.cli` installs 1.5.6, below the
 course's 2.0 requirement.
 
 **Verify** — it must print a version starting with `v2.`:

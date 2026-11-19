@@ -41,9 +41,7 @@ From the [SCU Graduate Bulletin](https://www.scu.edu/bulletin/graduate/leavey-sc
 > intermediate to advanced database concepts and to acquaint students with
 > state-of-the-art software tools.
 >
-> The course will rely on classroom discussions, media articles and cases, as
-> well as programming exercises and an integrative group project. Use of
-> database software is required. […]
+> […] Use of database software is required. […]
 >
 > Introduces database management and database management systems (DBMS).
 > Teaches technical and managerial skills in database planning, analysis,
@@ -52,8 +50,9 @@ From the [SCU Graduate Bulletin](https://www.scu.edu/bulletin/graduate/leavey-sc
 > relational DBMS software. Emphasizes designing and developing reliable
 > databases to support organizational management.
 
-**This term's coursework** consists of ten in-class labs and a final exam —
-see [Grading at a Glance](#grading-at-a-glance).
+**This term's coursework** consists of **20 labs** (two per session: Lab A in
+class, Lab B by the next day) and a **final exam** — there is no group
+project. See [Grading at a Glance](#grading-at-a-glance).
 
 ### Why DuckDB?
 
