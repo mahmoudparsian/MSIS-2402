@@ -70,7 +70,7 @@ jobs:
 
           Ignore "Source code (zip)" and "Source code (tar.gz)". GitHub adds those automatically, and they hold the whole repository.
 
-          Every ZIP also contains \`datasets/oltp_database/\`, so its notebooks run on their own. How to unzip and run: [DOWNLOADING_COURSE_FILES.md](https://github.com/mahmoudparsian/MSIS-2402/blob/main/course_information/DOWNLOADING_COURSE_FILES.md).
+          Every week ZIP also contains \`datasets/oltp_database/\`, and every lab ZIP its session's own \`data/\` folder, so the notebooks run on their own. How to unzip and run: [DOWNLOADING_COURSE_FILES.md](https://github.com/mahmoudparsian/MSIS-2402/blob/main/course_information/DOWNLOADING_COURSE_FILES.md).
 
           Last updated: $(date -u '+%Y-%m-%d %H:%M UTC') from commit ${GITHUB_SHA::7}.
           NOTES

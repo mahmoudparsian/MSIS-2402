@@ -7,7 +7,8 @@
 You do **not** need git. Each week of the course, and each session's labs,
 is ready as **one ZIP file**. Click a link, unzip the file, and you have
 everything for that week or that lab — **including the course data**
-(`datasets/oltp_database/`), so the notebooks run without anything else.
+(a week ZIP has `datasets/oltp_database/`; a lab ZIP has the session's own `data/` folder),
+so the notebooks run without anything else.
 
 ## ⬇️ Weeks — Slides, Notebooks, Class Discussions
 
@@ -54,12 +55,12 @@ week1_db_concepts_sql_fundamentals.zip
 
 session01-labs.zip
 └── MSIS-2402-session01-labs/
-    ├── LABS/week1/session01/                 ← Lab A, Lab B (and solutions, once added)
-    └── datasets/oltp_database/
+    └── LABS/week1/session01/                 ← Lab A, Lab B (and solutions, once added)
+        └── data/                             ← this lab's data
 ```
 
 Keep the folders exactly as they come out of the ZIP — don't move a
-notebook out of its folder, or it can't find `datasets/`.
+notebook out of its folder, or it can't find its data (`datasets/` or `data/`).
 
 ## 🍎 On a MacBook
 
@@ -141,9 +142,9 @@ Releases page?** GitHub adds these two files to every release. They hold
 the **whole** course repository. Ignore them and download a `week…` or
 `sessionNN-labs` ZIP instead.
 
-**Why is every ZIP about 14–18 MB?** Each one includes the course data
-(`datasets/oltp_database/`, 100,000 orders and 300,000 order items), so
-it works on its own.
+**Why are the ZIPs several MB?** Each one includes the data it needs
+(a week ZIP: `datasets/oltp_database/`, 100,000 orders and 300,000 order items;
+a lab ZIP: its session's `data/` folder), so it works on its own.
 
 **Can I download `tutorials/`, `data_stories/`, or everything at once?**
 Not as these ZIPs. For the whole course, use the green **Code** button

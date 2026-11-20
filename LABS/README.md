@@ -50,13 +50,13 @@ MySQL, and web-app labs) is in
 | Sessions | Format | What you need |
 |---|---|---|
 | 1–6, and 9 (Lab A) | [Marimo](https://marimo.io) notebook with DuckDB — each task has an empty SQL cell for your query | The core course software |
-| 7, 9 (Lab B), and 10 | Markdown handout — you work in the `mysql` command-line client | MySQL with the course data loaded ([how](../datasets/oltp_database/mysql/README.md)) |
+| 7, 9 (Lab B), and 10 | Markdown handout — you work in the `mysql` command-line client | MySQL with the course data loaded — Sessions 7 and 10: the lab's Setup loads it from its own `data/` folder |
 | 8 | A small Python + DuckDB web application you modify (`shop_app_starter.py`), with a Markdown handout | The core course software |
 
 ### Running a notebook lab
 
-Open it from **inside its session folder** — the notebooks read the course
-data by relative path:
+Open it from **inside its session folder** — every session has its own
+`data/` folder with the tables its labs use, and the notebooks read it from there:
 
 ```bash
 cd LABS/week1/session01

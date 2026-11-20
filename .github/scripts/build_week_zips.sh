@@ -10,8 +10,8 @@
 #   Lab ZIPs — one per session already released into LABS/ (none before the term):
 #     session01-labs.zip
 #     └── MSIS-2402-session01-labs/
-#         ├── LABS/week1/session01/                 ← exactly what is in LABS/week1/session01/ now
-#         └── datasets/oltp_database/
+#         └── LABS/week1/session01/                 ← exactly what is in LABS/week1/session01/ now,
+#                                                     incl. its own data/ (since 2026-11-19)
 #
 # Both keep the repository's own folder layout, so every relative data path
 # (../../datasets/oltp_database/..., ../session01_single_table_sql/data/...) works unchanged.
@@ -31,11 +31,13 @@ trap 'rm -rf "$stage"' EXIT
 DATA="datasets/oltp_database"
 
 # pack <top_folder_name> <zip_name> <path>...   (paths are repo-relative)
+# Week ZIPs add the shared $DATA; lab ZIPs carry their own data/ (WITH_DATA=0).
 pack() {
   local top="$1" name="$2"; shift 2
+  local extra="$DATA"; [ "${WITH_DATA:-1}" = 0 ] && extra=""
   rm -rf "${stage:?}/$top"
   mkdir -p "$stage/$top"
-  for p in "$@" "$DATA"; do
+  for p in "$@" $extra; do
     mkdir -p "$stage/$top/$(dirname "$p")"
     cp -R "$p" "$stage/$top/$p"
   done
@@ -55,5 +57,5 @@ for lab in LABS/week[1-5]/session[01][0-9]/; do
   [ -d "$lab" ] || continue
   lab="${lab%/}"
   n="$(basename "$lab")"          # session01 … session10
-  pack "MSIS-2402-$n-labs" "$n-labs" "$lab"
+  WITH_DATA=0 pack "MSIS-2402-$n-labs" "$n-labs" "$lab"
 done
