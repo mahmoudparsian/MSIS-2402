@@ -20,9 +20,10 @@ applies, and the instructor will correct this page.
 | **Units** | 2 |
 | **Quarter** | Winter 2027 |
 | **Format** | 5 weeks · 10 sessions (2 per week) · 95 minutes per session |
+| **Term** | January 4 – February 7, 2027 |
 | **Meetings** | Tuesday and Thursday, 7:35–9:10 pm Pacific Time |
 | **Session dates** | Weeks 1–5 of the quarter, January 5 – February 4, 2027: Jan 5, 7, 12, 14, 19, 21, 26, 28 · Feb 2, 4 |
-| **Classroom** | *To be announced on Camino* <!-- TODO(syllabus): room --> |
+| **Classroom** | Lucas Hall, Room 309 |
 | **Prerequisite** | None |
 | **Learning management system** | Camino (Canvas) — lab submissions, Final Exam, announcements, Zoom link |
 | **Course materials** | Course repository: <https://github.com/mahmoudparsian/MSIS-2402> — or one ZIP per week and per session's labs ([`DOWNLOADING_COURSE_FILES.md`](DOWNLOADING_COURSE_FILES.md)) |
