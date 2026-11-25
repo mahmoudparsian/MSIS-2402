@@ -38,7 +38,7 @@ By the end of today:
 # 🎯 Learning Objectives (cont.)
 
 Dataset for this walkthrough: the same 7-table `oltp_database` used since
-Week 1 (`customers`, `orders`, `order_items`, `products`, `payments`,
+Session 4 (`customers`, `orders`, `order_items`, `products`, `payments`,
 `shipments`, `stores`), loaded from this deck's folder with
 `read_csv_auto('../../datasets/oltp_database/<table>.csv')`. Today's demo runs company-wide, across all six
 countries; in the "Try It Yourself" exercise at the end, you repeat it for one
@@ -217,12 +217,15 @@ SELECT
          ELSE 'Low' END AS value_tier,
     COUNT(*) AS customer_count
 FROM customer_revenue
-GROUP BY value_tier;
+GROUP BY value_tier
+ORDER BY customer_count DESC;
 ```
 
 🧠 Insight: 👉 thresholds should come from *your* data's actual
 percentiles, not round numbers picked in advance — every country's
-revenue scale is different.
+revenue scale is different. Here the quartiles are
+`quantile_cont(total_revenue, 0.25)` ≈ **176,579** and `quantile_cont(total_revenue, 0.75)` ≈ **209,870**:
+with those as the Low / High cut-offs, each outer tier holds exactly a quarter of the customers.
 
 ---
 

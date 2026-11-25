@@ -91,7 +91,7 @@ A database is:
 # slide-8: 📊 Table = Business Events
 
 ```
-order_id, country, product, price, quantity
+sale_id, sale_date, product_id, product_category, quantity, unit_price, total_amount
 ```
 
 * 👉 Each row = one transaction
@@ -101,11 +101,9 @@ order_id, country, product, price, quantity
 
 # slide-9: 💼 Business Translation
 
-```
-	•	Row → sale
-	•	Column → attribute
-	•	Table → business process
-```
+* Row → sale
+* Column → attribute
+* Table → business process
 
 ---
 
@@ -249,9 +247,9 @@ SQL allows us to:
 
 # slide-18: 🧠 Key Idea
 
-### * SQL is NOT programming
+### * SQL is **declarative**: you say **what** you want, not **how** to get it
 
-### * SQL is asking questions to data
+### * SQL is asking questions to data (the database decides how to answer)
 
 ---
 
@@ -266,13 +264,9 @@ FROM sales;
 
 # slide-20: 🔍 What does this mean?
 
-```
-	•	SELECT → what you want
-	
-	•	FROM → where data lives
-	
-	•		*	→ everything
-```
+* `SELECT` → what you want (which columns)
+* `FROM` → where the data lives (which table)
+* `*` → every column
 
 ---
 
@@ -282,10 +276,8 @@ FROM sales;
 
  is:
 
-```
-	•	good for learning ✅
-	•	bad in production ❌
-```
+* good for learning ✅
+* bad in production ❌
 
 ---
 
@@ -294,9 +286,9 @@ FROM sales;
 
 SELECT what is required:
 
-```
-SELECT product, 
-       price,
+```sql
+SELECT product_category,
+       unit_price,
        quantity
 FROM sales;
 ```
@@ -309,7 +301,7 @@ FROM sales;
 
 * "what are top-5 selling products per country?"
 
-* "What are the sales revenue month-by-month for year 2025?"
+* "What is the sales revenue month by month for 2024?"
 
 ---
 
@@ -341,10 +333,9 @@ This course focuses heavily on **querying data**.
 
 # slide-26:  Our Week‑1 Dataset
 
-From here on we switch to the **real, file-backed** `sales` table —
+Every query in this deck uses the **real, file-backed** `sales` table,
 loaded from `data/sales.csv` (200 rows), the same table used in
-`notebook_01_single_table_sql.py`. (This replaces the small in-class demo
-table from the SELECT examples earlier — same idea, real data.) From this
+`notebook_01_single_table_sql.py`. From this
 deck's folder (`session01_single_table_sql/`):
 `CREATE OR REPLACE TABLE sales AS SELECT * FROM read_csv_auto('data/sales.csv');`
 
@@ -581,6 +572,9 @@ When a `WHERE` mixes `AND` and `OR`, **always** add parentheses.
 | F | T | F | T | T | T |
 | F | F | F | F | T | F |
 
+SQL has `AND`, `OR` and `NOT`. `XOR` (exactly one is true) is shown for logic only:
+in SQL write `(A OR B) AND NOT (A AND B)`.
+
 ---
 
 # slide-44: `ORDER BY` Clause
@@ -816,21 +810,20 @@ the second? Decide (`<` vs. `<=`), then test a row right at the edge.
 
 Write queries for:
 
-```
-	1.	price > 800
-	2.	country = Canada
-	3.	total_value
-	4.	total_value > 1000
-```
+1. sales with `unit_price > 400` (49 rows)
+2. sales in the `Toys` category (23 rows)
+3. a derived column `line_value = quantity * unit_price`
+4. sales with `line_value > 1000` (41 rows)
+
 ---
 
 # slide-59: 💬 Discussion
 
 Ask:
 
-* Which products are expensive?
+* Which categories have the most expensive sales?
 
-* Which country appears most?
+* Which category appears most often? (Hint: `ORDER BY` helps; Session 2 adds `GROUP BY`.)
 
 ---
 

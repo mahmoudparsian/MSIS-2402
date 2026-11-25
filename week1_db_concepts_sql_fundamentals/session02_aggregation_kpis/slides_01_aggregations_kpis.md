@@ -369,6 +369,8 @@ Key metrics:
 
 ---
 
+<style scoped>section { font-size: 21px; } pre, pre code, table { font-size: 16px; }</style>
+
 # Slide 27 — Insight Example
 
 * High revenue ≠ high volume
@@ -378,11 +380,20 @@ Key metrics:
 SELECT product,
        SUM(sales_amount) AS revenue,
        COUNT(*)          AS num_transactions,
-       AVG(price)        AS avg_price
+       ROUND(AVG(price), 2) AS avg_price
 FROM sales
 GROUP BY product
 ORDER BY revenue DESC;
 ```
+
+| product | revenue | num_transactions | avg_price |
+|---|---:|---:|---:|
+| Phone | 149,892 | 54 | 826.04 |
+| Laptop | 132,398 | 40 | 1,209.45 |
+| Tablet | 46,308 | 49 | 301.49 |
+| Watch | 35,623 | 57 | 197.67 |
+
+👉 Watch has the **most** transactions (57) but the **least** revenue; Laptop has the fewest (40) and is #2.
 
 ---
 

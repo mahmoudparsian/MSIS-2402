@@ -5,7 +5,7 @@ theme: default
 paginate: true
 ---
 
-# Beautiful ER Diagrams for Weeks 2–3
+# ER Diagrams for Weeks 2–3
 
 These diagrams visually reinforce the database structure students use across the course.
 
@@ -27,7 +27,8 @@ SELECT c.country, COUNT(o.order_id) AS total_orders
 FROM customers c
 JOIN orders o
   ON c.customer_id = o.customer_id
-GROUP BY c.country;
+GROUP BY c.country
+ORDER BY total_orders DESC;
 ```
 
 **Business question:**  
@@ -83,7 +84,8 @@ SELECT s.store_type, SUM(oi.sales_amount) AS revenue
 FROM stores s
 JOIN orders o ON s.store_id = o.store_id
 JOIN order_items oi ON o.order_id = oi.order_id
-GROUP BY s.store_type;
+GROUP BY s.store_type
+ORDER BY revenue DESC;
 ```
 
 Payment method usage:
@@ -91,7 +93,8 @@ Payment method usage:
 ```sql
 SELECT payment_method, COUNT(*) AS num_payments
 FROM payments
-GROUP BY payment_method;
+GROUP BY payment_method
+ORDER BY num_payments DESC;
 ```
 
 ---

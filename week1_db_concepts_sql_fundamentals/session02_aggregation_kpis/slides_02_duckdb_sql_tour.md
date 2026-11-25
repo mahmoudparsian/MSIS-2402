@@ -150,7 +150,7 @@ Text and dates need single quotes (`'...'`). Dates must be `'YYYY-MM-DD'`.
 
 ```sql
 INSERT INTO cities
-VALUES ('San Francisco', -194.0, 53.0);
+VALUES ('San Francisco', 37.77, -122.42);   -- latitude, longitude
 ```
 
 ---
@@ -344,8 +344,8 @@ WHERE city = name;
 
 |     city      | temp_lo | temp_hi | prcp |    date    |     name      |   lat    |  lon   |
 |---------------|--------:|--------:|-----:|------------|---------------|---------:|-------:|
-| San Francisco | 46      | 50      | 0.25 | 1994-11-27 | San Francisco | -194.000 | 53.000 |
-| San Francisco | 43      | 57      | 0.0  | 1994-11-29 | San Francisco | -194.000 | 53.000 |
+| San Francisco | 46      | 50      | 0.25 | 1994-11-27 | San Francisco | 37.770   | -122.420 |
+| San Francisco | 43      | 57      | 0.0  | 1994-11-29 | San Francisco | 37.770   | -122.420 |
 
 Two things to notice:
 
@@ -413,8 +413,8 @@ LEFT OUTER JOIN cities ON weather.city = cities.name;
 
 |     city      | temp_lo | temp_hi | prcp |    date    |     name      |   lat    |  lon   |
 |---------------|--------:|--------:|-----:|------------|---------------|---------:|-------:|
-| San Francisco | 46      | 50      | 0.25 | 1994-11-27 | San Francisco | -194.000 | 53.000 |
-| San Francisco | 43      | 57      | 0.0  | 1994-11-29 | San Francisco | -194.000 | 53.000 |
+| San Francisco | 46      | 50      | 0.25 | 1994-11-27 | San Francisco | 37.770   | -122.420 |
+| San Francisco | 43      | 57      | 0.0  | 1994-11-29 | San Francisco | 37.770   | -122.420 |
 | Hayward       | 37      | 54      | NULL | 1994-11-29 | NULL          | NULL     | NULL   |
 
 **Left** table (`weather`) keeps every row at least once. **Right** table
@@ -499,6 +499,8 @@ One output row per city; each aggregate is computed over just that city's rows.
 
 ---
 
+<style scoped>section { font-size: 21px; } pre, pre code, table { font-size: 16px; }</style>
+
 # slide-30: Filtering Groups with `HAVING`
 
 ```sql
@@ -519,7 +521,7 @@ GROUP BY city
 HAVING max_temp_lo < 40;
 ```
 
-|  city   | max(temp_lo) |
+|  city   | max_temp_lo |
 |---------|-------------:|
 | Hayward | 37           |
 

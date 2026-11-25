@@ -101,7 +101,7 @@ WHERE payment_amount > (SELECT AVG(payment_amount) FROM payments);
 # Slide 7 — ⚠️ Why Not Just `WHERE payment_amount > AVG(payment_amount)`?
 
 ```sql
--- ❌ Error: aggregate functions are not allowed in WHERE
+-- ❌ Binder Error: WHERE clause cannot contain aggregates!
 SELECT COUNT(*) FROM payments
 WHERE payment_amount > AVG(payment_amount);
 ```

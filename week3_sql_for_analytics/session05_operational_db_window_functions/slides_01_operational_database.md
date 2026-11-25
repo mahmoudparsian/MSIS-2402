@@ -104,11 +104,7 @@ stores
 
 | store_id | store_type | country |
 
-Stores can be:
-
-• online  
-• retail  
-• warehouse  
+Stores are one of three types: `Online` (17), `Retail` (14), `Warehouse` (19).
 
 ---
 
@@ -141,72 +137,110 @@ Load each table once, from this deck's folder (`session05_operational_db_window_
 Example query:
 
 ```sql
-SELECT COUNT(*)
+SELECT COUNT(*) AS num_orders
 FROM orders;
 ```
 
-How many orders exist?
+How many orders exist? → **100,000** (2021-01-01 to 2024-12-31).
 
 ---
+
+<style scoped>section { font-size: 21px; } pre, pre code, table { font-size: 16px; }</style>
 
 # Slide 13 — Orders by Country
 
 ```sql
-SELECT c.country, 
-       COUNT(o.order_id)
+SELECT c.country,
+       COUNT(o.order_id) AS num_orders
 FROM customers c
 JOIN orders o
   ON c.customer_id = o.customer_id
-GROUP BY c.country;
+GROUP BY c.country
+ORDER BY num_orders DESC;
 ```
 
+| country | num_orders |
+|---|---:|
+| Germany | 19,621 |
+| Australia | 17,702 |
+| USA | 17,069 |
+| France | 16,215 |
+| UK | 15,835 |
+| Canada | 13,558 |
+
 ---
+
+<style scoped>section { font-size: 21px; } pre, pre code, table { font-size: 16px; }</style>
 
 # Slide 14 — Revenue by Product Category
 
 ```sql
-SELECT p.category, 
-       SUM(oi.sales_amount)
+SELECT p.category,
+       ROUND(SUM(oi.sales_amount), 0) AS revenue
 FROM order_items oi
 JOIN products p
   ON oi.product_id = p.product_id
-GROUP BY p.category;
+GROUP BY p.category
+ORDER BY revenue DESC;
 ```
 
+Clothing leads with **26,607,218**, Home is last with **22,100,912**: all 8 categories are within ±10% of each other.
+
 ---
+
+<style scoped>section { font-size: 21px; } pre, pre code, table { font-size: 16px; }</style>
 
 # Slide 15 — Revenue by Store
 
 ```sql
-SELECT s.store_type, 
-       SUM(oi.sales_amount)
+SELECT s.store_type,
+       ROUND(SUM(oi.sales_amount), 0) AS revenue
 FROM stores s
 JOIN orders o ON s.store_id = o.store_id
 JOIN order_items oi ON o.order_id = oi.order_id
-GROUP BY s.store_type;
+GROUP BY s.store_type
+ORDER BY revenue DESC;
 ```
 
+| store_type | revenue |
+|---|---:|
+| Warehouse | 73,222,434 |
+| Online | 65,807,138 |
+| Retail | 54,670,974 |
+
+👉 Warehouse leads partly because there are more of them (19 stores vs 17 and 14): compare **per store** too.
+
 ---
+
+<style scoped>section { font-size: 21px; } pre, pre code, table { font-size: 16px; }</style>
 
 # Slide 16 — Payment Method Analysis
 
 ```sql
-SELECT payment_method, 
-       SUM(payment_amount)
+SELECT payment_method,
+       COUNT(*)                         AS payments,
+       ROUND(SUM(payment_amount), 0)    AS amount
 FROM payments
-GROUP BY payment_method;
+GROUP BY payment_method
+ORDER BY amount DESC;
 ```
+
+Four methods, each about 25,000 payments and about 4.0 million: PayPal 4,033,088 · Gift Card 4,010,471 ·
+Credit Card 3,984,269 · Bank Transfer 3,971,141.
 
 ---
 
 # Slide 17 — Shipping Analysis
 
 ```sql
-SELECT carrier, 
-       COUNT(*)
+SELECT carrier,
+       COUNT(*) AS shipments
 FROM shipments
-GROUP BY carrier;
+GROUP BY carrier
+ORDER BY shipments DESC;
 ```
+
+UPS 25,108 · FedEx 25,028 · USPS 25,003 · DHL 24,861 (one shipment per order).
 
 ---
 
@@ -220,12 +254,32 @@ FROM orders
 WHERE customer_id IS NULL;
 ```
 
-(Our dataset is clean — this returns 0 rows. That's a normal, healthy
-outcome for a data quality check, not a sign the query is broken.)
+(This returns 0 rows: a normal, healthy outcome for a data quality check, not a sign the query is broken.)
 
 ---
 
-# Slide 19 — Large Dataset Thinking
+<style scoped>section { font-size: 21px; } pre, pre code, table { font-size: 16px; }</style>
+
+# Slide 19 — Data Quality: Do Two Tables Agree?
+
+A deeper check: does each order's **payment** equal the value of its **items**?
+
+```sql
+SELECT ROUND((SELECT SUM(payment_amount) FROM payments), 0)  AS total_paid,
+       ROUND((SELECT SUM(sales_amount)   FROM order_items), 0) AS total_items;
+```
+
+| total_paid | total_items |
+|---:|---:|
+| 15,998,970 | 193,700,546 |
+
+⚠️ They don't agree: in this teaching dataset `payments` was generated **independently** of the items
+(payments are 20–300 each). Lesson: use `sales_amount` for **revenue**, use `payments` only for
+payment questions (method, timing), and **always reconcile two tables before combining their numbers**.
+
+---
+
+# Slide 20 — Large Dataset Thinking
 
 Real databases contain:
 
@@ -237,7 +291,7 @@ SQL allows us to explore these efficiently.
 
 ---
 
-# Slide 20 — Week 3 Summary
+# Slide 21 — Week 3 Summary
 
 Today we learned:
 

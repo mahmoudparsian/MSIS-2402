@@ -350,6 +350,8 @@ and multi-row transactions are often weaker than in a relational database.
 
 ---
 
+<style scoped>section { font-size: 21px; } pre, pre code, table { font-size: 16px; }</style>
+
 ## Relational Rows vs. One Document
 
 Order 1, relational — **3 tables**, joined by keys:
@@ -371,6 +373,8 @@ The same order as **one** document:
 ```
 
 👉 One read gets the whole order — but "revenue by category" must open every document.
+(The payment, 143.45, is not the items' total, 1,990.17: in this teaching dataset `payments` was generated
+independently of the items — the reconciliation check in Session 5, slide 19.)
 
 ---
 

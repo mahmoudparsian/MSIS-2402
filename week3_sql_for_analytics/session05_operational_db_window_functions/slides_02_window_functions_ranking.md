@@ -362,7 +362,7 @@ Binder Error: WHERE clause cannot contain window functions!
 ```
 
 👉 `WHERE` runs **before** window functions are computed. Rank in a
-CTE (or use `QUALIFY`), then filter.
+CTE (or, in DuckDB only, use `QUALIFY`), then filter.
 
 ---
 
@@ -531,6 +531,8 @@ ORDER BY revenue DESC;
 | Tablet |  35,752 | Medium |
 | Watch  |  29,821 | Medium |
 
+With these thresholds no product is `Low`: choose thresholds from the data (here the totals run from 29,821 to 216,940).
+
 ---
 
 # 💼 Business Meaning
@@ -553,7 +555,8 @@ SELECT product,
             ELSE 'Low'
        END AS segment
 FROM sales
-GROUP BY product;
+GROUP BY product
+ORDER BY rnk;
 ```
 
 ---

@@ -133,25 +133,28 @@ JOIN orders
   ON customers.customer_id = orders.customer_id;
 ```
 
-This combines both tables.
+This combines both tables: each order is paired with **its** customer.
+`JOIN` means `INNER JOIN`: only rows that have a match in **both** tables are kept.
 
 ---
 
+<style scoped>section { font-size: 21px; } pre, pre code, table { font-size: 16px; }</style>
+
 # Slide 10 — Week 2 Dataset
 
-Tables:
+Three tables in `data/`. Load them from this deck's folder (`session03_relational_design_joins/`):
 
-customers  
-products  
-orders
+```sql
+CREATE OR REPLACE TABLE customers AS SELECT * FROM read_csv_auto('data/customers.csv');  -- 200 rows
+CREATE OR REPLACE TABLE orders    AS SELECT * FROM read_csv_auto('data/orders.csv');     -- 800 rows
+CREATE OR REPLACE TABLE products  AS SELECT * FROM read_csv_auto('data/products.csv');   -- 100 rows
+```
 
-Example:
-
-customers
-
-| customer_id | country |
+| Table | Columns |
 |---|---|
-| 1 | Germany |
+| `customers` | `customer_id` (PK), `gender`, `country`, `segment`, `signup_date` |
+| `orders` | `order_id` (PK), `customer_id` (FK → customers), `store_id`, `order_date` |
+| `products` | `product_id` (PK), `category`, `price` |
 
 ---
 
@@ -187,11 +190,21 @@ GROUP BY summarizes data.
 Example:
 
 ```sql
-SELECT country, 
-       COUNT(*)
+SELECT country,
+       COUNT(*) AS customers
 FROM customers
-GROUP BY country;
+GROUP BY country
+ORDER BY customers DESC, country;
 ```
+
+| country | customers |
+|---|---:|
+| UK | 43 |
+| Germany | 42 |
+| Australia | 34 |
+| France | 28 |
+| USA | 27 |
+| Canada | 26 |
 
 ---
 
@@ -242,31 +255,59 @@ GROUP BY c.country;
 
 ---
 
+<style scoped>section { font-size: 21px; } pre, pre code, table { font-size: 16px; }</style>
+
 # Slide 17 — Business Insight Example
 
 Which countries generate the most orders?
 
 ```sql
-SELECT c.country, 
+SELECT c.country,
        COUNT(o.order_id) AS total_orders
 FROM customers c
 JOIN orders o
   ON c.customer_id = o.customer_id
-GROUP BY c.country;
+GROUP BY c.country
+ORDER BY total_orders DESC, c.country;
 ```
 
+| country | total_orders |
+|---|---:|
+| UK | 40 |
+| Germany | 31 |
+| France | 23 |
+| Canada | 21 |
+| Australia | 20 |
+| USA | 14 |
+
+👉 These add up to **149**, but `orders` has **800** rows. Where did the others go? (Class Discussion, Q4.)
+
 ---
+
+<style scoped>section { font-size: 21px; } pre, pre code, table { font-size: 16px; }</style>
 
 # Slide 18 — Another Example
 
 Average product price by category
 
 ```sql
-SELECT category, 
-       AVG(price)
+SELECT category,
+       ROUND(AVG(price), 2) AS avg_price
 FROM products
-GROUP BY category;
+GROUP BY category
+ORDER BY avg_price DESC;
 ```
+
+| category | avg_price |
+|---|---:|
+| Computers | 330.81 |
+| Electronics | 321.29 |
+| Sports | 317.31 |
+| Office | 306.39 |
+| Beauty | 274.67 |
+| Clothing | 245.15 |
+| Toys | 201.99 |
+| Home | 200.12 |
 
 ---
 

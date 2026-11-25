@@ -81,6 +81,8 @@ Benefits:
 
 ---
 
+<style scoped>section { font-size: 21px; } pre, pre code, table { font-size: 16px; }</style>
+
 # Slide 7 — CTE Example
 
 Find our most frequent customers (100,000 orders / 1,000 customers, so
@@ -95,8 +97,11 @@ WITH customer_orders AS (
 )
 SELECT *
 FROM customer_orders
-WHERE order_count > 120;
+WHERE order_count > 120
+ORDER BY order_count DESC, customer_id;
 ```
+
+→ **25 customers**; customer 375 leads with 133 orders, then 84, 125 and 825 with 130 each.
 
 ---
 
@@ -110,16 +115,24 @@ ROW_NUMBER()
 
 ---
 
+<style scoped>section { font-size: 21px; } pre, pre code, table { font-size: 16px; }</style>
+
 # Slide 9 — ROW_NUMBER Example
 
 Find order-item ranking by sales.
 
 ```sql
-SELECT order_id,
+SELECT order_item_id,
+       order_id,
        sales_amount,
-       ROW_NUMBER() OVER (ORDER BY sales_amount DESC) AS rnk
-FROM order_items;
+       ROW_NUMBER() OVER (ORDER BY sales_amount DESC, order_item_id) AS rn
+FROM order_items
+ORDER BY rn
+LIMIT 5;
 ```
+
+⚠️ **42 line items** share the top amount (1,999.72). Without the tie-breaker `order_item_id`,
+which of them gets `rn = 1` is not guaranteed: it can change from run to run.
 
 ---
 
@@ -282,7 +295,8 @@ partition boundary. Subtracting two dates gives the number of days;
 
 # Slide 18 — Moving Averages
 
-Example — a trailing 7-day average (today + 6 prior rows):
+Example — a trailing 7-**row** average (the current row + the 6 rows before it;
+that is 7 **days** only when there is exactly one row per day, e.g. after `GROUP BY order_date`):
 
 ```sql
 AVG(sales_amount) OVER (

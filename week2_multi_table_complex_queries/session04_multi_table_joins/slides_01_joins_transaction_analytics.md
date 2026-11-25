@@ -200,7 +200,8 @@ JOIN customers c
   ON s.customer_id = c.customer_id
 JOIN products p
   ON s.product_id = p.product_id
-WHERE p.product = 'Laptop';
+WHERE p.product = 'Laptop'
+ORDER BY c.customer_name;
 ```
 
 (Our catalog has just 4 products — Laptop, Phone, Tablet, Watch —
@@ -208,15 +209,16 @@ intentionally simplified so you can focus on the JOIN mechanics.)
 
 ---
 
+<style scoped>section { font-size: 21px; } pre, pre code, table { font-size: 16px; }</style>
+
 # Slide 15 — 💼 Business Meaning
 
 "Which customers bought a Laptop?"
 
-```
-p.product = 'Laptop'
-=>
-Customer_3, Customer_22, Customer_55, Customer_4, Customer_12, ...
-```
+**73 rows** (73 Laptop sales), but only **44 different customers**:
+Customer_22 bought a Laptop 3 times, so the name appears 3 times.
+
+👉 "Which customers" = a list without repeats: `SELECT DISTINCT c.customer_name …` → 44 rows.
 
 ---
 
@@ -470,11 +472,14 @@ Ask:
 
 ---
 
+<style scoped>section { font-size: 21px; } pre, pre code, table { font-size: 16px; }</style>
+
 # Slide 31 — 🔥 Advanced Thinking
 
-👉 Pareto Principle:
+👉 Pareto principle ("80/20 rule"): *roughly 20% of customers bring 80% of revenue.*
 
-* Roughly 20% of customers → 80% of revenue
+* It is a **rule of thumb**, not a law. In our `sales` table the top 12 customers
+  (20% of 60) bring **38.5%** of revenue: check your data before you quote it.
 
 ---
 
@@ -483,6 +488,8 @@ Ask:
 SQL integrates data across tables → enables insight.
 
 ---
+
+<style scoped>section { font-size: 21px; } pre, pre code, table { font-size: 16px; }</style>
 
 # Slide 33 — 📦 A Bigger, Real-World Dataset
 
@@ -498,9 +505,12 @@ same one Week 3 completes with `stores`, `payments`, and `shipments`. From
 this folder, load it with `read_csv_auto('../../datasets/oltp_database/orders.csv')`
 (and the same for each table) — `notebook_01_transaction_analytics.py` does it for you.
 
+⚠️ Its `customers` and `products` tables **replace** the small ones above (same names, different columns:
+`products` now has `category` instead of `product`). Use `CREATE OR REPLACE TABLE`.
+
 ---
 
-# Slide 34 — Slide — Real Retail Data Model
+# Slide 34 — Real Retail Data Model
 
 Retail systems often store data in multiple tables:
 
@@ -526,6 +536,8 @@ This design avoids data duplication and enables detailed analytics.
 |---|---|---|---|---|---|---|
 
 Each order can contain multiple items.
+`category` and `price` are **copied** into each line item (the price at the time of sale), so many
+queries need no join to `products`.
 
 ---
 
@@ -602,7 +614,8 @@ SELECT p.category,
        SUM(oi.sales_amount) AS total_sales
 FROM order_items oi
 JOIN products p ON oi.product_id = p.product_id
-GROUP BY p.category;
+GROUP BY p.category
+ORDER BY total_sales DESC;
 ```
 
 This calculates revenue by category.
@@ -615,7 +628,8 @@ This calculates revenue by category.
 SELECT customer_id, 
        COUNT(order_id) AS num_orders
 FROM orders
-GROUP BY customer_id;
+GROUP BY customer_id
+ORDER BY num_orders DESC, customer_id;
 ```
 
 Shows customer purchasing frequency.
@@ -653,7 +667,8 @@ SELECT c.country,
        COUNT(o.order_id) AS num_orders
 FROM customers c
 JOIN orders o ON c.customer_id = o.customer_id
-GROUP BY c.country;
+GROUP BY c.country
+ORDER BY num_orders DESC;
 ```
 
 ---
@@ -666,7 +681,8 @@ SELECT c.country,
 FROM customers c
 JOIN orders o ON c.customer_id = o.customer_id
 JOIN order_items oi ON o.order_id = oi.order_id
-GROUP BY c.country;
+GROUP BY c.country
+ORDER BY revenue DESC;
 ```
 
 ---
@@ -698,12 +714,12 @@ Using SQL we can now answer:
 # Slide 49 — Common Query Pattern
 
 ```sql
-SELECT dimension, 
-       AGG(metric)
+SELECT dimension,
+       AGG(metric) AS value          -- AGG = SUM, COUNT, AVG, ...
 FROM table_a
 JOIN table_b ON table_a.key = table_b.key
 GROUP BY dimension
-ORDER BY metric DESC;
+ORDER BY value DESC;
 ```
 
 This pattern — join, then group, then order — appears constantly in
